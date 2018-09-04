@@ -18,9 +18,7 @@ namespace Diploma.DataBase
         public DbSet<Tag> Tags { get; set; }
 
         public BusinessUniversityContext(DbContextOptions<BusinessUniversityContext> options) : base(options)
-        {}
-
-        
+        {}        
 
         public BusinessUniversityContext()
         {
