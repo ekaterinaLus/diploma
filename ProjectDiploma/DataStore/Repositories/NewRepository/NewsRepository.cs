@@ -1,5 +1,5 @@
 ﻿using DataStore.Entities;
-using DiplomaBU.DataBase;
+using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 

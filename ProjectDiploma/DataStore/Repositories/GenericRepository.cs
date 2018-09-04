@@ -1,5 +1,5 @@
-﻿using DiplomaBU.DataBase;
-using DiplomaBU.Entities;
+﻿using Diploma.DataBase;
+using Diploma.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 

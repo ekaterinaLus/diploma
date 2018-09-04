@@ -1,4 +1,4 @@
-﻿using DiplomaBU.Entities;
+﻿using Diploma.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

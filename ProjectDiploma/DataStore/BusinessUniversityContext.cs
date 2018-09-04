@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DiplomaBU.DataBase
+namespace Diploma.DataBase
 {
     public class BusinessUniversityContext : DbContext
     {
