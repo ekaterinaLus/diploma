@@ -1,10 +1,19 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<h1 align="center">Проекты</h1>
+<p *ngIf="!oneProject"><strong>Загрузка...</strong></p>
 
-</body>
-</html>
+<div><p align="center"><b>{{oneProject.name}}</b></p></div>
+<div><p>Дата начала проекта: {{oneProject.start|date:'dd-MM-yyyy'}}</p></div>
+<div><p>Дата завершения проекта: {{oneProject.finish|date:'dd-MM-yyyy'}}</p></div>
+<style>
+  p {
+    text-indent: 32px;
+    line-height: 1.8;
+  }
+</style>
+<div><p align="justify">Стоимость проекта: {{oneProject.cost}} руб.</p></div>
+
+
+
+
+
+

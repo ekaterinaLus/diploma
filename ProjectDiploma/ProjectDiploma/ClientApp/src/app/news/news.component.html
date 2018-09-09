@@ -2,15 +2,18 @@
 <h1 align="center" >Новости</h1>
 <font size="4">
   <p *ngIf="!oneNews"><strong>Загрузка...</strong></p>
-  <div><p align="center"><b>{{oneNews.header}}</b></p></div>
-  <div><p align="center"><i>{{oneNews.annotation}}</i></p></div>
-  <div><p>{{oneNews.date|date:'dd-MM-yyyy'}}</p></div>
-  <style>
-    p {
-      text-indent: 32px;
-      line-height: 1.8;
-    }
-  </style>
-  <div><p align="justify">{{oneNews.text}}</p></div>
+  <div class="news-block">
+    <div><p align="center"><b>{{oneNews.header}}</b></p></div>
+    <div><p align="center"><i>{{oneNews.annotation}}</i></p></div>
+    <div><p>{{oneNews.date|date:'dd-MM-yyyy'}}</p></div>
+    <style>
+      p {
+        text-indent: 32px;
+        line-height: 1.8;
+      }
+    </style>
+    <div><p align="justify">{{oneNews.text}}</p></div>
+    </div>
 </font>
+
 

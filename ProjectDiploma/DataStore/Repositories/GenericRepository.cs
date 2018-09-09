@@ -1,6 +1,6 @@
 ﻿using Diploma.DataBase;
-using Diploma.Entities;
 using Microsoft.EntityFrameworkCore;
+using ProjectDiploma.Entities;
 using System.Collections.Generic;
 
 namespace DataStore.Repositories
