@@ -11,8 +11,8 @@ export class NewComponent {
   public oneNews: News;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get(baseUrl + 'api/News/GetRandomNews').subscribe(result => {
-      this.oneNews = result as News;
+    http.get<News>(baseUrl + 'api/News/GetRandomNews').subscribe(result => {
+      this.oneNews = result;
     }, error => console.error(error));
   }
 }

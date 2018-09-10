@@ -10,7 +10,7 @@ export class ProjectComponent {
   public oneProject: Project;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get(baseUrl + 'api/Project/GetRandomProject').subscribe(result => {
+    http.get<Project>(baseUrl + 'api/Project/GetRandomProject').subscribe(result => {
       this.oneProject = result;
     }, error => console.error(error));
   }
