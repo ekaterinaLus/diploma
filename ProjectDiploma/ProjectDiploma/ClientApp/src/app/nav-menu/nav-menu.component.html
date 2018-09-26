@@ -7,29 +7,34 @@
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </button>
-            <a class='navbar-brand' [routerLink]='["/"]'>Бизнес - университет</a>
+            <a class='navbar-brand' [routerLink]='["/"]' class="test2">Бизнес - университет</a>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
           <ul class='nav navbar-nav'>
             <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-              <a [routerLink]='["/"]' (click)='collapse()'>
+              <a [routerLink]='["/"]' (click)='collapse()' class="test3">
                 <span class='glyphicon glyphicon-home'></span> Главная
               </a>
             </li>
             <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/event']">
+              <a [routerLink]="['/event']" class="test3">
                 <span class='glyphicon glyphicon-calendar'></span> События
               </a>
             </li>
             <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/news"]' (click)='collapse()'>
+              <a [routerLink]='["/news"]' (click)='collapse()' class="test3">
                 <span class='glyphicon glyphicon-send'></span> Новости
               </a>
             </li>
             <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/project']">
+              <a [routerLink]="['/project']" class="test3">
                 <span class='glyphicon glyphicon-blackboard'></span> Проекты
+              </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+              <a [routerLink]="['/user']" class="test3">
+                <span class='glyphicon glyphicon-log-in'></span> Войти
               </a>
             </li>
           </ul>

@@ -17,5 +17,12 @@ namespace ProjectDiploma.Logic
                 return dbContext.Events.OrderBy(x => rnd.Next()).FirstOrDefault();
             }
         }
+        public static IEnumerable<Event> GtRndmEvnt()
+        {
+            using (var dbContext = new BusinessUniversityContext())
+            {
+                return dbContext.Events.OrderBy(x => rnd.Next()).Take(2);
+            }
+        }
     }
 }

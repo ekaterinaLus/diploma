@@ -1,16 +1,20 @@
-<h1 align="center">Проекты</h1>
-<p *ngIf="!oneProject"><strong>Загрузка...</strong></p>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+</head>
 
-<div><p align="center"><b>{{oneProject.name}}</b></p></div>
-<div><p>Дата начала проекта: {{oneProject.start|date:'dd-MM-yyyy'}}</p></div>
-<div><p>Дата завершения проекта: {{oneProject.finish|date:'dd-MM-yyyy'}}</p></div>
-<style>
-  p {
-    text-indent: 32px;
-    line-height: 1.8;
-  }
-</style>
-<div><p align="justify">Стоимость проекта: {{oneProject.cost}} руб.</p></div>
+<h1 align="center" class="test">Проекты</h1>
+<p *ngIf="!oneProject"><strong>Загрузка...</strong></p>
+<div style="border:10px ridge  #FFFACD;padding:10px;">
+  <div style="text-align: center; font-size: 20px; font-family: Lucida Sans;color: #000000; padding:2px;">
+    <div><p align="center">{{oneProject.name}}</p></div>
+    <div><p>Дата начала проекта: {{oneProject.start|date:'dd-MM-yyyy'}}</p></div>
+    <div><p>Дата завершения проекта: {{oneProject.finish|date:'dd-MM-yyyy'}}</p></div>
+    <style>
+     
+    </style>
+    <div ><p align="justify">Стоимость проекта: {{oneProject.cost}} руб.</p></div>
+  </div>
+</div>
 
 
 

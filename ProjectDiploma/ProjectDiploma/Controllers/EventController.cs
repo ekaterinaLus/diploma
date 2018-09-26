@@ -18,5 +18,10 @@ namespace ProjectDiploma.Controllers
         {
             return EventStore.GetRndmEvent();
         }
+        [HttpGet("[action]")]
+        public IEnumerable<Event> GetRandom()
+        {
+            return EventStore.GtRndmEvnt();
+        }
     }
 }

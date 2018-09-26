@@ -1,21 +1,22 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.component.html'
+  selector: 'app-user',
+  templateUrl: './user.component.html'
 })
-export class EventComponent {
-  public events: Event[];
-  public oneEvent: Event;
+export class UserComponent {
+  public news: News[];
+  public oneNews: News;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get(baseUrl + 'api/Event/GetRandom').subscribe(result => {
-      this.events = result as Event[];
+    http.get<News>(baseUrl + 'api/News/GetRandomNews').subscribe(result => {
+      this.oneNews = result;
     }, error => console.error(error));
   }
 }
-
+//прописать ньюс таг
 
 interface NewsTags {
   newsId: number;

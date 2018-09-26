@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
 import { ProjectComponent } from './project/project.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProjectComponent } from './project/project.component';
     HomeComponent,
     EventComponent,
     NewComponent,
-    ProjectComponent
+    ProjectComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,8 @@ import { ProjectComponent } from './project/project.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
       { path: 'news', component: NewComponent },
-      { path: 'project', component: ProjectComponent }
+      { path: 'project', component: ProjectComponent },
+      { path: 'user', component: UserComponent}
     ])
   ],
 
