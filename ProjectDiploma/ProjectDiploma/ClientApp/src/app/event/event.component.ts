@@ -10,8 +10,8 @@ export class EventComponent {
   public oneEvent: Event;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get(baseUrl + 'api/Event/GetRandom').subscribe(result => {
-      this.events = result as Event[];
+    http.get(baseUrl + 'api/Event/GetRandomEvent').subscribe(result => {
+      this.oneEvent = result as Event;
     }, error => console.error(error));
   }
 }

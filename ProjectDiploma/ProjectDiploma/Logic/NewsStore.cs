@@ -10,6 +10,7 @@ namespace ProjectDiploma.Logic
     public class NewsStore
     {
         public static Random rnd = new Random();
+        public static BusinessUniversityContext context;
 
         public static IEnumerable<News> GetNews()
         {
@@ -19,12 +20,9 @@ namespace ProjectDiploma.Logic
             }
         }
 
-        public static News GetRndmNews()
-        {
-            using (var dbContext = new BusinessUniversityContext())
-            {
-                return dbContext.News.OrderBy(x => rnd.Next()).FirstOrDefault();
-            }
+        public static  News GetRndmNews()
+        {   
+            return context.News.OrderBy(x => rnd.Next()).FirstOrDefault();
         }
     }
 }

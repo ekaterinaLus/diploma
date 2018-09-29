@@ -33,11 +33,6 @@ namespace Diploma.DataBase
                 .HasKey(x => new { x.NewsId, x.TagsId });
             base.OnModelCreating(modelBuilder);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=BusinessUniversity;Username=postgres;Password=1234");
-        }
     }
 }
  
