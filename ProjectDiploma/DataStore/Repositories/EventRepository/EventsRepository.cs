@@ -1,13 +1,15 @@
 ﻿using DataStore.Entities;
+using DataStore.Repositories.RandomizeRepository;
 using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataStore.Repositories.EventRepository
 {
-    class EventsRepository: GenericRepository<Event>, IEventsRepository 
+    public class EventsRepository: RandomizeRepository<Event>, IEventsRepository 
     {
         public EventsRepository(BusinessUniversityContext dbContext) : base(dbContext) { }
         

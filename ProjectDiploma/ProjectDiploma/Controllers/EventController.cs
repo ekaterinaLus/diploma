@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataStore.Entities;
+using Diploma.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 
 namespace ProjectDiploma.Controllers
-{
-    [Produces("application/json")]
+{    
     [Route("api/Event")]
+    [ApiController]
     public class EventController : ControllerBase
     {
-        [HttpGet("[action]")]
+        private readonly BusinessUniversityContext _context;
+
+        public EventController(BusinessUniversityContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
         public Event GetRandomEvent()
         {
-            return EventStore.GetRndmEvent();
+            return new EventModel(_context).GetRandomEvent();
         }
-        [HttpGet("[action]")]
+
+        [HttpGet]
         public IEnumerable<Event> GetRandom()
         {
-            return EventStore.GtRndmEvnt();
+            return new EventModel(_context).GetRandomEvents();
         }
     }
 }

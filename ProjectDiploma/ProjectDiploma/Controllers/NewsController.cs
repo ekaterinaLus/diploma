@@ -10,7 +10,6 @@ using ProjectDiploma.Logic;
 
 namespace ProjectDiploma.Controllers
 {
-    //[Route("api/[controller]")]
     [Route("api/[controller]")]
     [ApiController]
     public class NewsController : ControllerBase
@@ -20,13 +19,12 @@ namespace ProjectDiploma.Controllers
         public NewsController(BusinessUniversityContext context)
         {
             _context = context;
-            NewsStore.context = context;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public News GetRandomNews()
         {
-            return NewsStore.GetRndmNews();
+            return new NewsModel(_context).GetRandomNews();
         }
     }
 }

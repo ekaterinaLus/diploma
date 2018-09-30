@@ -4584,23 +4584,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Margo\\.nuget\\packages\\": {},
+    "C:\\Users\\марго\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "projectUniqueName": "D:\\Diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
       "projectName": "DataStore",
-      "projectPath": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
-      "packagesPath": "C:\\Users\\Margo\\.nuget\\packages\\",
-      "outputPath": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\obj\\",
+      "projectPath": "D:\\Diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "packagesPath": "C:\\Users\\марго\\.nuget\\packages\\",
+      "outputPath": "D:\\Diploma\\ProjectDiploma\\DataStore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Margo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\марго\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

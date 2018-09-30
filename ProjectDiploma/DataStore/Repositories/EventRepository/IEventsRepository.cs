@@ -1,11 +1,10 @@
 ﻿using DataStore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DataStore.Repositories.RandomizeRepository;
 
 namespace DataStore.Repositories.EventRepository
 {
-    public interface IEventsRepository: IGenericRepository<Event>
+    public interface IEventsRepository: IRandomizeRepository<Event>
     {
+        
     }
 }

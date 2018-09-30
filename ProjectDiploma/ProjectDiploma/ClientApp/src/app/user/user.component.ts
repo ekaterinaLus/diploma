@@ -7,59 +7,19 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './user.component.html'
 })
 export class UserComponent {
-  public news: News[];
-  public oneNews: News;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<News>(baseUrl + 'api/News/GetRandomNews').subscribe(result => {
-      this.oneNews = result;
-    }, error => console.error(error));
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+
+  }
+
+  onSubmit({ value, valid }: { value: UserRegistration, valid: boolean }) {
+      
+    this.http.post<string>(this.baseUrl + 'api/Account/Register', value)
+      .subscribe(result => { console.log(result) }, error => console.error(error));
   }
 }
-//прописать ньюс таг
 
-interface NewsTags {
-  newsId: number;
-  news: News;
-  tagsId: number;
-  tags: Tag;
-}
-
-interface NewsType {
-  id: number;
-  name: string;
-}
-
-interface Event {
-  id: number;
-  date: Date;
-  title: string;
-  description: string;
-  adress: string;
-  cost: number;
-  tags: Tag;
-}
-
-interface EventsTags {
-  eventId: number;
-  events: Event;
-  tagsId: number;
-  tags: Tag;
-}
-
-interface Tag {
-  id: number;
-  name: string;
-  news: NewsTags;
-  events: EventsTags;
-}
-interface News {
-  id: number;
-  header: string;
-  annotation?: string;
-  date: Date;
-  text: string;
-  tags: NewsTags;
-  section: NewsType;
-  sectionId: number;
+export interface UserRegistration {
+  email: string;
+  password: string;
 }

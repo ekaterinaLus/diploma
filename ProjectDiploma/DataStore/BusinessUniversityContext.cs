@@ -1,4 +1,5 @@
 ﻿using DataStore.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Diploma.DataBase
 {
-    public class BusinessUniversityContext : DbContext
+    public class BusinessUniversityContext : IdentityDbContext<User>
     {
         public DbSet<Event> Events { get; set; }
         public DbSet<News> News { get; set; }

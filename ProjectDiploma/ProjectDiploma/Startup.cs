@@ -36,12 +36,11 @@ namespace ProjectDiploma
             services.AddDbContext<BusinessUniversityContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("BusinessUniversity"),
                     migration => migration.MigrationsAssembly(Configuration.GetValue<string>("MigrationsAssembly"))));
-            /**/
-            //services.AddDbContext<ApplicationContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
 
-            //services.AddIdentity<User, IdentityRole>()
-            //   .AddEntityFrameworkStores<ApplicationContext>();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<BusinessUniversityContext>();
+                //.AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +60,8 @@ namespace ProjectDiploma
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            //Enable auth
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -80,16 +81,7 @@ namespace ProjectDiploma
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            //app.UseStaticFiles();
 
-            //app.UseAuthentication();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using DataStore.Entities;
+using DataStore.Repositories.RandomizeRepository;
 using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStore.Repositories.NewRepository
 {
-    public class NewsRepository : GenericRepository<News>, INewsRepository
+    public class NewsRepository : RandomizeRepository<News>, INewsRepository
     {
         public NewsRepository(BusinessUniversityContext dbContext) : base(dbContext) { }
 
@@ -14,6 +16,11 @@ namespace DataStore.Repositories.NewRepository
             return DbContext.
                 News.Include(x => x.Tags).
                 ThenInclude(x => x.Tags);
+        }
+
+        public IEnumerable<News> GetSortedNews()
+        {
+            return GetAll().OrderByDescending(x => x.Header);
         }
     }
 }
