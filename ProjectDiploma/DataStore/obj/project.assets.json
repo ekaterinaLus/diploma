@@ -2,153 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "emFramework.CodeGen/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0",
-          "emFramework.Database": "1.0.0",
-          "emFramework.Logger": "1.0.0"
-        }
-      },
-      "emFramework.CodeGen.Core/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.CodeGen.Core.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.CodeGen.Core.dll": {}
-        }
-      },
-      "emFramework.Content/1.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/emFramework.Content.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Content.dll": {}
-        }
-      },
-      "emFramework.Core/1.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/Kendo.Mvc.dll": {},
-          "lib/emFramework.Core.dll": {}
-        },
-        "runtime": {
-          "lib/Kendo.Mvc.dll": {},
-          "lib/emFramework.Core.dll": {}
-        }
-      },
-      "emFramework.Database/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0",
-          "emFramework.Logger": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Database.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Database.dll": {}
-        }
-      },
-      "emFramework.Entity/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Entity.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Entity.dll": {}
-        }
-      },
-      "emFramework.Helper/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Content": "1.0.0",
-          "emFramework.Core": "1.0.0",
-          "emFramework.Database": "1.0.0",
-          "emFramework.Network": "1.0.0",
-          "emFramework.Web": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Helper.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Helper.dll": {}
-        }
-      },
-      "emFramework.Identity.App/1.0.1": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.CodeGen": "1.0.0",
-          "emFramework.CodeGen.Core": "1.0.0",
-          "emFramework.Core": "1.0.0",
-          "emFramework.Database": "1.0.0",
-          "emFramework.Entity": "1.0.0",
-          "emFramework.Helper": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Identity.App.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Identity.App.dll": {}
-        }
-      },
-      "emFramework.Logger/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0",
-          "emFramework.Notification": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Logger.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Logger.dll": {}
-        }
-      },
-      "emFramework.Network/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Network.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Network.dll": {}
-        }
-      },
-      "emFramework.Notification/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Notification.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Notification.dll": {}
-        }
-      },
-      "emFramework.Web/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "emFramework.Core": "1.0.0"
-        },
-        "compile": {
-          "lib/emFramework.Web.dll": {}
-        },
-        "runtime": {
-          "lib/emFramework.Web.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.Authentication/2.1.1": {
         "type": "package",
         "dependencies": {
@@ -1448,143 +1301,10 @@
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
         }
-      },
-      "System.Web.Mvc.Extensions/1.1.1.2": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.Web.Mvc.Extensions.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Mvc.Extensions.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "emFramework.CodeGen/1.0.0": {
-      "sha512": "X8OCOtYNK76gpldb1eLKbMm7ojbCnIopacaMfpMIvNQeXjb8Fz3Uve4D2NkZKMKuewuHBsW8/xc0RjBAX2hPlA==",
-      "type": "package",
-      "path": "emframework.codegen/1.0.0",
-      "files": [
-        "content/emFramework.CodeGen/Entity.Identity.cs.template",
-        "content/emFramework.CodeGen/emFramework.CodeGen.exe",
-        "content/emFramework.CodeGen/emFramework.Core.dll",
-        "emframework.codegen.1.0.0.nupkg.sha512",
-        "emframework.codegen.nuspec"
-      ]
-    },
-    "emFramework.CodeGen.Core/1.0.0": {
-      "sha512": "1MVsUpzQV2PbbdkeVmqu43VVigZ1cgcmygDxjpWGTiARuQ+QG0grZkBCWeJTYeoSw+XL9yUg8PL3pycjw97ZMg==",
-      "type": "package",
-      "path": "emframework.codegen.core/1.0.0",
-      "files": [
-        "emframework.codegen.core.1.0.0.nupkg.sha512",
-        "emframework.codegen.core.nuspec",
-        "lib/emFramework.CodeGen.Core.dll"
-      ]
-    },
-    "emFramework.Content/1.0.0": {
-      "sha512": "5RiNDdE6/V4D8j39CVF1IMYe3wnrORIu2ezVUvUvC+Lm7Dtx8r9v/AkbGStB4pYyMRJpucfsry/Ip0wZSdvn5g==",
-      "type": "package",
-      "path": "emframework.content/1.0.0",
-      "files": [
-        "emframework.content.1.0.0.nupkg.sha512",
-        "emframework.content.nuspec",
-        "lib/emFramework.Content.dll"
-      ]
-    },
-    "emFramework.Core/1.0.0": {
-      "sha512": "ae+y5SnsIC8gwLPFejzPH4JET7QRI2JtQ5rXW3GDFnJRyWresPLZU1N1VU7OTdatqDqlyFSbB4WZsxUnTtNvkA==",
-      "type": "package",
-      "path": "emframework.core/1.0.0",
-      "files": [
-        "content/emFramework.CodeGen/emFramework.Core.dll",
-        "emframework.core.1.0.0.nupkg.sha512",
-        "emframework.core.nuspec",
-        "lib/Kendo.Mvc.dll",
-        "lib/emFramework.Core.dll"
-      ]
-    },
-    "emFramework.Database/1.0.0": {
-      "sha512": "XIORpt7BJuPHYKYTe652beYpQ4zP6e2PAjR6nQSHTkTOAJP099KxA0UiKaKzoIRxXzeAborQTC3MA7+XdB0QIQ==",
-      "type": "package",
-      "path": "emframework.database/1.0.0",
-      "files": [
-        "emframework.database.1.0.0.nupkg.sha512",
-        "emframework.database.nuspec",
-        "lib/emFramework.Database.dll"
-      ]
-    },
-    "emFramework.Entity/1.0.0": {
-      "sha512": "uB0WDLDNTTvifY+0eUi08MIo+q/R6iRUyFHGvDaH2kxnPXxHleyUBrqasAyeMCrHePvLRd29dV+r0T1jDeHCvA==",
-      "type": "package",
-      "path": "emframework.entity/1.0.0",
-      "files": [
-        "emframework.entity.1.0.0.nupkg.sha512",
-        "emframework.entity.nuspec",
-        "lib/emFramework.Entity.dll"
-      ]
-    },
-    "emFramework.Helper/1.0.0": {
-      "sha512": "EXLM7Udsxgmdj23bYVEJ4W5/5bFAgmmnnOtgUJvJcPs4XFHy4Si1kCCnrwxyXd6k6aFTF8sXo8Z5+fpC7oF5xA==",
-      "type": "package",
-      "path": "emframework.helper/1.0.0",
-      "files": [
-        "emframework.helper.1.0.0.nupkg.sha512",
-        "emframework.helper.nuspec",
-        "lib/emFramework.Helper.dll"
-      ]
-    },
-    "emFramework.Identity.App/1.0.1": {
-      "sha512": "f4bRP78Bi0WpxFrhsMQvQoFPajmlxtVOTfIIwJGQSY9U3NzSEQyHx4tWgCz0i3SWuwvRXeoXzk9v66NDaL2WNg==",
-      "type": "package",
-      "path": "emframework.identity.app/1.0.1",
-      "files": [
-        "emframework.identity.app.1.0.1.nupkg.sha512",
-        "emframework.identity.app.nuspec",
-        "lib/emFramework.Identity.App.dll"
-      ]
-    },
-    "emFramework.Logger/1.0.0": {
-      "sha512": "UDa49K7Dxwv2gtK2T6p6/E7GryRYsmuI+r8FGr3Q2r2DZ63ytLWeqopxT8ZVyuW1CNsQI3TWNUFJ0CswYyTtxg==",
-      "type": "package",
-      "path": "emframework.logger/1.0.0",
-      "files": [
-        "emframework.logger.1.0.0.nupkg.sha512",
-        "emframework.logger.nuspec",
-        "lib/emFramework.Logger.dll"
-      ]
-    },
-    "emFramework.Network/1.0.0": {
-      "sha512": "PnyM1Lxx3eldmsd6M63R6uHZJgTIgJ5wLzPURRKzajKIc7Mvv/IJNNI7WZKKuolRQzqC8dBstkNxnkxNdz/hqg==",
-      "type": "package",
-      "path": "emframework.network/1.0.0",
-      "files": [
-        "emframework.network.1.0.0.nupkg.sha512",
-        "emframework.network.nuspec",
-        "lib/emFramework.Network.dll"
-      ]
-    },
-    "emFramework.Notification/1.0.0": {
-      "sha512": "E+lTVR38oDWkemRhCx+6B/8dJ7vfbpPGXcWn4Sb/hi/dJkj05efj6lchBcIts23zpnOBL8r+o7I/SPCog8D3hQ==",
-      "type": "package",
-      "path": "emframework.notification/1.0.0",
-      "files": [
-        "emframework.notification.1.0.0.nupkg.sha512",
-        "emframework.notification.nuspec",
-        "lib/emFramework.Notification.dll"
-      ]
-    },
-    "emFramework.Web/1.0.0": {
-      "sha512": "Br+dHPXeBfRxhppiHvgXrsnjcZLkYvuIBLqheNZg4vyDM//M5XL0D+D6ZhjE1RXoqSzvi8Glwmx5XTz15UHLkA==",
-      "type": "package",
-      "path": "emframework.web/1.0.0",
-      "files": [
-        "emframework.web.1.0.0.nupkg.sha512",
-        "emframework.web.nuspec",
-        "lib/emFramework.Web.dll"
-      ]
-    },
     "Microsoft.AspNetCore.Authentication/2.1.1": {
       "sha512": "WgbDLOGoyX0/EoUdAlihMaKIpON6LwCYZ8fiPhZZe+qdCJhvl1aTBmJ/carHcv3NJGT+ETuq2ppYQr7PKLq1CQ==",
       "type": "package",
@@ -4557,19 +4277,6 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "System.Web.Mvc.Extensions/1.1.1.2": {
-      "sha512": "A8+X7EW9un/RedIBhpA/LMSvWw8iaEa9mJt0nvcFYQM2F1CoggZp6e7c50CIDfL6g5/105u7Q/QO8m7EUGtL9A==",
-      "type": "package",
-      "path": "system.web.mvc.extensions/1.1.1.2",
-      "files": [
-        "lib/net40/System.Web.Mvc.Extensions.dll",
-        "lib/net40/System.Web.Mvc.Extensions.xml",
-        "lib/net45/System.Web.Mvc.Extensions.dll",
-        "lib/net45/System.Web.Mvc.Extensions.xml",
-        "system.web.mvc.extensions.1.1.1.2.nupkg.sha512",
-        "system.web.mvc.extensions.nuspec"
-      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -4578,29 +4285,27 @@
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 2.1.3",
       "Microsoft.EntityFrameworkCore.Tools >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Npgsql.EntityFrameworkCore.PostgreSQL >= 2.1.1.1",
-      "System.Web.Mvc.Extensions >= 1.1.1.2",
-      "emFramework.Identity.App >= 1.0.1"
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 2.1.1.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\марго\\.nuget\\packages\\": {},
+    "C:\\Users\\Margo\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "projectUniqueName": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
       "projectName": "DataStore",
-      "projectPath": "D:\\Diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
-      "packagesPath": "C:\\Users\\марго\\.nuget\\packages\\",
-      "outputPath": "D:\\Diploma\\ProjectDiploma\\DataStore\\obj\\",
+      "projectPath": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "packagesPath": "C:\\Users\\Margo\\.nuget\\packages\\",
+      "outputPath": "C:\\ProjectDiploma\\ProjectDiploma\\DataStore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\марго\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Margo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4645,14 +4350,6 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[2.1.1.1, )"
-          },
-          "System.Web.Mvc.Extensions": {
-            "target": "Package",
-            "version": "[1.1.1.2, )"
-          },
-          "emFramework.Identity.App": {
-            "target": "Package",
-            "version": "[1.0.1, )"
           }
         },
         "imports": [
@@ -4662,127 +4359,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.CodeGen.Core 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.CodeGen.Core",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Content 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Content",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Core 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Core",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Database 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Database",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Entity 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Entity",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Helper 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Helper",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Identity.App 1.0.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Identity.App",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Logger 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Logger",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Network 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Network",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Notification 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Notification",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'emFramework.Web 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "emFramework.Web",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'System.Web.Mvc.Extensions 1.1.1.2' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "System.Web.Mvc.Extensions",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    }
-  ]
+  }
 }

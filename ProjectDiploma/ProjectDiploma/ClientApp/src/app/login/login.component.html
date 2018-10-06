@@ -1,15 +1,15 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="ui-form">
-  <h3 class="test">Зарегистрироваться на сайте</h3>
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="ui-form">
+  <h3 class="test">Войти</h3>
   <div class="form-row">
-    <input type="text" id="email" name="email" ngModel required autocomplete="off"><label for="email">Email</label>
+    <input type="text" id="email" name="email" required ngModel autocomplete="off"><label for="email">Email</label>
   </div>
   <div class="form-row">
     <input type="password" id="password" name="password" ngModel required autocomplete="off"><label for="password">Пароль</label>
   </div>
-  <p><button mat-raised-button type="submit">Зарегистрироваться</button></p>
+  <p><button mat-raised-button type="submit">Войти</button></p>
 </form>
 <div class="link">
   <a href='https://localhost:44357/registr'>Зарегистрироваться</a>

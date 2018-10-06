@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 .news-block {
   border-color: black;
   border-style: solid;
@@ -7,6 +7,7 @@
   border-right-width: 3px;
   padding-right: 10px;
 }
+
 .test {
   font-family: 'Lobster', cursive;
 }
@@ -16,6 +17,7 @@
   font-size: 24px;
   color: #808080;
 }
+
 .test3 {
   font-family: 'Georgia', cursive;
   font-size: 16px;
@@ -32,6 +34,7 @@ td {
   background: #dbdac3;
   padding: 10px;
 }
+
 .push {
   list-style: none;
   font-family: "Lucida Sans";
@@ -74,7 +77,7 @@ td {
     .push li:last-child:after {
       content: none;
     }
-    /**/
+/**/
 * {
   box-sizing: border-box;
 }
@@ -101,8 +104,8 @@ body {
     font-weight: normal;
   }
 
-    
-    
+
+
 
 .form-row {
   position: relative;
@@ -162,6 +165,16 @@ body {
   margin: 0;
   padding-top: 10px;
 }
+
 .link {
   text-align: center;
 }
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+  .example-container > * {
+    width: 100%;
+  }

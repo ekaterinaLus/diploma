@@ -23,8 +23,8 @@ namespace ProjectDiploma.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegistrationViewModel model)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Register([FromBody] RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -47,6 +47,40 @@ namespace ProjectDiploma.Controllers
                 }
             }
             return BadRequest(ModelState);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                    else
+                    {
+                        return Redirect("/home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("LoginError", "Не верный логин или пароль");
+                }
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost("[action]")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

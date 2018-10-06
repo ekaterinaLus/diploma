@@ -13,13 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="emFramework.Identity.App" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="System.Web.Mvc.Extensions" Version="1.1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +28,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\event\event.component.ts" />
-    <None Remove="ClientApp\src\app\home\project.ts" />
+    <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\news\news.component.ts" />
     <None Remove="ClientApp\src\app\project\project.component.ts" />
     <None Remove="ClientApp\src\app\project\project.ts" />
@@ -43,7 +41,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\event\event.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\home\project.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\news\news.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.ts" />

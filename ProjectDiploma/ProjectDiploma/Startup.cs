@@ -37,9 +37,15 @@ namespace ProjectDiploma
                 options.UseNpgsql(Configuration.GetConnectionString("BusinessUniversity"),
                     migration => migration.MigrationsAssembly(Configuration.GetValue<string>("MigrationsAssembly"))));
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<BusinessUniversityContext>();
-                //.AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<BusinessUniversityContext>()
+                .AddDefaultTokenProviders();
 
         }
 

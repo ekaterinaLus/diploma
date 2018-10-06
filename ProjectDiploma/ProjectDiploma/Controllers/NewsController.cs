@@ -21,7 +21,7 @@ namespace ProjectDiploma.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public News GetRandomNews()
         {
             return new NewsModel(_context).GetRandomNews();

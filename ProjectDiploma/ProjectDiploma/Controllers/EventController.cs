@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 
 namespace ProjectDiploma.Controllers
-{    
-    [Route("api/Event")]
+{
+    [Route("api/[controller]")]
     [ApiController]
     public class EventController : ControllerBase
     {
@@ -21,13 +21,13 @@ namespace ProjectDiploma.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public Event GetRandomEvent()
         {
             return new EventModel(_context).GetRandomEvent();
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         public IEnumerable<Event> GetRandom()
         {
             return new EventModel(_context).GetRandomEvents();
