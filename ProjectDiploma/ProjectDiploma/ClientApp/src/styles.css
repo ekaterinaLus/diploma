@@ -1,3 +1,4 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .news-block {
   border-color: black;
@@ -170,6 +171,7 @@ body {
   text-align: center;
 }
 
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -178,3 +180,4 @@ body {
   .example-container > * {
     width: 100%;
   }
+

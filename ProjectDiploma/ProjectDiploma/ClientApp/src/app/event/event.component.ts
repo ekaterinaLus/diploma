@@ -55,7 +55,7 @@ interface Tag {
 interface News {
   id: number;
   header: string;
-  annotation?: string;
+  annotation: string;
   date: Date;
   text: string;
   tags: NewsTags;

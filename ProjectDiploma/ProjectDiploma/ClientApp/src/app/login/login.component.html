@@ -1,14 +1,14 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
-<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="ui-form">
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
   <h3 class="test">Войти</h3>
-  <div class="form-row">
-    <input type="text" id="email" name="email" required ngModel autocomplete="off"><label for="email">Email</label>
-  </div>
-  <div class="form-row">
-    <input type="password" id="password" name="password" ngModel required autocomplete="off"><label for="password">Пароль</label>
-  </div>
+  <mat-form-field>
+    <input matInput id="email" name="email" required ngModel autocomplete="off" placeholder="Почта">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="password" id="password" name="password" ngModel required autocomplete="off" placeholder="Пароль">
+  </mat-form-field>
   <p><button mat-raised-button type="submit">Войти</button></p>
 </form>
 <div class="link">

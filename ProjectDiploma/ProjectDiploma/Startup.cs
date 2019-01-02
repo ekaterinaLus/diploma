@@ -1,9 +1,7 @@
-using DataStore;
 using DataStore.Entities;
 using Diploma.DataBase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -46,7 +44,6 @@ namespace ProjectDiploma
                 })
                 .AddEntityFrameworkStores<BusinessUniversityContext>()
                 .AddDefaultTokenProviders();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
