@@ -16,6 +16,9 @@ namespace DataStore.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string Description { get; set; }
+
         public DateTime? Start { get; set; }
 
         public DateTime? Finish { get; set; }

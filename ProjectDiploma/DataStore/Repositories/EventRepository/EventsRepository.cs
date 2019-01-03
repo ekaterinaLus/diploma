@@ -15,8 +15,9 @@ namespace DataStore.Repositories.EventRepository
         
         public override IEnumerable<Event> GetAll()
         {
-            return DbContext.
-                Events.Include(x => x.Tags);
+            return DbContext.Events
+                .Include(x => x.Tags)
+                .ThenInclude(x => x.Tags);
         }
     }
 }

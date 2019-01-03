@@ -29,11 +29,6 @@ namespace DataStore.Entities
 
         public decimal? Cost { get; set; }
 
-        public virtual ICollection<EventsTags> Tags { get; set; }
-
-        public Event()
-        {
-            Tags = new HashSet<EventsTags>();
-        }
+        public virtual ICollection<EventsTags> Tags { get; set; } = new HashSet<EventsTags>();
     }
 }

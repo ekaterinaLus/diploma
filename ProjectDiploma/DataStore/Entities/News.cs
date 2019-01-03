@@ -24,16 +24,10 @@ namespace DataStore.Entities
         [Required]
         public string Text { get; set; }
 
-        public ICollection<NewsTags> Tags { get; set; }
+        public ICollection<NewsTags> Tags { get; set; } = new HashSet<NewsTags>();
 
         public NewsType Section { get; set; }
 
         public int? SectionId { get; set; }
-        
-
-        public News()
-        {
-            Tags = new HashSet<NewsTags>();
-        }
     }
 }

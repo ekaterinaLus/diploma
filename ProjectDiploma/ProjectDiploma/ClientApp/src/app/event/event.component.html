@@ -4,7 +4,7 @@
 
 <h1 align="center" class="test">События</h1>
 
-  <p *ngIf="!oneEvent"><strong>Загрузка...</strong></p>
+  <mat-spinner *ngIf="!oneEvent">Загрузка...</mat-spinner>
   <table class='table' *ngIf="oneEvent">
     <thead>
       <tr>

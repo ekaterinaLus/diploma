@@ -12,6 +12,13 @@ namespace Diploma.DataBase
 {
     public class BusinessUniversityContext : IdentityDbContext<User>
     {
+        public struct RoleName
+        {
+            public const string ADMIN_ROLE_NAME = "ADMIN";
+            public const string UNIVERSITY_ROLE_NAME = "UNIVERSITY";
+            public const string BUSINESS_ROLE_NAME = "BUSINESS";
+        }
+
         public DbSet<Event> Events { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<NewsType> NewsTypes { get; set; }

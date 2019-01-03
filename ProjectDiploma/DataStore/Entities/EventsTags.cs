@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataStore.Entities
 {
@@ -16,9 +12,7 @@ namespace DataStore.Entities
         [Key]
         public int TagsId { get; set; }
 
-        public Tag Tags { get; set; }
-
-        
+        public Tag Tags { get; set; }        
     }
     
 }
