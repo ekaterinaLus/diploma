@@ -18,7 +18,7 @@ namespace ProjectDiploma
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<BusinessUniversityContext>();
+                //var context = services.GetRequiredService<BusinessUniversityContext>();
                 //context.Database.Migrate();
                 
                 try

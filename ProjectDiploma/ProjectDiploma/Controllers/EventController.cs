@@ -7,6 +7,7 @@ using Diploma.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
+using ProjectDiploma.ViewModel;
 
 namespace ProjectDiploma.Controllers
 {
@@ -22,15 +23,16 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpGet("[action]")]
-        public Event GetRandomEvent()
+        public EventViewModel GetRandomEvent()
         {
-            return new EventModel(_context).GetRandomEvent();
+            var result = new EventModel(_context).GetRandomEvent();
+            return EventViewModel.FromDbObject(result);
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<Event> GetRandom()
+        public IEnumerable<EventViewModel> GetRandom()
         {
-            return new EventModel(_context).GetRandomEvents();
+            return new EventModel(_context).GetRandomEvents().Select(x => EventViewModel.FromDbObject(x));
         }
     }
 }

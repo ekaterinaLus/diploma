@@ -18,8 +18,8 @@ namespace DataStore.Repositories.RandomizeRepository
         public IEnumerable<T> GetRandomEntities(int count = 1)
         {
             return GetAll()
-                .OrderBy(x => rnd.Next())
-                .Take(count);
+                    .OrderBy(x => rnd.Next())
+                    .Take(count);
         }
     }
 }

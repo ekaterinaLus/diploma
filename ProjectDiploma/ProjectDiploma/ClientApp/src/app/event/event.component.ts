@@ -37,21 +37,12 @@ interface Event {
   description: string;
   adress: string;
   cost: number;
-  tags: Tag;
-}
-
-interface EventsTags {
-  eventId: number;
-  events: Event;
-  tagsId: number;
-  tags: Tag;
+  tags: Tag[];
 }
 
 interface Tag {
   id: number;
   name: string;
-  news: NewsTags;
-  events: EventsTags;
 }
 interface News {
   id: number;

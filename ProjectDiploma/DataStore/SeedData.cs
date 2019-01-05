@@ -11,6 +11,41 @@ using System.Threading.Tasks;
 
 namespace DataStore
 {
+    static class DBHelper
+    {
+        private static readonly Dictionary<Type, dynamic> _comparersList = new Dictionary<Type, dynamic>
+        {
+            { typeof(Tag), new GenericComparer<Tag> { GetComparableField = x => x.Name } },
+            { typeof(News), new GenericComparer<News> { GetComparableField = x => x.Header } },
+            { typeof(Event), new GenericComparer<Event> { GetComparableField = x => x.Title } },
+            { typeof(NewsType), new GenericComparer<NewsType> { GetComparableField = x => x.Name } }
+        };
+
+        public static async Task AddUniqueElementsAsync<T>(this DbSet<T> @this, IEnumerable<T> addingElements)
+            where T: class
+        {
+            IEqualityComparer<T> comparer = _comparersList[typeof(T)];
+            IEnumerable<T> elementsInDb = await @this.AsNoTracking().ToArrayAsync();
+            await @this.AddRangeAsync(addingElements.Except(elementsInDb.Intersect(addingElements, comparer), comparer));
+        }
+    }
+
+    class GenericComparer<TItem> : IEqualityComparer<TItem>
+    {
+        public delegate dynamic Field(TItem obj);
+        public Field GetComparableField { get; set; }
+
+        public bool Equals(TItem x, TItem y)
+        {
+            return GetComparableField(x) == GetComparableField(y);
+        }
+
+        public int GetHashCode(TItem obj)
+        {
+            return GetComparableField(obj).GetHashCode();
+        }
+    }
+
     public static class SeedData
     {
 
@@ -21,7 +56,7 @@ namespace DataStore
             {
                 //создаем админа
                 var adminId = await EnsureUserCreated(serviceProvider, "1234", "ekaterinatimofeeva20@gmail.com");
-
+                
                 //создаем роли + добавляем админа в роль админ
                 await EnsureRoleCreated(serviceProvider, adminId, BusinessUniversityContext.RoleName.ADMIN_ROLE_NAME);
                 await EnsureRoleCreated(serviceProvider, string.Empty, BusinessUniversityContext.RoleName.BUSINESS_ROLE_NAME);
@@ -79,7 +114,7 @@ namespace DataStore
 
             var newsTypes = await FillNewsType(context);
 
-            //await FillEvents(context, tags);
+            await FillEvents(context, tags);
 
             //сохраняем базу
             await context.SaveChangesAsync();
@@ -103,10 +138,10 @@ namespace DataStore
 
                 new Tag { Name = "курсы"},
                 new Tag { Name = "университеты"},
-                new Tag { Name = "бизнесс"}
+                new Tag { Name = "бизнес"}
             };
 
-            await context.Tags.AddRangeAsync(items);
+            await context.Tags.AddUniqueElementsAsync(items);
 
             return items;
         }
@@ -115,10 +150,13 @@ namespace DataStore
         {
             List<NewsType> items = new List<NewsType>
             {
-                //....
+                new NewsType {Name = "Наука" },
+                new NewsType {Name = "Культура" },
+                new NewsType {Name = "Промышленность" },
+                new NewsType {Name = "Обучающие курсы и семинары" }
             };
 
-            await context.NewsTypes.AddRangeAsync(items);
+            await context.NewsTypes.AddUniqueElementsAsync(items);
 
             return items;
         }
@@ -129,23 +167,67 @@ namespace DataStore
             {
                 new Event
                 {
-                    Title = "",
+                    Date = new DateTime(2018, 5, 1),
+                    Title = "Тренинг саморазвития",
                     Tags = tags.Where(tag => 
-                            tag.Name == "тренинг" || tag.Name == "")
+                            tag.Name == "тренинг" || tag.Name == "развитие")
                                 .Select(x => new EventsTags { Tags = x }).ToList(),
+                    Description = "Тренинги профессионального и личностного развития для преподавателей и сотрудников университета",
+                    Adress = "ул. Татищева, 20а"
                 },
+                new Event
+                {
+                    Date = new DateTime(2018, 7, 5),
+                    Title = "Мероприятие",
+                    Tags = tags.Where(tag =>
+                            tag.Name == "семинар" || tag.Name == "развитие")
+                                .Select(x => new EventsTags { Tags = x }).ToList(),
+                    Description = "Социальная адаптация на рынке труда студентов выпускных групп колледжа по специальностям «Фармация» и «Ветеринария» совместно с ОГКУ «Центр занятости населения г. Астрахани",
+                    Adress = "ул. Татищева, 20а"
+                }
             };
-
-            await context.Events.AddRangeAsync(items);
+            
+            await context.Events.AddUniqueElementsAsync(items);
+           
         }
 
-        //NewsTypes
+        ////NewsTypes
 
-        //Events
-        //Тренинги профессионального и личностного развития для преподавателей и сотрудников университета
-        //Социальная адаптация на рынке труда студентов выпускных групп колледжа по специальностям «Фармация» и «Ветеринария» совместно с ОГКУ «Центр занятости населения г. Астрахани»
+        ////Events
+        ////Тренинги профессионального и личностного развития для преподавателей и сотрудников университета
+        ////Социальная адаптация на рынке труда студентов выпускных групп колледжа по специальностям «Фармация» и «Ветеринария» совместно с ОГКУ «Центр занятости населения г. Астрахани»
 
         //News
         //Project -
+        //private static async Task FillNews(BusinessUniversityContext context, IEnumerable<Tag> tags,IEnumerable<NewsType> nt )
+        //{
+        //    List<News> items = new List<News>
+        //    {
+        //        new News
+        //        {
+        //            SectionId = nt.Where( n => n.Name == "наука"),
+        //            Tags = tags.Where(tag =>
+        //                    tag.Name == "биология" || tag.Name == "болезнь" || tag.Name == "новосибирск" || tag.Name == "генетика")
+        //                        .Select(x => new NewsTags { Tags = x }).ToList(),
+        //            Header = "Российские ученые приблизились к разгадке генетической болезни Хантингтона",
+        //            Annotation = "Биологи Новосибирского государственного университета и Института цитологии и генетики СО РАН создали  клеточную линию, " +
+        //            "которая моделирует неизлечимую на сегодня болезнь",
+        //            //DateTime Date = new DateTime (2018, 2, 1, 0, 0),
+        //            Text = "Что такое болезнь Хантингтона? Хорея Хантингтона (или Гентингтона — взависимости отпроизношения имени врача, ее описавшего) —  тяжелое, неизлечимое, наследственное заболевание. Недуг кроется вгенах иможет проявить себя влюбой момент, чтообычно становится тяжелым ударом для человека, который дотого ипонятия неимел, что обречен.Болезнь поражает нервную систему, прежде всего — стриатум, область головного мозга, которую также называют полосатым телом. Этоприводит кразвитию хореического гиперкинеза — синдрома, прикотором учеловека развиваются неконтролируемые беспорядочные отрывистые движения различной амплитуды иинтенсивности. Внешне онинапоминают танец — отсюда иназвание «хорея», что в переводе с греческого означает «пляска» (унамного более невинного слова «хореография» аналогичное происхождение). В народе это состояние также получило  название «пляска святого Вита». Болезнь Хантингтона проявляется у больных в возрасте 35 - 45 лет двигательных и умственных расстройств и в течение 15 - 20 лет приводит к распаду личности и смерти.Чтобы найти метод лечения, российские ученые с помощью современной технологии «отредактировали» геном CRISPR\Cas9 и получили клеточную модель,  которая позволит исследовать молекулярные механизмы заболевания."
+        //        },
+        //        new News
+        //        {
+        //            SectionId = nt.Where( n => n.Name == "Обучающие курсы и семинары"),
+        //            Tags = tags.Where(tag =>
+        //                    tag.Name == "курсы" || tag.Name == "университеты" || tag.Name == "бизнес")
+        //                        .Select(x => new NewsTags { Tags = x }).ToList(),
+        //            Header = "Обучающие курсы помогут усовершенствовать работу компании",
+        //            //DateTime Date = new DateTime (2018, 2, 1, 0, 0),
+        //            Text = "На сегодняшний день конкурентоспособными оказываются компании, постоянно работающие над своим усовершенствованием. В частности, перспективы развития светят тем, кто уделяет должное внимание обучению всего штата сотрудников, в том числе и руководящего состава. Приоритетным в работе таких компаний является системный подход к решению всех вопросов. За счет этого занятия любого формата строятся таким образом, что их восприятие слушателями оказывается простым и при этом эффективным, а продолжение самосовершенствования каждым участником в самостоятельном режиме становится беспроблемным. Ассортимент предложений профессионалов очень широк и позволяет подобрать наиболее оптимальное решение в полном соответствии с поставленными задачами. Многие программы рассчитаны на реализацию в течение весьма продолжительного периода времени, например, за 1-3 года, и именно такие тренинги дают самые солидные и стабильные плоды в виде формирования отлично подкованного во всех вопросах штата. Огромное значение уделяет мотивации учени ков, перед которыми заблаговременно ставятся четкие цели и задачи. Корректировка обучения может осуществляться по ходу продвижения его участников вперед, при этом могут применяться и практические инструменты для проверки и закрепления полученных знаний и навыков. Идеальным форматом сотрудничества между двумя сторонами становится интеграция программы в организацию заказчика на всех уровнях. Это позволяет в режиме реального времени отслеживать полученные результаты и выявлять степень эффективности проведенных мероприятий."
+        //        }
+        //    };
+
+        //    await context.News.AddUniqueElementsAsync(items);
+        //}
     }
 }

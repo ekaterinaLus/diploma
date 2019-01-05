@@ -28,6 +28,7 @@ namespace ProjectDiploma.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO: сделать проверку на пользователя
                 User user = new User { Email = model.Email, UserName = model.Email };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -54,18 +55,17 @@ namespace ProjectDiploma.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
 
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+                    return Ok(new UserViewModel
                     {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return Redirect("/home");
-                    }
+                        Id = user.Id,
+                        Email = user.UserName,
+                        Role = "ADMIN"
+                    });
                 }
                 else
                 {

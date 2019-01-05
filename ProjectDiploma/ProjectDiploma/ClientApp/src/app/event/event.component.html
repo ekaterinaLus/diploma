@@ -2,9 +2,9 @@
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 
-<h1 align="center" class="test">События</h1>
+<h1 *ngIf="oneEvent" align="center" class="test">События</h1>
 
-  <mat-spinner *ngIf="!oneEvent">Загрузка...</mat-spinner>
+  <mat-spinner *ngIf="!oneEvent" class="spinner">Загрузка...</mat-spinner>
   <table class='table' *ngIf="oneEvent">
     <thead>
       <tr>

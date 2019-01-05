@@ -11,6 +11,7 @@
 
 .test {
   font-family: 'Lobster', cursive;
+  padding-left: 12px;
 }
 
 .test2 {
@@ -180,4 +181,19 @@ body {
   .example-container > * {
     width: 100%;
   }
+
+.spinner {
+  position: fixed;
+  height: 140px;
+  width: 140px;
+  margin:150px;
+  left:30%;
+}
+
+.text {
+ padding-left:10px;
+}
+
+
+
 

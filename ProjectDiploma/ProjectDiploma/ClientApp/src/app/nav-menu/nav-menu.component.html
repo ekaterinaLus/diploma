@@ -1,48 +1,106 @@
-<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]='["/"]' class="test2">Бизнес - университет</a>
-        </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-          <ul class='nav navbar-nav'>
-            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-              <a [routerLink]='["/"]' (click)='collapse()' class="test3">
-                <span class='glyphicon glyphicon-home'></span> Главная
-              </a>
-            </li>
-            <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/event']" class="test3">
-                <span class='glyphicon glyphicon-calendar'></span> События
-              </a>
-            </li>
-            <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/news"]' (click)='collapse()' class="test3">
-                <span class='glyphicon glyphicon-send'></span> Новости
-              </a>
-            </li>
-            <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/project']" class="test3">
-                <span class='glyphicon glyphicon-blackboard'></span> Проекты
-              </a>
-            </li>
-            <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/user']" class="test3">
-                <span class='glyphicon glyphicon-log-in'></span> Зарегистрироваться
-              </a>
-            </li>
-            <li [routerLinkActive]="['link-active']">
-              <a [routerLink]="['/login']" class="test3">
-                <span class='glyphicon glyphicon-log-in'></span> Войти
-              </a>
-            </li>
-          </ul>
-        </div>
+<!--<div class='main-nav'>
+  <div class='navbar navbar-inverse'>
+    <div class='navbar-header'>
+      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
+        <span class='sr-only'>Toggle navigation</span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+      </button>
+      <a class='navbar-brand test2' [routerLink]='["/"]'>Бизнес - университет</a>
     </div>
-</div>
+    <div class='clearfix'></div>
+    <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
+      <ul class='nav navbar-nav'>
+        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a [routerLink]='["/"]' (click)='collapse()' class="test3">
+            <span class='glyphicon glyphicon-home'></span> Главная
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/event']" class="test3">
+            <span class='glyphicon glyphicon-calendar'></span> События
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]'>
+          <a [routerLink]='["/news"]' (click)='collapse()' class="test3">
+            <span class='glyphicon glyphicon-send'></span> Новости
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/project']" class="test3">
+            <span class='glyphicon glyphicon-blackboard'></span> Проекты
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/user']" class="test3">
+            <span class='glyphicon glyphicon-log-in'></span> Зарегистрироваться
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/login']" class="test3">
+            <span class='glyphicon glyphicon-log-in'></span> Войти
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>-->
+
+<!--<mat-toolbar color="warn">
+  <mat-toolbar-row>
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span><img src="./assets/devglan.png"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>Sidenav content</mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>-->
+
+<!--<mat-toolbar color="warn">
+  <mat-toolbar-row> menu
+  </mat-toolbar-row>
+</mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened role="navigation">
+      D
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>-->
+
+<mat-toolbar class="main-tool-bar mat-elevation-z24">
+  <mat-toolbar-row class="navbar nav-menu-button">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span *ngIf="authenticationService.currentUserValue">Вошли как: {{authenticationService.currentUserValue.email}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="main-nav">
+  <mat-sidenav #drawer mode="side" opened role="navigation" class="main-nav-bar">
+    <mat-nav-list>
+      <a mat-list-item routerLink='/' class="text">
+        <mat-icon mat-list-icon>home</mat-icon>
+        Главная
+      </a>
+      <a mat-list-item routerLink='/event' class="text">
+        <mat-icon mat-list-icon>event</mat-icon>
+        События
+      </a>
+      <a mat-list-item routerLink='/news'>
+        <mat-icon mat-list-icon>speaker_notes</mat-icon>
+        Новости
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

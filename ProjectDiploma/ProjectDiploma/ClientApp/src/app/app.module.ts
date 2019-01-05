@@ -1,26 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-
+//Realised components
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
 import { ProjectComponent } from './project/project.component';
-import { UserComponent } from './user/user.component';
+//import { UserComponent } from './user/user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//NG Modules
+//Material design
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
-import { LoginComponent } from './login/login.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+
+//LOGIN
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './guard/auth.guard';
+import { ErrorInterceptor } from './helpers/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,30 +38,34 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     EventComponent,
     NewComponent,
     ProjectComponent,
-    UserComponent,
+    //UserComponent,
     LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     MatSliderModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'event', component: EventComponent },
+      { path: 'event', component: EventComponent, canActivate: [AuthGuard] },
       { path: 'news', component: NewComponent },
       { path: 'project', component: ProjectComponent },
-      { path: 'user', component: UserComponent },
+      //{ path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent }
     ])
   ],
 
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

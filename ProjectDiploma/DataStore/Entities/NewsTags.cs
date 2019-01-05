@@ -14,8 +14,5 @@ namespace DataStore.Entities
         public int TagsId { get; set; }
 
         public Tag Tags { get; set; }
-
-        [NotMapped]
-        public object Select { get; internal set; }
     }
 }

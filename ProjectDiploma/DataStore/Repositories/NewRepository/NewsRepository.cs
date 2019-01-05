@@ -13,9 +13,7 @@ namespace DataStore.Repositories.NewRepository
 
         public override IEnumerable<News> GetAll()
         {
-            return DbContext.
-                News.Include(x => x.Tags).
-                ThenInclude(x => x.Tags);
+            return DbContext.News;
         }
 
         public IEnumerable<News> GetSortedNews()
