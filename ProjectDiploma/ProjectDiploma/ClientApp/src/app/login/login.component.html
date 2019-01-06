@@ -1,20 +1,28 @@
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-</head>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <h3 class="test">Войти</h3>
-  <mat-form-field>
-    <input matInput formControlName="username" required autocomplete="off" placeholder="Почта">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="password" formControlName="password" required autocomplete="off" placeholder="Пароль">
-  </mat-form-field>
-  <button mat-raised-button type="submit" [disabled]="loading">Войти</button>
-  <mat-spinner *ngIf="loading">Загрузка...</mat-spinner>
-</form>
-<div class="link">
-  <a href='https://localhost:44357/registr'>Зарегистрироваться</a>
-</div>
+
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  </head>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1 class="style-text">Войти</h1>
+    <mat-card class="form" mat-elevation-z24>
+      <mat-form-field class="input">
+        <input matInput formControlName="username" required autocomplete="off" placeholder="Почта">
+      </mat-form-field>
+      <mat-form-field class="input">
+        <input matInput type="password" formControlName="password" required autocomplete="off" placeholder="Пароль" >
+      </mat-form-field>
+      <p class="input">
+      <button mat-raised-button type="submit" [disabled]="loading" class="input">Войти</button>
+      <p>
+      <mat-spinner *ngIf="loading">Загрузка...</mat-spinner>
+      <div class="link">
+        <a href='https://localhost:44357/registr' class="link-login">Зарегистрироваться</a>
+      </div>
+        </mat-card>
+  </form>
+  
+  
 
 <!--<h2>Login</h2>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">

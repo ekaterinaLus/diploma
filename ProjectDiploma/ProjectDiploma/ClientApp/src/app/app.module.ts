@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 //Realised components
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
+/*import { NavMenuComponent } from './nav-menu/nav-menu.component';*/
 import { HomeComponent } from './home/home.component';
 import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
@@ -24,22 +24,26 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { SidenavDisableCloseExample } from './nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
+    //NavMenuComponent,
+    SidenavDisableCloseExample,
     HomeComponent,
     EventComponent,
     NewComponent,
     ProjectComponent,
     //UserComponent,
-    LoginComponent
+    LoginComponent,
+    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -55,6 +59,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent, canActivate: [AuthGuard] },
@@ -69,3 +74,4 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

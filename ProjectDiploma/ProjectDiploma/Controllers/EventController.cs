@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataStore.Entities;
 using Diploma.DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
@@ -23,6 +24,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpGet("[action]")]
+        [Authorize]
         public EventViewModel GetRandomEvent()
         {
             var result = new EventModel(_context).GetRandomEvent();

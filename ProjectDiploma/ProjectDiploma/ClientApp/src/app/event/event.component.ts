@@ -13,7 +13,7 @@ export class EventComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get(baseUrl + 'api/Event/GetRandomEvent').subscribe(result => {
       this.oneEvent = result as Event;
-    }, error => console.error(error));
+    }, error => console.log('error in event'));
   }
 }
 

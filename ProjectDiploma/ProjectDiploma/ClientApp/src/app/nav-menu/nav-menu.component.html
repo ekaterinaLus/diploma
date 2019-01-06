@@ -1,3 +1,13 @@
+<!--<head class="text">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+</head>-->
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Alice|Philosopher" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Alice|Arsenal|Old+Standard+TT|Philosopher" rel="stylesheet">
+</head>
+
+
+
 <!--<div class='main-nav'>
   <div class='navbar navbar-inverse'>
     <div class='navbar-header'>
@@ -46,7 +56,6 @@
     </div>
   </div>
 </div>-->
-
 <!--<mat-toolbar color="warn">
   <mat-toolbar-row>
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
@@ -61,7 +70,6 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>-->
-
 <!--<mat-toolbar color="warn">
   <mat-toolbar-row> menu
   </mat-toolbar-row>
@@ -74,8 +82,8 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>-->
-
-<mat-toolbar class="main-tool-bar mat-elevation-z24">
+<!------------------Правильный вариант-->
+<!--<mat-toolbar class="main-tool-bar mat-elevation-z24">
   <mat-toolbar-row class="navbar nav-menu-button">
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -85,7 +93,7 @@
 </mat-toolbar>
 <mat-sidenav-container class="main-nav">
   <mat-sidenav #drawer mode="side" opened role="navigation" class="main-nav-bar">
-    <mat-nav-list>
+
       <a mat-list-item routerLink='/' class="text">
         <mat-icon mat-list-icon>home</mat-icon>
         Главная
@@ -103,4 +111,56 @@
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
+</mat-sidenav-container>-->
+<!--<mat-sidenav-container
+    class="example-container" (backdropClick)="close('backdrop')" *ngIf="shouldRun">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.open()">Open</button></p>-->
+
+
+<mat-sidenav-container class="example-container" (backdropClick)="close('backdrop')" color="accent">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape') " opened role="navigation" disableClose class="main-nav-bar">
+    <mat-nav-list>
+      <a mat-list-item button [routerLink]="['/']" class="style_text_menu"> <mat-icon mat-list-icon>home</mat-icon><strong>Главная</strong></a>
+      <a mat-list-item button [routerLink]="['/event']" class="style_text_menu"><mat-icon mat-list-icon>event</mat-icon><strong>События</strong></a>
+      <a mat-list-item button [routerLink]="['/news']" class="style_text_menu"><mat-icon mat-list-icon>speaker_notes</mat-icon><strong>Новости</strong></a>
+      <a mat-list-item button [routerLink]="['/project']" class="style_text_menu"><mat-icon mat-list-icon>trending_up</mat-icon><strong>Проекты</strong></a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="main-tool-bar mat-elevation-z7 style-manager-theme" color="primary">
+      <mat-toolbar-row class="navbar nav-menu-button">
+        <button mat-button (click)="sidenav.open()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <button mat-button (click)="openDialog()">
+          <mat-icon>account_circle</mat-icon>
+          <!--<src ="https://localhost:44357/login?returnUrl=%2Fevent">-->
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+
+
+<!--<mat-sidenav-container class="example-container" (backdropClick)="close('backdrop')">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-toolbar class="main-tool-bar mat-elevation-z24">
+  <mat-toolbar-row class="navbar nav-menu-button">
+    <button mat-icon-button (click)="drawer.toggle()" color="primary">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>-->

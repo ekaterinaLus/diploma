@@ -1,23 +1,43 @@
-.main-tool-bar {
+/*.main-tool-bar {
   height: 100%;
   top: 0;
   position: relative;
-}
+}*/
 
-.main-nav {
+/*.main-nav {
   position: fixed;
   left: 0;
   right: 0;
   z-index: 1;
   height: calc(100% - 64px);
-}
+}*/
 
-.main-nav-bar {  
+/*.main-nav-bar {  
   width: calc(25% - 20px);
-}
+}*/
 
-.nav-menu-button button:focus {
+/*.nav-menu-button button:focus {
   outline: none;
   border: 0;
+}*/
+
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.toolbar-exs {
+{
+  width: 100%;
+  height: 40px;
+  background: #000;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+}
 }
 
