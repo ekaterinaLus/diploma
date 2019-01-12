@@ -9,7 +9,7 @@ namespace DataStore.Entities
 {
     //Время дата заголовок описание адрес цена
 
-    public class Event : IEntity
+    public class Event : IEntity, IDate
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

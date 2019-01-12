@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataStore.Entities
 {
-    public class Project : IEntity
+    public class Project : IEntity, IDate
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,6 +25,9 @@ namespace DataStore.Entities
 
         [Required]
         public decimal Cost { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 }
 

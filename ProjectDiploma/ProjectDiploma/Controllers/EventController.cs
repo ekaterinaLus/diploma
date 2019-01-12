@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataStore.Entities;
+﻿using System.Collections.Generic;
 using Diploma.DataBase;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 using ProjectDiploma.ViewModel;
@@ -14,27 +8,27 @@ namespace ProjectDiploma.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class EventController : ControllerBase, IPagingController<EventViewModel>
     {
         private readonly BusinessUniversityContext _context;
+        private readonly EventModel _model;
 
         public EventController(BusinessUniversityContext context)
         {
             _context = context;
+            _model = new EventModel(context);
         }
 
         [HttpGet("[action]")]
-        [Authorize]
-        public EventViewModel GetRandomEvent()
+        public int GetCount()
         {
-            var result = new EventModel(_context).GetRandomEvent();
-            return EventViewModel.FromDbObject(result);
+            return _model.GetEventsCount();
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<EventViewModel> GetRandom()
+        public IEnumerable<EventViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            return new EventModel(_context).GetRandomEvents().Select(x => EventViewModel.FromDbObject(x));
+            return _model.GetPagingEvents(pageIndex, pageSize);
         }
     }
 }

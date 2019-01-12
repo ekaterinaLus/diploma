@@ -1,12 +1,6 @@
 ﻿using DataStore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Diploma.DataBase
 {
@@ -17,6 +11,19 @@ namespace Diploma.DataBase
             public const string ADMIN_ROLE_NAME = "ADMIN";
             public const string UNIVERSITY_ROLE_NAME = "UNIVERSITY";
             public const string BUSINESS_ROLE_NAME = "BUSINESS";
+
+            public static bool CheckRole(string roleName)
+            {
+                switch (roleName)
+                {
+                    case ADMIN_ROLE_NAME:
+                    case UNIVERSITY_ROLE_NAME:
+                    case BUSINESS_ROLE_NAME:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
         }
 
         public DbSet<Event> Events { get; set; }

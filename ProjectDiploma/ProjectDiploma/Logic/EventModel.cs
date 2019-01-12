@@ -1,6 +1,7 @@
 ﻿using DataStore.Entities;
 using DataStore.Repositories.EventRepository;
 using Diploma.DataBase;
+using ProjectDiploma.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,16 @@ namespace ProjectDiploma.Logic
         {
             _eventRepository = new EventsRepository(dbContext);            
         }
-
-        public Event GetRandomEvent()
+        
+        public int GetEventsCount()
         {
-            return _eventRepository.GetRandomEntities().FirstOrDefault();
+            return _eventRepository.GetItemsCount();
         }
 
-        public IEnumerable<Event> GetRandomEvents()
+        public IEnumerable<EventViewModel> GetPagingEvents(int pageIndex, int pageSize)
         {
-            return _eventRepository.GetRandomEntities(2);            
+            var items = _eventRepository.GetPaging(pageIndex, pageSize).ToArray();
+            return items.Select(item => EventViewModel.FromDbObject(item));
         }
     }
 }

@@ -1,5 +1,6 @@
+import { Role } from './role';
+
 export class User {
-    id: string;
     email: string;
-    role: string;
+    role: Role;
 }

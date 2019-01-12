@@ -11,8 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
 import { ProjectComponent } from './project/project.component';
-//import { UserComponent } from './user/user.component';
+import { UserComponent } from './user/user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginDialog } from './login/login.dialog';
 
 //Material design
 import { MatButtonModule } from '@angular/material/button';
@@ -25,25 +26,32 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ErrorInterceptor } from './helpers/error.interceptor';
-import { SidenavDisableCloseExample } from './nav-menu/nav-menu.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    //NavMenuComponent,
-    SidenavDisableCloseExample,
+    NavMenuComponent,
+    //SidenavDisableCloseExample,
     HomeComponent,
     EventComponent,
     NewComponent,
     ProjectComponent,
-    //UserComponent,
+    UserComponent,
     LoginComponent,
-    
+    LoginDialog
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -60,16 +68,23 @@ import { SidenavDisableCloseExample } from './nav-menu/nav-menu.component';
     MatIconModule,
     MatListModule,
     MatCardModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatChipsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent, canActivate: [AuthGuard] },
       { path: 'news', component: NewComponent },
       { path: 'project', component: ProjectComponent },
-      //{ path: 'user', component: UserComponent },
+      { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent }
     ])
   ],
-
+  entryComponents: [NavMenuComponent, LoginDialog],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })

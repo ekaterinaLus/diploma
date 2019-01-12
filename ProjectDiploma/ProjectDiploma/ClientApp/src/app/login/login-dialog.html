@@ -1,0 +1,20 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Lobster');
+</style>
+<h1 mat-dialog-title  class="style-text">Войти</h1>
+<div mat-dialog-content [formGroup]="loginForm" class="form">
+
+  <mat-form-field class="input">
+    <input matInput formControlName="username" required autocomplete="off" placeholder="Почта">
+  </mat-form-field><p></p>
+
+  <mat-form-field class="input">
+    <input matInput type="password" formControlName="password" required autocomplete="off" placeholder="Пароль">
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions color="primary">
+  <!--<button mat-button (click)="onNoClick()">Нет</button>-->
+  <button mat-raised-button type="submit" cdkFocusInitial (click)="onLoginClick()" color="primary" class="button_login">Войти</button>
+</div>

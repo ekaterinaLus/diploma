@@ -11,25 +11,30 @@ namespace ProjectDiploma
 {
     public class Program
     {
+        private static bool NeedUpdateDatabase { get => true; }
+
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
+            if (NeedUpdateDatabase)
             {
-                var services = scope.ServiceProvider;
-                //var context = services.GetRequiredService<BusinessUniversityContext>();
-                //context.Database.Migrate();
-                
-                try
+                using (var scope = host.Services.CreateScope())
                 {
-                    SeedData.Initialize(services).Wait();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "Error when init db");
-                    throw ex;
+                    var services = scope.ServiceProvider;
+                    //var context = services.GetRequiredService<BusinessUniversityContext>();
+                    //context.Database.Migrate();
+
+                    try
+                    {
+                        SeedData.Initialize(services).Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(ex, "Error when init db");
+                        throw ex;
+                    }
                 }
             }
 

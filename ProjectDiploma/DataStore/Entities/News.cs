@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DataStore.Entities
 {
-    public class News : IEntity
+    public class News : IEntity, IDate
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

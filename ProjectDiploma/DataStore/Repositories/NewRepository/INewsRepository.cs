@@ -1,13 +1,10 @@
 ﻿using DataStore.Entities;
-using DataStore.Repositories.RandomizeRepository;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DataStore.Repositories.OrderedRepository;
+using DataStore.Repositories.PagingRepository;
 
 namespace DataStore.Repositories.NewRepository
 {
-    public interface INewsRepository: IRandomizeRepository<News>
-    {
-        IEnumerable<News> GetSortedNews();
+    public interface INewsRepository : IOrderedRepository<News>, IPagingRepository<News>
+    { 
     }
 }

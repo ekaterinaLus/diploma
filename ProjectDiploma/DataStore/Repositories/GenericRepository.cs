@@ -1,7 +1,6 @@
 ﻿using Diploma.DataBase;
-using Microsoft.EntityFrameworkCore;
 using ProjectDiploma.Entities;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStore.Repositories
 {
@@ -34,7 +33,7 @@ namespace DataStore.Repositories
             DbContext.Set<T>().Update(element); 
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
             return DbContext.Set<T>();
         }

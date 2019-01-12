@@ -1,45 +1,16 @@
 
 <head>
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-  <style>
-    .column {
-      -webkit-column-width: 50px;
-      -moz-column-width: 50px;
-      column-width: 50px;
-      -webkit-column-count: 2;
-      -moz-column-count: 2;
-      column-count: 2;
-      -webkit-column-gap: 20px;
-      -moz-column-gap: 20px;
-      column-gap: 20px;
-      -webkit-column-rule: 1px solid #ccc;
-      -moz-column-rule: 1px solid #ccc;
-      column-rule: 1px solid #ccc;
-      
-    }
-    P:first-letter {
-      font-family: "Times New Roman", Times, serif; /* Гарнитура шрифта первой буквы */
-      font-size: 200%; /* Размер шрифта первого символа */
-      color: darkslateblue;
-    }
-  </style>
 </head>
 
 <body>
   <h1 align="center" class="style-text">Новости</h1>
   <font size="4">
-    <p *ngIf="!oneNews"><strong>Загрузка...</strong></p>
+    <p *ngIf="!oneNews"><mat-spinner *ngIf="!oneEvent" class="spinner">Загрузка...</mat-spinner></p>
     <div *ngIf ="oneNews">
       <div align="center"><b>{{oneNews.header}}</b></div><br>
       <div align="center"><i>{{oneNews.annotation}}</i></div><br>
       <div><i>{{oneNews.date|date:'dd-MM-yyyy'}}</i></div><br>
-      <style>
-        p {
-          text-indent: 46px;
-          line-height: 1.8;
-          font-family: 'Times New Roman';
-        }
-      </style>
       <div class="column"><p align="justify">{{oneNews.text}}</p></div>
     </div>
   </font>

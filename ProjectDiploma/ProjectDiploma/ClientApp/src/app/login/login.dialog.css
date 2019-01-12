@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+.style-text {
+  font-family: 'Lobster', cursive;
+  text-align: center;
+  font-size: 32px;
+}
+
+.form {
+  width: 380px;
+  margin: 1em auto;
+  padding: 1em 1em 1em 1em;
+  background: #fafafa;
+  border: 1px solid #ebebeb;
+  box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+.input{
+  width: 100%;
+}
+
+.button_login {
+  width: 100%;
+  margin: 0px 0px 35px 0px;
+}

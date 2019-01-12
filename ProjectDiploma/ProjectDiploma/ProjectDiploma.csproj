@@ -29,6 +29,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\event\event.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\nav-menu\nav-menu-search.ts" />
     <None Remove="ClientApp\src\app\news\news.component.ts" />
     <None Remove="ClientApp\src\app\project\project.component.ts" />
     <None Remove="ClientApp\src\app\project\project.ts" />
@@ -42,6 +43,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\event\event.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\nav-menu\nav-menu-search.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\news\news.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.ts" />

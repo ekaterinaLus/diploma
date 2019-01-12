@@ -32,19 +32,38 @@ namespace ProjectDiploma.Controllers
                 User user = new User { Email = model.Email, UserName = model.Email };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+                var errors = new List<IdentityError>();
+                
                 if (result.Succeeded)
                 {
-                    // установка куки
-                    await _signInManager.SignInAsync(user, false);
-                    //return RedirectToAction("Index", "Home");
-                    return new OkObjectResult("Account created");
+                    result = await _userManager.AddToRoleAsync(user, model.Role);
+                    if (result.Succeeded)
+                    {
+                        // установка куки
+                        //await _signInManager.SignInAsync(user, false);
+
+                        var roles = await _userManager.GetRolesAsync(user);
+                        var role = roles.FirstOrDefault();
+
+                        return Ok(new UserViewModel
+                        {
+                            Email = user.Email,
+                            Role = role
+                        });
+                    }
+                    else
+                    {
+                        errors.AddRange(result.Errors);
+                    }
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    errors.AddRange(result.Errors);
+                }
+
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return BadRequest(ModelState);
@@ -60,11 +79,13 @@ namespace ProjectDiploma.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.UserName);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var role = roles.FirstOrDefault();
+
                     return Ok(new UserViewModel
                     {
-                        Id = user.Id,
                         Email = user.UserName,
-                        Role = "ADMIN"
+                        Role = role
                     });
                 }
                 else
@@ -76,11 +97,10 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpPost("[action]")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return Ok();
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Diploma.DataBase;
 using ProjectDiploma.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataStore.Repositories.RandomizeRepository
 {
@@ -15,7 +13,7 @@ namespace DataStore.Repositories.RandomizeRepository
         {
         }
 
-        public IEnumerable<T> GetRandomEntities(int count = 1)
+        public IQueryable<T> GetRandomEntities(int count = 1)
         {
             return GetAll()
                     .OrderBy(x => rnd.Next())

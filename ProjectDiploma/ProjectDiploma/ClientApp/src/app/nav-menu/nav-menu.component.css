@@ -20,6 +20,10 @@
   outline: none;
   border: 0;
 }*/
+.nav-menu-button button:focus {
+  outline: none;
+  border: 0;
+}
 
 .example-container {
   position: absolute;
@@ -30,7 +34,6 @@
 }
 
 .toolbar-exs {
-{
   width: 100%;
   height: 40px;
   background: #000;
@@ -39,5 +42,22 @@
   left: 0px;
   z-index: 100;
 }
+
+.nav-menu-width{
+  width:224px;
 }
 
+.sidenav_button_close {
+  width: 100%;
+  outline: none;
+  border: 0;
+}
+
+.text_padding{
+  padding: 15px;
+}
+
+
+.example-chip-list {
+  width: 100%;
+}
