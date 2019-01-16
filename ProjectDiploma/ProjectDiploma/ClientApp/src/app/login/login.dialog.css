@@ -21,4 +21,6 @@
 .button_login {
   width: 100%;
   margin: 0px 0px 35px 0px;
+  outline: none;
+  border: 0;
 }

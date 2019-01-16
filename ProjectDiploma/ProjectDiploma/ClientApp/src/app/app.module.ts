@@ -33,6 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -75,6 +77,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatPaginatorModule,
     MatExpansionModule,
     MatChipsModule,
+    MatGridListModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent, canActivate: [AuthGuard] },

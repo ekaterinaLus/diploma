@@ -18,7 +18,7 @@ namespace ProjectDiploma.Controllers
             _context = context;
             _model = new EventModel(context);
         }
-
+        
         [HttpGet("[action]")]
         public int GetCount()
         {

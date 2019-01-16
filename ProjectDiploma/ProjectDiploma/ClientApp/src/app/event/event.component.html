@@ -12,8 +12,8 @@
       <mat-panel-title>
         {{e.title}}
       </mat-panel-title>
-      <mat-panel-description>
-        Дата: {{e.date}} Адрес: {{e.adress}}
+      <mat-panel-description class="position">
+        <a>  <mat-icon aria-label="Side nav toggle icon" class="icon">calendar_today</mat-icon><p class="padding">Дата: {{e.date|date:'dd-MM-yyyy'}} &nbsp; Адрес: {{e.adress}} </p></a>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{e.description}}</p>

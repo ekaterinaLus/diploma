@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from '../services/authentication.service';
 import { Role } from '../models/role';
+import { delay } from 'q';
 
 export interface IRole {
   value: Role,
@@ -76,8 +77,8 @@ export class UserComponent implements OnInit {
         this.loading = false;
         console.error(error);
       });
-    //delay(2000);
     //this.success = true;
+    //delay(20000); 
     //this.loading = false;
   }
 }

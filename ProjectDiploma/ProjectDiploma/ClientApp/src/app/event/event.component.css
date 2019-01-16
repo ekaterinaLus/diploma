@@ -1,0 +1,13 @@
+.padding {
+  /*display: block;
+  margin: 0% 10% 0% 30%;*/
+  padding-left: 40px;
+}
+
+.icon{
+  position:absolute;
+}
+
+.position{
+  position:relative;
+}
