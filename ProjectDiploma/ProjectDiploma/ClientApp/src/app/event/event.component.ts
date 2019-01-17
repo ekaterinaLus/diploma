@@ -5,7 +5,8 @@ import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-event',
-  templateUrl: './event.component.html'
+  templateUrl: './event.component.html',
+  styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
   

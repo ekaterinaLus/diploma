@@ -1,4 +1,4 @@
-.column {
+/*.column {
   -webkit-column-width: 50px;
   -moz-column-width: 50px;
   column-width: 50px;
@@ -11,7 +11,7 @@
   -webkit-column-rule: 1px solid #ccc;
   -moz-column-rule: 1px solid #ccc;
   column-rule: 1px solid #ccc;
-}
+}*/
 
 P:first-letter {
   font-family: "Times New Roman", Times, serif; /* Гарнитура шрифта первой буквы */
@@ -22,4 +22,32 @@ p {
   text-indent: 46px;
   line-height: 1.8;
   font-family: 'Times New Roman';
+}
+
+mat-grid-tile {
+  background: white;
+  height: 180px;
+}
+
+.width_panel {
+  position: absolute;
+}
+
+.height_panel {
+  top: 2px;
+  margin: 28px 7px 2px 4px;
+  position: absolute;
+}
+
+.example-card {
+  max-width: 440px;
+  position: absolute;
+  top: 10px;
+  padding: 0px;
+}
+
+.example-header-image {
+  background-image: url('http://ezorazum.ru/assets/images/articles/Lichnost/обучающие-курсы-–-помощник-личностного-роста.jpg');
+  position:initial;
+  background-size: cover;
 }
