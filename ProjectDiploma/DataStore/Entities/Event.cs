@@ -1,4 +1,5 @@
 ﻿using ProjectDiploma.Entities;
+using SharedLogic.Mapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace DataStore.Entities
 {
     //Время дата заголовок описание адрес цена
 
-    public class Event : IEntity, IDate
+    public class Event : IEntity, IDate, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

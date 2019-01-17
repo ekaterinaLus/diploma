@@ -1,5 +1,5 @@
-﻿
-using ProjectDiploma.Entities;
+﻿using ProjectDiploma.Entities;
+using SharedLogic.Mapper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataStore.Entities
 {
-    public class Tag : IEntity
+    public class Tag : IEntity, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -22,13 +22,13 @@ namespace ProjectDiploma.Controllers
         [HttpGet("[action]")]
         public int GetCount()
         {
-            return _model.GetEventsCount();
+            return _model.GetItemsCount();
         }
 
         [HttpGet("[action]")]
         public IEnumerable<EventViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            return _model.GetPagingEvents(pageIndex, pageSize);
+            return _model.GetPagingItems(pageIndex, pageSize);
         }
     }
 }

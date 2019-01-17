@@ -1,4 +1,5 @@
 ﻿using ProjectDiploma.Entities;
+using SharedLogic.Mapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace DataStore.Entities
 {
-    public class News : IEntity, IDate
+    public class News : IEntity, IDate, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,13 +1,12 @@
 ﻿using ProjectDiploma.Entities;
+using SharedLogic.Mapper;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DataStore.Entities
 {
-    public class Project : IEntity, IDate
+    public class Project : IEntity, IDate, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
