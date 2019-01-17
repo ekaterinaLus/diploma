@@ -6,9 +6,9 @@ using System.Linq;
 namespace ProjectDiploma.Logic.Mapper
 {
     public class ObjectMapper
-    {        
+    {
         static ObjectMapper()
-        {            
+        {
             AutoMapper.Mapper.Initialize(configuration =>
             {
                 configuration.CreateMap<Event, EventViewModel>()
@@ -16,7 +16,10 @@ namespace ProjectDiploma.Logic.Mapper
                         dest => dest.Tags,
                         opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tags.ToType<TagViewModel>())));
 
-                //configuration.CreateMap<News, >
+                configuration.CreateMap<News, NewsViewModel>()
+                    .ForMember(
+                        dest => dest.Tags,
+                        opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tags.ToType<TagViewModel>())));
 
                 configuration.CreateMap<Tag, TagViewModel>();
 
@@ -24,7 +27,7 @@ namespace ProjectDiploma.Logic.Mapper
         }
 
         public static TTarget Create<TTarget>(object source)
-        {            
+        {
             return AutoMapper.Mapper.Instance.Map<TTarget>(source);
         }
     }

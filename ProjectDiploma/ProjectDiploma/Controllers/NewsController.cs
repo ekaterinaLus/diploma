@@ -18,17 +18,6 @@ namespace ProjectDiploma.Controllers
         private readonly BusinessUniversityContext _context;
         private readonly NewsModel _model;
 
-
-        //public NewsController(BusinessUniversityContext context)
-        //{
-        //    _context = context;
-        //}
-
-        //[HttpGet("[action]")]
-        //public News GetRandomNews()
-        //{
-        //    return new NewsModel(_context).GetRandomNews();
-        //}
         public NewsController(BusinessUniversityContext context)
         {
             _context = context;
@@ -38,18 +27,13 @@ namespace ProjectDiploma.Controllers
         [HttpGet("[action]")]
         public int GetCount()
         {
-            return _model.GetNewsCount();
+            return _model.GetItemsCount();
         }
 
         [HttpGet("[action]")]
         public IEnumerable<NewsViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            return _model.GetPagingNews(pageIndex, pageSize);
-        }
-
-        //IEnumerable<EventViewModel> IPagingController<EventViewModel>.GetPage(int pageIndex, int pageSize)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            return _model.GetPagingItems(pageIndex, pageSize);
+        }       
     }
 }
