@@ -74,5 +74,10 @@ A.link1 {
   text-decoration: none; 
 }
 
+.panel {
+  width: 100%;
+  height: 140px;
+}
+
 
 

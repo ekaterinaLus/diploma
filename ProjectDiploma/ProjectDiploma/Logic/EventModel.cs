@@ -5,7 +5,7 @@ using ProjectDiploma.ViewModel;
 
 namespace ProjectDiploma.Logic
 {
-    public class EventModel: PagingModel<EventsRepository, Event, EventViewModel>
+    public class EventModel : PagingModel<EventsRepository, Event, EventViewModel>
     {               
         private readonly EventsRepository _eventRepository;
 

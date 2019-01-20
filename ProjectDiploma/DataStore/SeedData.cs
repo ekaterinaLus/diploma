@@ -66,9 +66,9 @@ namespace DataStore
                 var adminId = await EnsureUserCreated(serviceProvider, "1234", "ekaterinatimofeeva20@gmail.com");
                 
                 //создаем роли + добавляем админа в роль админ
-                await EnsureRoleCreated(serviceProvider, adminId, BusinessUniversityContext.RoleName.ADMIN_ROLE_NAME);
-                await EnsureRoleCreated(serviceProvider, string.Empty, BusinessUniversityContext.RoleName.BUSINESS_ROLE_NAME);
-                await EnsureRoleCreated(serviceProvider, string.Empty, BusinessUniversityContext.RoleName.UNIVERSITY_ROLE_NAME);
+                await EnsureRoleCreated(serviceProvider, adminId, nameof(BusinessUniversityContext.RoleValues.ADMIN));
+                await EnsureRoleCreated(serviceProvider, string.Empty, nameof(BusinessUniversityContext.RoleValues.BUSINESS));
+                await EnsureRoleCreated(serviceProvider, string.Empty, nameof(BusinessUniversityContext.RoleValues.UNIVERSITY));
 
                 //создаем элементы таблиц
                 await SeedDB(context);
@@ -182,9 +182,9 @@ namespace DataStore
                     Title = "Тренинг саморазвития",
                     Tags = tags.Where(tag => 
                             tag.Name == "тренинг" || tag.Name == "развитие")
-                                .Select(x => new EventsTags { Tags = x }).ToList(),
+                                .Select(x => new EventsTags { Tag = x }).ToList(),
                     Description = "Тренинги профессионального и личностного развития для преподавателей и сотрудников университета",
-                    Adress = "ул. Татищева, 20а"
+                    Address = "ул. Татищева, 20а"
                 },
                 new Event
                 {
@@ -192,9 +192,9 @@ namespace DataStore
                     Title = "Мероприятие",
                     Tags = tags.Where(tag =>
                             tag.Name == "семинар" || tag.Name == "развитие")
-                                .Select(x => new EventsTags { Tags = x }).ToList(),
+                                .Select(x => new EventsTags { Tag = x }).ToList(),
                     Description = "Социальная адаптация на рынке труда студентов выпускных групп колледжа по специальностям «Фармация» и «Ветеринария» совместно с ОГКУ «Центр занятости населения г. Астрахани",
-                    Adress = "ул. Татищева, 20а"
+                    Address = "ул. Татищева, 20а"
                 }
             };
             
@@ -218,7 +218,7 @@ namespace DataStore
                 {
                     Tags = tags.Where(tag =>
                             tag.Name == "биология" || tag.Name == "болезнь" || tag.Name == "новосибирск" || tag.Name == "генетика")
-                                .Select(x => new NewsTags { Tags = x }).ToList(),
+                                .Select(x => new NewsTags { Tag = x }).ToList(),
                     Header = "Российские ученые приблизились к разгадке генетической болезни Хантингтона",
                     Annotation = "Биологи Новосибирского государственного университета и Института цитологии и генетики СО РАН создали  клеточную линию, " +
                     "которая моделирует неизлечимую на сегодня болезнь",
@@ -231,7 +231,7 @@ namespace DataStore
                     Section = nt.Where( n => n.Name == "Обучающие курсы и семинары").FirstOrDefault(),
                     Tags = tags.Where(tag =>
                             tag.Name == "курсы" || tag.Name == "университеты" || tag.Name == "бизнес")
-                                .Select(x => new NewsTags { Tags = x }).ToList(),
+                                .Select(x => new NewsTags { Tag = x }).ToList(),
                     Header = "Обучающие курсы помогут усовершенствовать работу компании",
                     Date = DateTime.Now.AddDays(-1),
                     Text = @"На сегодняшний день конкурентоспособными оказываются компании, постоянно работающие над своим усовершенствованием. В частности, перспективы развития светят тем, кто уделяет должное внимание обучению всего штата сотрудников, в том числе и руководящего состава. Приоритетным в работе таких компаний является системный подход к решению всех вопросов. За счет этого занятия любого формата строятся таким образом, что их восприятие слушателями оказывается простым и при этом эффективным, а продолжение самосовершенствования каждым участником в самостоятельном режиме становится беспроблемным. Ассортимент предложений профессионалов очень широк и позволяет подобрать наиболее оптимальное решение в полном соответствии с поставленными задачами. Многие программы рассчитаны на реализацию в течение весьма продолжительного периода времени, например, за 1-3 года, и именно такие тренинги дают самые солидные и стабильные плоды в виде формирования отлично подкованного во всех вопросах штата. Огромное значение уделяет мотивации учени ков, перед которыми заблаговременно ставятся четкие цели и задачи. Корректировка обучения может осуществляться по ходу продвижения его участников вперед, при этом могут применяться и практические инструменты для проверки и закрепления полученных знаний и навыков. Идеальным форматом сотрудничества между двумя сторонами становится интеграция программы в организацию заказчика на всех уровнях. Это позволяет в режиме реального времени отслеживать полученные результаты и выявлять степень эффективности проведенных мероприятий."

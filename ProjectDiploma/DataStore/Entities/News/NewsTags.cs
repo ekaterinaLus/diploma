@@ -11,8 +11,8 @@ namespace DataStore.Entities
         public News News { get; set; }
 
         [Key]
-        public int TagsId { get; set; }
+        public int TagId { get; set; }
 
-        public Tag Tags { get; set; }
+        public Tag Tag { get; set; }
     }
 }

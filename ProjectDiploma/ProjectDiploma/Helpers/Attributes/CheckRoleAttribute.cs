@@ -1,4 +1,5 @@
 ﻿using Diploma.DataBase;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectDiploma.Helpers.Attributes
@@ -10,8 +11,8 @@ namespace ProjectDiploma.Helpers.Attributes
     {
         public override bool IsValid(object value)
         {
-            return BusinessUniversityContext.RoleName.CheckRole(value.ToString()) 
-                    && value.ToString() != BusinessUniversityContext.RoleName.ADMIN_ROLE_NAME;
+            return Enum.IsDefined(typeof(BusinessUniversityContext.RoleValues), value)
+                    && value.ToString() != BusinessUniversityContext.RoleValues.ADMIN.ToString();
         }
     }
 }

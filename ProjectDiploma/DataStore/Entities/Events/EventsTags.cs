@@ -7,12 +7,12 @@ namespace DataStore.Entities
         [Key]
         public int EventId { get; set; }
 
-        public Event Events { get; set; }
+        public Event Event { get; set; }
 
         [Key]
-        public int TagsId { get; set; }
+        public int TagId { get; set; }
 
-        public Tag Tags { get; set; }        
+        public Tag Tag { get; set; }        
     }
     
 }

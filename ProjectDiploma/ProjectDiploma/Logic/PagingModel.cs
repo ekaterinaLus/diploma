@@ -13,10 +13,7 @@ namespace ProjectDiploma.Logic
     {
         protected abstract TRepository Repository { get; }
                 
-        public int GetItemsCount()
-        {
-            return Repository.GetItemsCount();
-        }
+        public int GetItemsCount() => Repository.GetItemsCount();
 
         public IEnumerable<TViewModel> GetPagingItems(int pageIndex, int pageSize)
         {

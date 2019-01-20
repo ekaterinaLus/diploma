@@ -1,32 +1,24 @@
 ﻿using ProjectDiploma.Entities;
 using SharedLogic.Mapper;
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataStore.Entities
 {
-    public class Project : IEntity, IDate, IMappable
+    public class Company : IEntity, IOrganization, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+        [MaxLength(2000)]
+        public string ContactInformation { get; set; }
 
-        public DateTime? Start { get; set; }
-
-        public DateTime? Finish { get; set; }
-
-        [Required]
-        public decimal Cost { get; set; }
-
-        [Required]
-        public DateTime Date { get; set; }
+        public virtual ICollection<User> Employees { get; set; } = new HashSet<User>();
     }
 }
-

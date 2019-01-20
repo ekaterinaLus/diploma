@@ -13,7 +13,7 @@ namespace DataStore.Repositories.EventRepository
         public override IQueryable<Event> GetAll()
         {
             return DbContext.Events.Include(x => x.Tags)
-                .ThenInclude(x => x.Tags);
+                .ThenInclude(x => x.Tag);
         }
     }
 }

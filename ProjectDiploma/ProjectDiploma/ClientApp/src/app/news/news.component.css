@@ -13,11 +13,10 @@
   column-rule: 1px solid #ccc;
 }*/
 
-P:first-letter {
-  font-family: "Times New Roman", Times, serif; /* Гарнитура шрифта первой буквы */
-  font-size: 200%; /* Размер шрифта первого символа */
-  color: darkslateblue;
-}
+/*P:first-letter {
+  font-family: "Times New Roman", Times, serif; /* Гарнитура шрифта первой буквы 
+  font-size: 200%; /* Размер шрифта первого символа 
+  color: darkslateblue;*/
 p {
   text-indent: 46px;
   line-height: 1.8;
@@ -47,7 +46,14 @@ mat-grid-tile {
 }
 
 .example-header-image {
-  background-image: url('http://ezorazum.ru/assets/images/articles/Lichnost/обучающие-курсы-–-помощник-личностного-роста.jpg');
-  position:initial;
+  background-image: url('http://www.fainaidea.com/wp-content/uploads/2016/08/news.jpg');
   background-size: cover;
 }
+
+.example-header-image2 {
+  width: 440px;
+  height: 200px;
+  margin: 0 0 0 0%;
+  position: relative;
+}
+

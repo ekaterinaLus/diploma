@@ -15,6 +15,7 @@ namespace DataStore.Entities
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(350)]
         public string Header { get; set; }
 
         public string Annotation { get; set; }

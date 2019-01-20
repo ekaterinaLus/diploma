@@ -1,48 +1,19 @@
 ﻿using DataStore.Entities;
+using DataStore.Repositories.ProjectRepository;
 using Diploma.DataBase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ProjectDiploma.ViewModel;
 
 namespace ProjectDiploma.Logic
 {
-    public class ProjectStore
+    public class ProjectModel : PagingModel<ProjectsRepository, Project, ProjectViewModel>
     {
-        public static Random rnd = new Random();
-        public static BusinessUniversityContext context;
+        private readonly ProjectsRepository _projectRepository;
 
-        public static IEnumerable<Project> GetProject()
+        protected override ProjectsRepository Repository => _projectRepository;
+
+        public ProjectModel(BusinessUniversityContext dbContext)
         {
-            using (var dbContext = new BusinessUniversityContext())
-            {
-                return dbContext.Projects.OrderByDescending(x => x.Start);
-            }
-        }
-
-        public static Project GetRndmProject()
-        {
-                return context.Projects.OrderBy(x => rnd.Next()).FirstOrDefault();
-        }
-
-        public static bool PutProject(Project project)
-        {
-            try
-            {
-                using (var dbContext = new BusinessUniversityContext())
-                {
-                    dbContext.Projects.Add(project);
-                    dbContext.SaveChanges();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
-        }
-
-       
+            _projectRepository = new ProjectsRepository(dbContext);
+        }       
     }
 }

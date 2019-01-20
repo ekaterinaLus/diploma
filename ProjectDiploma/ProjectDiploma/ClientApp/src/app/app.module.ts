@@ -12,6 +12,7 @@ import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
 import { ProjectComponent } from './project/project.component';
 import { UserComponent } from './user/user.component';
+import { NewsPageComponent } from './newspage/newspage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginDialog } from './login/login.dialog';
 
@@ -52,6 +53,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     NewComponent,
     ProjectComponent,
     UserComponent,
+    NewsPageComponent,
     LoginComponent,
     LoginDialog
   ],
@@ -84,7 +86,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
       { path: 'news', component: NewComponent },
       { path: 'project', component: ProjectComponent },
       { path: 'user', component: UserComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'newspage', component: NewsPageComponent }
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],

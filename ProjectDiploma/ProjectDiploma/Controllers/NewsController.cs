@@ -34,6 +34,12 @@ namespace ProjectDiploma.Controllers
         public IEnumerable<NewsViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
             return _model.GetPagingItems(pageIndex, pageSize);
-        }       
+        }
+
+        [HttpGet("[action]/{id}")]
+        public NewsViewModel Get([FromRoute] int id)
+        {
+            return _model.Get(id);
+        }
     }
 }

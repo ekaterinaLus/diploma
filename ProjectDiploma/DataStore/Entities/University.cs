@@ -4,24 +4,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace DataStore.Entities
 {
-    public class Tag : IEntity, IMappable
+    public class University : IEntity, IOrganization, IMappable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(100)]
         public string Name { get; set; }
 
-        public virtual ICollection<NewsTags> News { get; set; } = new HashSet<NewsTags>();
+        [MaxLength(2000)]
+        public string ContactInformation { get; set; }
 
-        public virtual ICollection<EventsTags> Events { get; set; } = new HashSet<EventsTags>();
-
-        public virtual ICollection<ProjectsTags> Projects { get; set; } = new HashSet<ProjectsTags>();
-
+        public virtual ICollection<User> Employees { get; set; } = new HashSet<User>();
     }
 }

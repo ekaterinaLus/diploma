@@ -15,10 +15,7 @@
     </div>
   </font>
 </body>-->
-
-
-
-<h1 *ngIf="news" align="center" class="test">Новости</h1>
+<!--<h1 *ngIf="news" align="center" class="test">Новости</h1>
 
 <mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
 
@@ -29,9 +26,10 @@
       <mat-grid-tile>
         <mat-expansion-panel>
           <mat-expansion-panel-header class="height_panel">
-            <mat-panel-title>
+            <mat-panel-title img src="http://ezorazum.ru/assets/images/articles/Lichnost/обучающие-курсы-–-помощник-личностного-роста.jpg" class="panel">
               {{n.header}}
               <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
+
             </mat-panel-title>
             <mat-panel-description>
               <a class="padding"> Дата: {{n.date|date:'dd-MM-yyyy'}} </a>
@@ -53,35 +51,36 @@
                [pageSize]="pageSize"
                [pageSizeOptions]="[2, 5, 10, 25, 100]"
                (page)="pageEvent = handlePage($event)">
-</mat-paginator>
+</mat-paginator>-->
 
 
-
-
-
-
-
-<!--<mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
+<mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
 <h1 *ngIf="news" align="center" class="test">Новости</h1>
 <mat-grid-list cols="2" rowHeight="2:2">
   <a *ngFor="let n of news">
     <mat-grid-tile>
       <mat-card class="example-card">
         <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title value="header">{{n.header}}</mat-card-title>
           <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
-
-          <mat-card-title>{{n.header}}</mat-card-title>
           <mat-card-subtitle>{{n.date|date:'dd-MM-yyyy'}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="http://ezorazum.ru/assets/images/articles/Lichnost/обучающие-курсы-–-помощник-личностного-роста.jpg" class="example-header-image">
+        <img mat-card-image src="http://rvbu.ru/uploads/posts/2015-09/1443087020_1.jpg" class="example-header-image2">
         <mat-card-content>
-          <p>
+          <p class="annotation">
             {{n.annotation}}
           </p>
         </mat-card-content>
         <mat-card-actions>
+          <a mat-button href='{{baseUrl}}newspage'>Подробнее</a>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </a>
-</mat-grid-list>-->
+</mat-grid-list>
+
+
+
+
+

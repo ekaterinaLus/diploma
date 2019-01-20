@@ -4,7 +4,7 @@ using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace DataStore.Repositories.NewRepository
+namespace DataStore.Repositories.NewsRepository
 {
     public class NewsRepository : DatePagingRepository<News>, INewsRepository
     {
@@ -13,9 +13,8 @@ namespace DataStore.Repositories.NewRepository
         public override IQueryable<News> GetAll()
         {
             return DbContext.News.Include(x => x.Tags)
-                .ThenInclude(x => x.Tags); //return DbContext.News
+                .ThenInclude(x => x.Tag); 
         }
-
     }
 }
 

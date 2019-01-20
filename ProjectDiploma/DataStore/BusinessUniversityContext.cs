@@ -6,24 +6,11 @@ namespace Diploma.DataBase
 {
     public class BusinessUniversityContext : IdentityDbContext<User>
     {
-        public struct RoleName
+        public enum RoleValues
         {
-            public const string ADMIN_ROLE_NAME = "ADMIN";
-            public const string UNIVERSITY_ROLE_NAME = "UNIVERSITY";
-            public const string BUSINESS_ROLE_NAME = "BUSINESS";
-
-            public static bool CheckRole(string roleName)
-            {
-                switch (roleName)
-                {
-                    case ADMIN_ROLE_NAME:
-                    case UNIVERSITY_ROLE_NAME:
-                    case BUSINESS_ROLE_NAME:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
+            ADMIN,
+            UNIVERSITY,
+            BUSINESS
         }
 
         public DbSet<Event> Events { get; set; }
@@ -31,6 +18,8 @@ namespace Diploma.DataBase
         public DbSet<NewsType> NewsTypes { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<University> Universities { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         public BusinessUniversityContext(DbContextOptions<BusinessUniversityContext> options) : base(options)
         {}        
@@ -42,10 +31,17 @@ namespace Diploma.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventsTags>()
-                .HasKey(x => new { x.EventId, x.TagsId });
+                .HasKey(x => new { x.EventId, x.TagId });
 
             modelBuilder.Entity<NewsTags>()
-                .HasKey(x => new { x.NewsId, x.TagsId });
+                .HasKey(x => new { x.NewsId, x.TagId });
+
+            modelBuilder.Entity<ProjectsTags>()
+                .HasKey(x => new { x.ProjectId, x.TagId });
+
+            modelBuilder.Entity<ProjectsCompanies>()
+                .HasKey(x => new { x.ProjectId, x.CompanyId });
+
             base.OnModelCreating(modelBuilder);
         }
     }

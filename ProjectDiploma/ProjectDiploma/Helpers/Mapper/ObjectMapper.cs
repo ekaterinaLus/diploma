@@ -14,14 +14,41 @@ namespace ProjectDiploma.Logic.Mapper
                 configuration.CreateMap<Event, EventViewModel>()
                     .ForMember(
                         dest => dest.Tags,
-                        opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tags.ToType<TagViewModel>())));
+                        opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tag.ToType<TagViewModel>())));
 
                 configuration.CreateMap<News, NewsViewModel>()
                     .ForMember(
                         dest => dest.Tags,
-                        opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tags.ToType<TagViewModel>())));
+                        opt => opt.MapFrom(src => src.Tags.Select(obj => obj.Tag.ToType<TagViewModel>())));
 
                 configuration.CreateMap<Tag, TagViewModel>();
+
+                configuration.CreateMap<Project, ProjectViewModel>()
+                    .ForMember(
+                        dest => dest.Tags,
+                        opt => opt.MapFrom(
+                            src => src.Tags
+                                .Select(obj => obj.Tag.ToType<TagViewModel>())))
+                    .ForMember(
+                        dest => dest.Sponsors,
+                        opt => opt.MapFrom(
+                            src => src.Sponsors
+                            .Select(obj => obj.Company.ToType<OrganizationViewModel>())))
+                    .ForMember(
+                        dest => dest.Initializer,
+                        opt => opt.MapFrom(
+                            src => src.Initializer
+                            .ToType<OrganizationViewModel>()));
+
+                configuration.CreateMap<Company, OrganizationViewModel>()
+                    .ForMember(
+                        dest => dest.Type,
+                        opt => opt.MapFrom(src => OrganizationViewModel.OrganizationType.Company));
+
+                configuration.CreateMap<University, OrganizationViewModel>()
+                    .ForMember(
+                        dest => dest.Type,
+                        opt => opt.MapFrom(src => OrganizationViewModel.OrganizationType.University));
 
             });
         }

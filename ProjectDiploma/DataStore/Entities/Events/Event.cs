@@ -20,13 +20,15 @@ namespace DataStore.Entities
         public DateTime Date { get; set; }
 
         [Required]
+        [MaxLength(150)]
         public string Title { get; set; }
 
         [Required]
         public string Description { get; set; }
 
         [Required]
-        public string Adress { get; set; }
+        [MaxLength(300)]
+        public string Address { get; set; }
 
         public decimal? Cost { get; set; }
 
