@@ -16,10 +16,13 @@ import { LoginDialog } from '../login/login.dialog';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
+
+
 export class NavMenuComponent {
   @ViewChild('sidenav') sidenav: MatSidenav;
   public currentUser: string;
   public showLoginButton: boolean;
+
 
   constructor(public authenticationService: AuthenticationService, private router: Router, private dialog: MatDialog) {
     this.authenticationService.currentUser.subscribe(x =>

@@ -21,25 +21,21 @@
         <button mat-button (click)="sidenav.open()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-
-
-
-
-        <!--<mat-form-field class="example-chip-list">
-    <mat-chip-list #chipList>
-      <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
-                [removable]="removable" (removed)="remove(fruit)">
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-      </mat-chip>
-      <input placeholder="New fruit..."
-             [matChipInputFor]="chipList"
-             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             [matChipInputAddOnBlur]="addOnBlur"
-             (matChipInputTokenEnd)="add($event)">
-    </mat-chip-list>
-  </mat-form-field>-->
-
-
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList class="shriftSearch">
+            <mat-chip *ngFor="let  event of events" [selectable]="selectable"
+                      [removable]="removable" (removed)="remove(event)">
+              {{event.title}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input  placeholder="Поиск..." 
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)">
+            <mat-icon aria-label="Side nav toggle icon">search</mat-icon>
+          </mat-chip-list>
+        </mat-form-field>
         <div *ngIf="currentUser">
           <button mat-button [matMenuTriggerFor]="menu">{{currentUser}}</button>
           <mat-menu #menu="matMenu">
@@ -47,9 +43,9 @@
             <mat-icon aria-label="Side nav toggle icon">reply</mat-icon>
           </mat-menu>
         </div>
-        <a *ngIf="!currentUser"  mat-button href = '{{baseUrl}}user' class="icon_registration link1">
-        <mat-icon>person_add</mat-icon>
-        Зарегистрироваться
+        <a *ngIf="!currentUser" mat-button href='{{baseUrl}}user' class="icon_registration link1">
+          <mat-icon>person_add</mat-icon>
+          Зарегистрироваться
         </a>
         <button *ngIf="!currentUser && showLoginButton" mat-button (click)="openLoginDialog()">
           <mat-icon>account_circle</mat-icon>

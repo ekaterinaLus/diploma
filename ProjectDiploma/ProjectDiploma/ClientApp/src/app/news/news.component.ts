@@ -12,6 +12,7 @@ import { PageEvent } from '@angular/material';
 
 export class NewComponent implements OnInit{
   public news: News[];
+  public oneNews: News;
   public itemsLength: number;
   public pageIndex: number;
   public pageSize: number;
@@ -26,6 +27,32 @@ export class NewComponent implements OnInit{
   ngOnInit(): void {
     this.handlePage(null);
   }
+
+  //public getNews(id1: number) {
+  //  var args = new HttpParams()
+  //    .append("id", this.oneNews.id.toString());
+  //  this.http.get(this.baseUrl + 'api/News/Get/' + id1
+  //  ).subscribe(result =>
+  //  {
+  //    if (this.oneNews.id = id1) {
+  //      result = this.oneNews;
+  //    }
+  //  }, err => console.log('error in news'));
+  //}
+
+
+  public getNews(id: number) {
+    this.http.get<News>(this.baseUrl + 'api/News/Get/' + id
+    ).subscribe(result => {
+      this.oneNews = result
+      console.log(result);
+    }, err => console.log('error in news'));
+  }
+
+  //public getNews() {
+  //  this.http.get(this.baseUrl + 'api/News/Get').subscribe(result => {
+  //  }, err => console.log('error in news'));
+  //}
 
   public handlePage(event?: PageEvent) {
 

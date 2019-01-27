@@ -26,6 +26,7 @@ p {
 mat-grid-tile {
   background: white;
   height: 180px;
+  grid-gap: 1em;
 }
 
 .width_panel {
@@ -39,10 +40,15 @@ mat-grid-tile {
 }
 
 .example-card {
-  max-width: 440px;
+  max-width: 540px;
   position: absolute;
   top: 10px;
   padding: 0px;
+  height:500px;
+}
+
+.padding{
+  padding-left:10px;
 }
 
 .example-header-image {
@@ -51,9 +57,27 @@ mat-grid-tile {
 }
 
 .example-header-image2 {
-  width: 440px;
-  height: 200px;
+  width: 540px;
+  height: 250px;
   margin: 0 0 0 0%;
   position: relative;
 }
 
+.link {
+
+  margin: 0px 0px 5px 0px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 0fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+}
+
+.annotation{
+  text-align:justify;
+  padding:5px;
+  font-size:12pt;
+  font-style:italic;
+}

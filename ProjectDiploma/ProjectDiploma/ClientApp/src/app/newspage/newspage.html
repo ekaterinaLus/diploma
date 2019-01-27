@@ -1,11 +1,10 @@
 <mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
-
+<a *ngIf="id1">
   <mat-grid-list cols="1" rowHeight="2:2">
-
     <mat-grid-tile>
       <mat-card class="example-card">
         <a *ngFor="let n of news">
-          <h3 *ngIf="news" align="center" class="test">{{n.header}}</h3>
+          <h3 align="center" class="test">{{n.header}}</h3>
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title></mat-card-title>
@@ -27,8 +26,8 @@
           <mat-card-actions>
           </mat-card-actions>
         </a>
-</mat-card>
+      </mat-card>
     </mat-grid-tile>
-
   </mat-grid-list>
+</a>
 

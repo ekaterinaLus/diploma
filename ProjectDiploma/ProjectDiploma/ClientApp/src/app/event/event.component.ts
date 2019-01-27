@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material';
 export class EventComponent implements OnInit {
   
   public events: Event[];
+  public event: Event;
   public itemsLength: number;
   public pageIndex: number;
   public pageSize: number;
@@ -20,6 +21,11 @@ export class EventComponent implements OnInit {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.pageSize = 1;
     this.pageIndex = 0;
+  }
+
+  public FindEvent(): void {
+    this.http.post(this.baseUrl + 'api/Event/FindEvent', this.event)
+      .subscribe(result => { }, error => console.error(error))
   }
 
   ngOnInit(): void {

@@ -56,9 +56,8 @@
 
 <mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
 <h1 *ngIf="news" align="center" class="test">Новости</h1>
-<mat-grid-list cols="2" rowHeight="2:2">
-  <a *ngFor="let n of news">
-    <mat-grid-tile>
+<mat-grid-list cols="2" rowHeight="2:4" >
+    <mat-grid-tile *ngFor="let n of news" class="padding">
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -73,12 +72,15 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-button href='{{baseUrl}}newspage'>Подробнее</a>
+          <div class="link">
+          <a mat-button (click)="getNews(n.id)" value="id1" mat-button href='{{baseUrl}}newspage' >Подробнее</a>
+            </div>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-  </a>
 </mat-grid-list>
+
+
 
 
 

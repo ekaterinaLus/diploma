@@ -59,12 +59,13 @@
 
 
 .example-chip-list {
-  width: 100%;
+  width: 20%;
+  left: 200px;
 }
 
 
 .icon_registration{
-  left: 470px;
+  left: 220px;
 }
 
 
@@ -77,6 +78,14 @@ A.link1 {
 .panel {
   width: 100%;
   height: 140px;
+}
+
+.navbar {
+  height:30%;
+}
+
+.shriftSearch{
+  font-size: 12px;
 }
 
 

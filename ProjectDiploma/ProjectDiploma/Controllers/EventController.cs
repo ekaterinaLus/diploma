@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DataStore.Entities;
 using Diploma.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
