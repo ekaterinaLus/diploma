@@ -52,9 +52,7 @@
                [pageSizeOptions]="[2, 5, 10, 25, 100]"
                (page)="pageEvent = handlePage($event)">
 </mat-paginator>-->
-
-
-<mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
+<!--<mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
 <h1 *ngIf="news" align="center" class="test">Новости</h1>
 <mat-grid-list cols="2" rowHeight="2:4" >
     <mat-grid-tile *ngFor="let n of news" class="padding">
@@ -65,24 +63,98 @@
           <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
           <mat-card-subtitle>{{n.date|date:'dd-MM-yyyy'}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="http://rvbu.ru/uploads/posts/2015-09/1443087020_1.jpg" class="example-header-image2">
+      <img mat-card-image src="http://rvbu.ru/uploads/posts/2015-09/1443087020_1.jpg" class="example-header-image2">
         <mat-card-content>
           <p class="annotation">
             {{n.annotation}}
           </p>
+          <mat-chip-list>
+            <mat-chip *ngFor="let tag of n.tags" color="primary">{{tag.name}}</mat-chip>
+          </mat-chip-list>
         </mat-card-content>
         <mat-card-actions>
           <div class="link">
-          <a mat-button (click)="getNews(n.id)" value="id1" mat-button href='{{baseUrl}}newspage?id=1' >Подробнее</a>
-            </div>
+            <a mat-button (click)="getNews(n.id)" value="id1" mat-button href='{{baseUrl}}newspage?id=1'>Подробнее</a>
+          </div>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list>-->
+<!---->
+<mat-spinner *ngIf="!news" class="spinner">Загрузка...</mat-spinner>
+<h1 *ngIf="news" align="center" class="test">Новости</h1>
+<mat-grid-list cols="2" rowHeight="2:4">
+  <mat-grid-tile class="padding">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title value="header">"Пять способов для стартапа вызвать доверие у клиентов"</mat-card-title>
+        <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
+        <mat-card-subtitle>27-01-2019</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://kakzarabativat.ru/wp-content/uploads/2016/11/Chto-takoe-startap.jpg" class="example-header-image2">
+      <mat-card-content>
+        <p class="annotation">
+          Доверие является ключевым фактором в процессе установления профессиональных отношений и увеличения количество конверсий. Согласно исследованиям, 1 из 3 потребителей оценили «доверие к бренду» как одну из трех главных причин, которые влияют на их решение о покупке у конкретного продавца.
+        </p>
+        <div class="text-card">
+        <p>
+          1. Ценный контент
+          Одним из наиболее эффективных способов для стартапа привлечь и удержать клиентов может стать получение их доверия путем предоставления им ценного образовательного контента. Вы не только представите свою компанию в качестве ведущего специалиста в своей отрасли, предлагая полезные сообщения в блогах, но и сможете решить проблемы своей целевой аудитории.
+          Раздел комментариев ваших сообщений в блогах также является отличным местом для развития ваших отношений с потребителями.</p>
+          <p>2. Быть доступным для запросов через чат
+          Большинство потребителей сегодня хотят быстрого, почти немедленного ответа и предпочитают общаться с клиентами через чат, а не по телефону или электронной почте.</p>
+          <p>3. Истории успеха
+          Истории успеха являются социальным доказательством, а социальное доказательство - ключ к укреплению доверия с потребителями. Когда клиент не уверен в чем-то, он смотрит на социальное доказательство, чтобы понять, что думают и говорят другие.
+          Фактически, 90% покупателей, которые читали положительные истории и отзывы других клиентов, утверждали, что это повлияло на их решение о покупке.</p>
+          <p>4. Политика возврата
+          Хорошая политика возврата показывает, что вы заботитесь о своих клиентах и уверены в своем продукте.</p>
+          </div>
+        <mat-chip-list>
+          <mat-chip color="primary">курсы</mat-chip>
+          <mat-chip color="accent">бизнес</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+      <!--<mat-card-actions>
+        <div class="link">
+          <a mat-button (click)="getNews(n.id)" value="id1" mat-button href='{{baseUrl}}newspage?id=1'>Подробнее</a>
+        </div>
+      </mat-card-actions>-->
+    </mat-card>
+  </mat-grid-tile>
 
-
-
-
-
-
+  <mat-grid-tile class="padding">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title value="header">«Инвестируйте в свой опыт, а не в имущество», - Томас Гилович</mat-card-title>
+        <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
+        <mat-card-subtitle>27-01-2019</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="http://rscf.ru/upload/iblock/2ed/2ed66d0cb78ac4221ea05d9551de83c3.jpg" class="example-header-image2">
+      <mat-card-content>
+        <p class="annotation">
+          Результаты исследования профессор психологии Корнельского университета о ценности инвестиций в опыт
+        </p>
+        <p class="text-card">
+          Профессор психологии Корнельского университета доктор Томас Гилович в течении 20-ти лет проводил исследование, которое привело его к одному простому выводу: не стоит тратить деньги на вещи, то есть инвестировать в имущество. Проблема в том, что счастье, которое оно обеспечивает, быстро исчезает. Для этого есть три важных причины:
+          Мы привыкаем к новым вещам. То, что когда-то казалось новым и захватывающим, быстро становится нормой.
+          Мы продолжаем поднимать планку. Новые покупки приводят к новым ожиданиям. Как только мы немного привыкаем к новой вещи, начинаем искать что-то лучше.
+          Имущество, по своей природе, способствует сравнению. Мы покупаем новый автомобиль и в восторге от него, пока друг не купит лучше.
+          «Один из врагов счастья - адаптация, - говорит Гилович. Мы покупаем вещи, чтобы сделать себя счастливыми, и нам это удается. Но только на время. Сначала новые вещи нам интересны, но мы быстро привыкаем к этому».
+          Парадокс имущества состоит в том, что мы предполагаем, что счастье, которое мы получаем от покупки чего-либо, будет продолжаться до тех пор, пока у нас есть сама вещь. На уровне интуиции кажется, что инвестирование в то, что мы можем видеть, слышать и к чему прикасаться, имеет большую ценность. Но это не так.  
+        </p>
+        <mat-chip-list>
+          <mat-chip color="primary">курсы</mat-chip>
+          <mat-chip color="accent">бизнес</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <!--<div class="link">
+          <a mat-button (click)="getNews(n.id)" value="id1" mat-button href='{{baseUrl}}newspage?id=1'>Подробнее</a>
+        </div>-->
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  </mat-grid-list>
 

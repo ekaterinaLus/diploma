@@ -87,6 +87,8 @@ namespace DataStore.Migrations
                         .IsRequired()
                         .HasMaxLength(350);
 
+                    b.Property<string>("Link");
+
                     b.Property<int?>("SectionId");
 
                     b.Property<string>("Text")
@@ -105,11 +107,7 @@ namespace DataStore.Migrations
 
                     b.Property<int>("TagId");
 
-                    b.Property<int>("NewsId1");
-
                     b.HasKey("NewsId", "TagId");
-
-                    b.HasIndex("NewsId1");
 
                     b.HasIndex("TagId");
 
@@ -174,7 +172,7 @@ namespace DataStore.Migrations
 
                     b.HasKey("ProjectId", "CompanyId");
 
-                    b.HasAlternateKey("CompanyId", "ProjectId");
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("ProjectsCompanies");
                 });
@@ -185,11 +183,7 @@ namespace DataStore.Migrations
 
                     b.Property<int>("TagId");
 
-                    b.Property<int>("ProjectId1");
-
                     b.HasKey("ProjectId", "TagId");
-
-                    b.HasIndex("ProjectId1");
 
                     b.HasIndex("TagId");
 
@@ -416,7 +410,7 @@ namespace DataStore.Migrations
                 {
                     b.HasOne("DataStore.Entities.News", "News")
                         .WithMany("Tags")
-                        .HasForeignKey("NewsId1")
+                        .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataStore.Entities.Tag", "Tag")
@@ -436,7 +430,7 @@ namespace DataStore.Migrations
             modelBuilder.Entity("DataStore.Entities.ProjectsCompanies", b =>
                 {
                     b.HasOne("DataStore.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -450,7 +444,7 @@ namespace DataStore.Migrations
                 {
                     b.HasOne("DataStore.Entities.Project", "Project")
                         .WithMany("Tags")
-                        .HasForeignKey("ProjectId1")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataStore.Entities.Tag", "Tag")

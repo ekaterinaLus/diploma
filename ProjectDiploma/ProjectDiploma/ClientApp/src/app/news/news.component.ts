@@ -125,6 +125,7 @@ interface News {
   annotation?: string;
   date: Date;
   text: string;
+  link: string;
   tags: NewsTags;
   section: NewsType;
   sectionId: number;

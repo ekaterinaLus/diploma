@@ -53,9 +53,9 @@ namespace DataStore.Entities
         [Required]
         public University Initializer { get; set; }
 
-        public virtual ICollection<ProjectsCompanies> Sponsors { get; set; } = new HashSet<ProjectsCompanies>();
+        public  ICollection<ProjectsCompanies> Sponsors { get; set; } = new HashSet<ProjectsCompanies>();
 
-        public virtual ICollection<ProjectsTags> Tags { get; set; } = new HashSet<ProjectsTags>();
+        public ICollection<ProjectsTags> Tags { get; set; } = new HashSet<ProjectsTags>();
     }
 }
 

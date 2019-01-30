@@ -5,15 +5,6 @@
 <h1 *ngIf="events" align="center" class="test">События</h1>
 
 <mat-spinner *ngIf="!events" class="spinner">Загрузка...</mat-spinner>
-<div>
-  <div>
-    <label>Название: </label>
-    <input>
-  </div>
-  <div>
-    <button (click)="FindEvent()">Add</button>
-  </div>
-</div>
 <mat-accordion *ngIf="events && events.length > 0">
   <mat-expansion-panel *ngFor="let e of events">
     <mat-expansion-panel-header>

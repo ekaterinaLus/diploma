@@ -56,29 +56,29 @@ namespace ProjectDiploma.Logic.Mapper
 
                 configuration.CreateMap<OrganizationViewModel, University>();
 
-                configuration.CreateMap<ProjectViewModel, Project>()
-                    .ForMember(
-                        dest => dest.Tags,
-                        opt => opt.MapFrom(
-                            src => src.Tags
-                                .Select(tag => new ProjectsTags()
-                                {
-                                    ProjectId = src.Id,
-                                    TagId = tag.Id
-                                })))
-                    .ForMember(
-                        dest => dest.Initializer,
-                        opt => opt.MapFrom(
-                            src => src.Initializer.ToType<University>()))
-                    .ForMember(
-                        dest => dest.Sponsors, //Куда (у объекта приемника, того что справа)
-                        opt => opt.MapFrom( //Каким образом преобразование
-                            src => src.Sponsors //Поле объекта источника, того что слева
-                                .Select(company => new ProjectsCompanies()
-                                {
-                                    CompanyId = company.Id,
-                                    ProjectId = src.Id
-                                })));
+                //configuration.CreateMap<ProjectViewModel, Project>()
+                //    .ForMember(
+                //        dest => dest.Tags,
+                //        opt => opt.MapFrom(
+                //            src => src.Tags
+                //                .Select(tag => new ProjectsTags()
+                //                {
+                //                    ProjectId = src.Id,
+                //                    TagId = tag.Id
+                //                })))
+                //    .ForMember(
+                //        dest => dest.Initializer,
+                //        opt => opt.MapFrom(
+                //            src => src.Initializer.ToType<University>()))
+                //    .ForMember(
+                //        dest => dest.Sponsors, //Куда (у объекта приемника, того что справа)
+                //        opt => opt.MapFrom( //Каким образом преобразование
+                //            src => src.Sponsors //Поле объекта источника, того что слева
+                //                .Select(company => new ProjectsCompanies()
+                //                {
+                //                    CompanyId = company.Id,
+                //                    ProjectId = src.Id
+                //                })));
             });
         }
 

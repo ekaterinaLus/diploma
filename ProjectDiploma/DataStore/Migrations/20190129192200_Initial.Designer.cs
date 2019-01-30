@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataStore.Migrations
 {
     [DbContext(typeof(BusinessUniversityContext))]
-    [Migration("20190103104440_Initial")]
+    [Migration("20190129192200_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,13 +21,31 @@ namespace DataStore.Migrations
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("DataStore.Entities.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ContactInformation")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("DataStore.Entities.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adress")
-                        .IsRequired();
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(300);
 
                     b.Property<decimal?>("Cost");
 
@@ -37,7 +55,8 @@ namespace DataStore.Migrations
                         .IsRequired();
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
@@ -48,11 +67,11 @@ namespace DataStore.Migrations
                 {
                     b.Property<int>("EventId");
 
-                    b.Property<int>("TagsId");
+                    b.Property<int>("TagId");
 
-                    b.HasKey("EventId", "TagsId");
+                    b.HasKey("EventId", "TagId");
 
-                    b.HasIndex("TagsId");
+                    b.HasIndex("TagId");
 
                     b.ToTable("EventsTags");
                 });
@@ -67,7 +86,10 @@ namespace DataStore.Migrations
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Header")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(350);
+
+                    b.Property<string>("Link");
 
                     b.Property<int?>("SectionId");
 
@@ -85,15 +107,11 @@ namespace DataStore.Migrations
                 {
                     b.Property<int>("NewsId");
 
-                    b.Property<int>("TagsId");
+                    b.Property<int>("TagId");
 
-                    b.Property<int>("NewsId1");
+                    b.HasKey("NewsId", "TagId");
 
-                    b.HasKey("NewsId", "TagsId");
-
-                    b.HasIndex("NewsId1");
-
-                    b.HasIndex("TagsId");
+                    b.HasIndex("TagId");
 
                     b.ToTable("NewsTags");
                 });
@@ -116,21 +134,62 @@ namespace DataStore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Cost");
+                    b.Property<decimal>("CostCurrent");
+
+                    b.Property<decimal>("CostFull");
+
+                    b.Property<DateTime>("Date");
 
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<DateTime?>("Finish");
+                    b.Property<DateTime?>("FinishDate");
+
+                    b.Property<int>("InitializerId");
+
+                    b.Property<bool>("IsClosed");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(300);
 
-                    b.Property<DateTime?>("Start");
+                    b.Property<string>("Risks");
+
+                    b.Property<int>("Stage");
+
+                    b.Property<DateTime?>("StartDate");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("InitializerId");
+
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("DataStore.Entities.ProjectsCompanies", b =>
+                {
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int>("CompanyId");
+
+                    b.HasKey("ProjectId", "CompanyId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("ProjectsCompanies");
+                });
+
+            modelBuilder.Entity("DataStore.Entities.ProjectsTags", b =>
+                {
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("ProjectId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ProjectsTags");
                 });
 
             modelBuilder.Entity("DataStore.Entities.Tag", b =>
@@ -139,11 +198,29 @@ namespace DataStore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("DataStore.Entities.University", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ContactInformation")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Universities");
                 });
 
             modelBuilder.Entity("DataStore.Entities.User", b =>
@@ -152,6 +229,8 @@ namespace DataStore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<int?>("CompanyId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -181,10 +260,14 @@ namespace DataStore.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
+                    b.Property<int?>("UniversityId");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -192,6 +275,8 @@ namespace DataStore.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
+
+                    b.HasIndex("UniversityId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -305,14 +390,14 @@ namespace DataStore.Migrations
 
             modelBuilder.Entity("DataStore.Entities.EventsTags", b =>
                 {
-                    b.HasOne("DataStore.Entities.Event", "Events")
+                    b.HasOne("DataStore.Entities.Event", "Event")
                         .WithMany("Tags")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DataStore.Entities.Tag", "Tags")
+                    b.HasOne("DataStore.Entities.Tag", "Tag")
                         .WithMany("Events")
-                        .HasForeignKey("TagsId")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -327,13 +412,58 @@ namespace DataStore.Migrations
                 {
                     b.HasOne("DataStore.Entities.News", "News")
                         .WithMany("Tags")
-                        .HasForeignKey("NewsId1")
+                        .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DataStore.Entities.Tag", "Tags")
+                    b.HasOne("DataStore.Entities.Tag", "Tag")
                         .WithMany("News")
-                        .HasForeignKey("TagsId")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataStore.Entities.Project", b =>
+                {
+                    b.HasOne("DataStore.Entities.University", "Initializer")
+                        .WithMany()
+                        .HasForeignKey("InitializerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataStore.Entities.ProjectsCompanies", b =>
+                {
+                    b.HasOne("DataStore.Entities.Company", "Company")
+                        .WithMany("Projects")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DataStore.Entities.Project", "Project")
+                        .WithMany("Sponsors")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataStore.Entities.ProjectsTags", b =>
+                {
+                    b.HasOne("DataStore.Entities.Project", "Project")
+                        .WithMany("Tags")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DataStore.Entities.Tag", "Tag")
+                        .WithMany("Projects")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataStore.Entities.User", b =>
+                {
+                    b.HasOne("DataStore.Entities.Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DataStore.Entities.University")
+                        .WithMany("Employees")
+                        .HasForeignKey("UniversityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

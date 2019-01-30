@@ -45,7 +45,7 @@ mat-grid-tile {
   position: absolute;
   top: 10px;
   padding: 0px;
-  height:1200px;
+  height: 1100px;
 }
 
 .text-card {
@@ -54,12 +54,12 @@ mat-grid-tile {
   font-size: 12pt;
 }
 
-.padding{
-  padding-left:10px;
+.padding {
+  padding-left: 10px;
 }
 
 .example-header-image {
-  background-image: url('http://www.fainaidea.com/wp-content/uploads/2016/08/news.jpg');
+  background-image: url('http://rylik.ru/uploads/posts/2015-01/1420826088_4v9crmyljugxbrt.jpg');
   background-size: cover;
 }
 
@@ -71,7 +71,6 @@ mat-grid-tile {
 }
 
 .link {
-
   margin: 0px 0px 5px 0px;
 }
 
@@ -82,9 +81,9 @@ mat-grid-tile {
   grid-row-gap: 1em;
 }
 
-.annotation{
-  text-align:justify;
-  padding:5px;
-  font-size:12pt;
-  font-style:italic;
+.annotation {
+  text-align: justify;
+  padding: 5px;
+  font-size: 12pt;
+  font-style: italic;
 }

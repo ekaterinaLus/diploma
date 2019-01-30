@@ -26,9 +26,11 @@ namespace DataStore.Entities
         [Required]
         public string Text { get; set; }
 
-        public virtual ICollection<NewsTags> Tags { get; set; } = new HashSet<NewsTags>();
+        public ICollection<NewsTags> Tags { get; set; } = new HashSet<NewsTags>();
 
         public NewsType Section { get; set; }
+
+        public string Link { get; set; }
 
         public int? SectionId { get; set; }
     }

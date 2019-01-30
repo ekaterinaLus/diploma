@@ -23,28 +23,17 @@ namespace DataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    ContactInformation = table.Column<string>(maxLength: 2000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,9 +43,9 @@ namespace DataStore.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Date = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Adress = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(maxLength: 300, nullable: false),
                     Cost = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
@@ -78,33 +67,30 @@ namespace DataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    Start = table.Column<DateTime>(nullable: true),
-                    Finish = table.Column<DateTime>(nullable: true),
-                    Cost = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Universities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    ContactInformation = table.Column<string>(maxLength: 2000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Universities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,6 +110,146 @@ namespace DataStore.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Header = table.Column<string>(maxLength: 350, nullable: false),
+                    Annotation = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    Link = table.Column<string>(nullable: true),
+                    SectionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_News_NewsTypes_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "NewsTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventsTags",
+                columns: table => new
+                {
+                    EventId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventsTags", x => new { x.EventId, x.TagId });
+                    table.ForeignKey(
+                        name: "FK_EventsTags_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventsTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<int>(nullable: true),
+                    UniversityId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Universities_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "Universities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(maxLength: 300, nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Risks = table.Column<string>(nullable: true),
+                    Stage = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    FinishDate = table.Column<DateTime>(nullable: true),
+                    CostCurrent = table.Column<decimal>(nullable: false),
+                    CostFull = table.Column<decimal>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    IsClosed = table.Column<bool>(nullable: false),
+                    InitializerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_Universities_InitializerId",
+                        column: x => x.InitializerId,
+                        principalTable: "Universities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewsTags",
+                columns: table => new
+                {
+                    NewsId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsTags", x => new { x.NewsId, x.TagId });
+                    table.ForeignKey(
+                        name: "FK_NewsTags_News_NewsId",
+                        column: x => x.NewsId,
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NewsTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -214,72 +340,48 @@ namespace DataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "News",
+                name: "ProjectsCompanies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Header = table.Column<string>(nullable: false),
-                    Annotation = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Text = table.Column<string>(nullable: false),
-                    SectionId = table.Column<int>(nullable: true)
+                    ProjectId = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_News", x => x.Id);
+                    table.PrimaryKey("PK_ProjectsCompanies", x => new { x.ProjectId, x.CompanyId });
                     table.ForeignKey(
-                        name: "FK_News_NewsTypes_SectionId",
-                        column: x => x.SectionId,
-                        principalTable: "NewsTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EventsTags",
-                columns: table => new
-                {
-                    EventId = table.Column<int>(nullable: false),
-                    TagsId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventsTags", x => new { x.EventId, x.TagsId });
-                    table.ForeignKey(
-                        name: "FK_EventsTags_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
+                        name: "FK_ProjectsCompanies_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EventsTags_Tags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "Tags",
+                        name: "FK_ProjectsCompanies_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NewsTags",
+                name: "ProjectsTags",
                 columns: table => new
                 {
-                    NewsId = table.Column<int>(nullable: false),
-                    TagsId = table.Column<int>(nullable: false),
-                    NewsId1 = table.Column<int>(nullable: false)
+                    ProjectId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewsTags", x => new { x.NewsId, x.TagsId });
+                    table.PrimaryKey("PK_ProjectsTags", x => new { x.ProjectId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_NewsTags_News_NewsId1",
-                        column: x => x.NewsId1,
-                        principalTable: "News",
+                        name: "FK_ProjectsTags_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NewsTags_Tags_TagsId",
-                        column: x => x.TagsId,
+                        name: "FK_ProjectsTags_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -312,6 +414,11 @@ namespace DataStore.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CompanyId",
+                table: "AspNetUsers",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -323,9 +430,14 @@ namespace DataStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventsTags_TagsId",
+                name: "IX_AspNetUsers_UniversityId",
+                table: "AspNetUsers",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventsTags_TagId",
                 table: "EventsTags",
-                column: "TagsId");
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_News_SectionId",
@@ -333,14 +445,24 @@ namespace DataStore.Migrations
                 column: "SectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsTags_NewsId1",
+                name: "IX_NewsTags_TagId",
                 table: "NewsTags",
-                column: "NewsId1");
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsTags_TagsId",
-                table: "NewsTags",
-                column: "TagsId");
+                name: "IX_Projects_InitializerId",
+                table: "Projects",
+                column: "InitializerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectsCompanies_CompanyId",
+                table: "ProjectsCompanies",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectsTags_TagId",
+                table: "ProjectsTags",
+                column: "TagId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -367,7 +489,10 @@ namespace DataStore.Migrations
                 name: "NewsTags");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "ProjectsCompanies");
+
+            migrationBuilder.DropTable(
+                name: "ProjectsTags");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -382,10 +507,19 @@ namespace DataStore.Migrations
                 name: "News");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
+                name: "Companies");
+
+            migrationBuilder.DropTable(
                 name: "NewsTypes");
+
+            migrationBuilder.DropTable(
+                name: "Universities");
         }
     }
 }

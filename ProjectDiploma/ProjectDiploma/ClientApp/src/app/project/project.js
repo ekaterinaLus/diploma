@@ -6,4 +6,10 @@ var Project = /** @class */ (function () {
     return Project;
 }());
 exports.Project = Project;
+var University = /** @class */ (function () {
+    function University() {
+    }
+    return University;
+}());
+exports.University = University;
 //# sourceMappingURL=project.js.map

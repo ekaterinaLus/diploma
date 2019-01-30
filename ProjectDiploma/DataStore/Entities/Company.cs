@@ -19,6 +19,7 @@ namespace DataStore.Entities
         [MaxLength(2000)]
         public string ContactInformation { get; set; }
 
+        public ICollection<ProjectsCompanies> Projects { get; set; } = new HashSet<ProjectsCompanies>();
         public virtual ICollection<User> Employees { get; set; } = new HashSet<User>();
     }
 }
