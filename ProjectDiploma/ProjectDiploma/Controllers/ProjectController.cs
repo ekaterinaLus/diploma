@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Diploma.DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 using ProjectDiploma.ViewModel;
@@ -9,6 +10,7 @@ namespace ProjectDiploma.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProjectController : ControllerBase, IPagingController<ProjectViewModel>
     {
         private readonly BusinessUniversityContext _context;

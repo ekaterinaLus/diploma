@@ -1,24 +1,30 @@
+<button *ngIf="canAdd" mat-button (onclick)="AddNewProject()">Add Project</button>
 
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-</head>
+<mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
+<mat-grid-list cols="2" rowHeight="2:1" *ngIf="projects && projects.length > 0">
+  <mat-grid-tile *ngFor="let pr of projects">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{pr.name}}</mat-card-title>
+        <mat-card-subtitle>{{pr.initializer.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{pr.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (onclick)="OpenProject(pr.id);">Подробнее</button>        
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<h1 align="center" class="test">Проекты</h1>
-<p *ngIf="!oneProject"><strong>Загрузка...</strong></p>
-<div style="border:10px ridge  #FFFACD;padding:10px;">
-  <div style="text-align: center; font-size: 20px; font-family: Lucida Sans;color: #000000; padding:2px;">
-    <div><p align="center">{{oneProject.name}}</p></div>
-    <div><p>Дата начала проекта: {{oneProject.start|date:'dd-MM-yyyy'}}</p></div>
-    <div><p>Дата завершения проекта: {{oneProject.finish|date:'dd-MM-yyyy'}}</p></div>
-    <style>
-     
-    </style>
-    <div ><p align="justify">Стоимость проекта: {{oneProject.cost}} руб.</p></div>
-  </div>
-</div>
-
-
-
-
+<mat-paginator *ngIf="projects && projects.length > 0"
+               [length]="itemsLength"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               (page)="pageEvent = handlePage($event)">
+</mat-paginator>
 
 

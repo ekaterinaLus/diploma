@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { filter, first } from 'rxjs/operators';
 
 import { LoginDialog } from '../login/login.dialog';
+import { Role } from '../models/role';
 
 /** @title Sidenav with custom escape and backdrop click behavior */
 
@@ -20,15 +21,14 @@ import { LoginDialog } from '../login/login.dialog';
 
 export class NavMenuComponent {
   @ViewChild('sidenav') sidenav: MatSidenav;
-  public currentUser: string;
+  public currentUser: User;
   public showLoginButton: boolean;
-
-
+  
   constructor(public authenticationService: AuthenticationService, private router: Router, private dialog: MatDialog) {
     this.authenticationService.currentUser.subscribe(x =>
     {
       if (x != null) {
-        this.currentUser = x.email
+        this.currentUser = x;
       }
       else {
         this.currentUser = null;
@@ -38,7 +38,7 @@ export class NavMenuComponent {
     this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe(event => { this.showLoginButton = !event.url.startsWith("/login"); });
   }
-
+  
   public openLoginDialog() {
     const dialogRef = this.dialog.open(LoginDialog, {
       autoFocus: true
