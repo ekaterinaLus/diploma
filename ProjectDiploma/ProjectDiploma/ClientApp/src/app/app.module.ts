@@ -36,8 +36,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-
-
 //LOGIN
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
@@ -83,9 +81,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatGridListModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'event', component: EventComponent, canActivate: [AuthGuard] },
+      { path: 'event', component: EventComponent },
       { path: 'news', component: NewComponent },
-      { path: 'project', component: ProjectComponent },
+      { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] },
       { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent },
       { path: 'newspage', component: NewsPageComponent }

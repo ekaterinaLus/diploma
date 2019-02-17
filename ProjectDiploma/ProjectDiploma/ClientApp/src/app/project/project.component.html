@@ -1,183 +1,30 @@
+<button *ngIf="canAdd" mat-button (onclick)="AddNewProject()">Add Project</button>
 
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-</head>
-
-<!--<mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
-<h1 *ngIf="projects" align="center" class="test">Проекты</h1>
-<mat-grid-list cols="2" rowHeight="2:4">
-  <mat-grid-tile *ngFor="let p of projects" class="padding">
-    <mat-card class="example-card">
+<mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
+<mat-grid-list cols="2" rowHeight="2:1" *ngIf="projects && projects.length > 0">
+  <mat-grid-tile *ngFor="let pr of projects">
+    <mat-card>
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title value="header">{{p.name}}</mat-card-title>
-        <mat-icon aria-label="Side nav toggle icon" class="icon">bookmark</mat-icon>
-        <mat-card-subtitle>{{p.date|date:'dd-MM-yyyy'}}</mat-card-subtitle>
+        <mat-card-title>{{pr.name}}</mat-card-title>
+        <mat-card-subtitle>{{pr.initializer.name}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="http://rvbu.ru/uploads/posts/2015-09/1443087020_1.jpg" class="example-header-image2">
       <mat-card-content>
-        <p class="annotation">
-          {{p.description}}
+        <p>
+          {{pr.description}}
         </p>
-        <mat-chip-list>
-          <mat-chip *ngFor="let tag of p.tags" color="primary">{{tag.name}}</mat-chip>
-        </mat-chip-list>
       </mat-card-content>
       <mat-card-actions>
-        <div class="link">
-          <a mat-button value="id1" mat-button href='{{baseUrl}}newspage?id=1'>Подробнее</a>
-        </div>
+        <button mat-button (onclick)="OpenProject(pr.id);">Подробнее</button>        
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>
-</mat-grid-list>-->
-
-<mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
-<h1 *ngIf="projects" align="center" class="test">Проекты</h1>
-<mat-grid-list cols="2" rowHeight="2:3.5">
-  <mat-grid-tile class="padding">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title value="header">Платформа. Бизнес-тренажеры для онлайн обучения</mat-card-title>
-
-        <mat-card-subtitle>Дата размещения: 21-01-219</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="https://www.pravmir.ru/wp-content/uploads/2018/03/onlineeducation2-1200x600.jpg" class="example-header-image2">
-      <mat-card-content>
-        <div class="text-card">
-          <p>
-            Описание: Платформа позволяет: - Быстро и легко создавать многопользовательские бизнес-тренажеры и реалистичные обучающие бизнес-игры - Создавать, продавать и проводить онлайн курсы по менеджменту и онлайн тренинги нового поколения, построенные по схеме «ТЕОРИЯ (контент) + ПРАКТИКА (в бизнес-симуляции) = НАВЫКИ» - Проводить автоматизированную онлайн оценку компетенций сотрудников и кандидатов в бизнес-тренажерах - Проводить онлайн турниры по менеджменту - Интегрировать бизнес-симуляции в любые образовательные платформы
-          </p>
-          <p>
-            Риски:Рыночная среда: Worldwide E-Learning Market by 2016 - $51,5 B,Annual worldwide growth rate over theperiod 2012-2016 - 7,9%Одним из самых мощных трендов последних лет в индустрии онлайн обучения и тренингов является движение в сторону геймификации и использования обучающих игр и симуляций.Самые высокие темпы роста в индустрии e-learning сейчас показывает сегмент решений simulation-based - 23% в год. С $2,4B в 2012 году до $6,6 в 2017.
-          </p>
-          <p>
-            Требуемая на данном этапе сумма: 50 000 руб.
-          </p>
-          <p class="text-card">
-            Итоговая сумма: 100 000 руб.
-          </p>
-          <p>
-            Контакты: АГУ ЮРИДИЧЕСКИЙ АДРЕС: 414056, Россия, г. Астрахань, ул. Татищева, 20а, Астраханский государственный университет.Телефоны: 8(8512) 24 - 64 - 00.Факс: 8(8512) 49 - 41 - 57.E - mail: asu @asu.edu.ru
-          </p>
-        </div>
-        <mat-chip-list>
-          <mat-chip>менеджмент</mat-chip>
-          <mat-chip>IT-технологии</mat-chip>
-          <mat-chip>бизнес</mat-chip>
-        </mat-chip-list>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
-
-  <mat-grid-tile class="padding">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title value="header">Аналитическая система визуального анализа данных</mat-card-title>
-        <mat-card-subtitle>Дата размещения: 21-01-219</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="https://postnauka.ru/img/2017/12/stockvault-big-data-analytics196879.jpg" class="example-header-image2">
-      <mat-card-content>
-        <div class="text-card">
-          <p>
-            Описание: Система реализована на авторских теориях: - искусственный интеллект; -теория СУБД;-теория графов.Свойства: -интеллектуальный анализ с помощью глубокой интерактивности, поддерживающая рассуждения исследователя;-встроенные Объектная База данных и База знаний;-аналитические возможности усиленны технологией 'нейронные сети'(начальная стадия для прогнозирования процессов);-не требующий навыков программирования визуальный язык GSQL
-          </p>
-          <p>
-            Риски: Российский рынок информационных технологий находится под контролем дилеров западных продуктов. Их гонорары порядка 2-3 млрд $. И они делают всё возможное, чтобы на этот рынок не допустить отечественные продукты.
-          </p>
-          <p>
-            Требуемая на данном этапе сумма: 50 000 руб.
-          </p>
-          <p>
-            Итоговая сумма: 100 000 руб.
-          </p>
-          <p>
-            Контакты: АГТУ г.Астрахань, ул.Татищева, 16. Приемная ректора: тел. (8512) 61-41-19. Общий отдел: тел./факс 61-43-66; e-mail: astu@astu.org
-          </p>
-        </div>
-        <mat-chip-list>
-          <mat-chip color="primary">IT-технологии</mat-chip>
-        </mat-chip-list>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
-
-  <mat-grid-tile class="padding">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title value="header">Доставка свежеприготовленного горячего обеда или ужина</mat-card-title>
-        <mat-card-subtitle>Дата размещения: 11-01-219</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="http://nuzhenuzhin.ru/blog/wp-content/uploads/2016/02/first-screen-bg.jpeg" class="example-header-image2">
-      <mat-card-content>
-        <div class="text-card">
-          <p>
-            Описание: Действующий бизнес с монетизацией.- Портал работает;-ежедневно заключаются договоры с точками общественного питания;-укомплектован штат сотрудников;-разработана юридическая и правовая основа проекта;-совместно с процессинговой компанией разработана логика платежей, которая интегрирована в портал и дает возможность всем участникам бизнес - процесса получать свои средства в автоматическом режиме при оплате заказа покупателем;-разработана упаковка;-отгружается наша фирменная упаковка в точки общественного питания;-заключены договоры с партнерами и разными участниками бизнес - процесса;-продукт выводится на рынок согласно маркетинговому плану;-разработана и автоматизирована программа лояльности для покупателей и поставщиков, которая присутствует в логике платежей;-закончено тестирование мобильного приложения.
-          </p>
-          <p>
-            Риски: Российский рынок информационных технологий находится под контролем дилеров западных продуктов. Их гонорары порядка 2-3 млрд $. И они делают всё возможное, чтобы на этот рынок не допустить отечественные продукты.
-          </p>
-          <p>
-            Требуемая на данном этапе сумма: 50 000 руб.
-          </p>
-          <p>
-            Итоговая сумма: 100 000 руб.
-          </p>
-          <p>
-            Контакты: АГУ ЮРИДИЧЕСКИЙ АДРЕС: 414056, Россия, г. Астрахань, ул. Татищева, 20а, Астраханский государственный университет.Телефоны: 8(8512) 24 - 64 - 00.Факс: 8(8512) 49 - 41 - 57.E - mail: asu @asu.edu.ru
-          </p>
-        </div>
-        <mat-chip-list>
-          <mat-chip color="primary">франчайзинг</mat-chip>
-          <mat-chip color="primary">торговля</mat-chip>
-          <mat-chip color="primary">IT-технологии</mat-chip>
-        </mat-chip-list>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
-
-  <mat-grid-tile class="padding">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title value="header">Реклама будущего, которая производит wow эффект</mat-card-title>
-        <mat-card-subtitle>Дата размещения: 11-01-219</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="https://womanadvice.ru/sites/default/files/27/articles_main_big/2017-03-16_2114/targetirovannaya_reklama.jpg" class="example-header-image2">
-      <mat-card-content>
-        <div class="text-card">
-          <p>
-            Описание: Готов прототип. Проекционная система для показа включает в себя мобильную платформу на базе Лада Ларгус, оснащённую автоматизированным подъемником - позиционером и лазерным проекторомна нём. По заказу клиента, создаётся изображение или видеоролик на специализированном программном обеспечении, и отправляется на проекционную систему. В результате получаем мега-широкоформатную рекламу нового поколения, котоорая имеет повышеннгое время удержания целевой аудитории и, как следствие, обеспечивает повышене конверсии компаний.
-          </p>
-          <p>
-            Риски: Риски практически отстуствуют
-          </p>
-          <p>
-            Требуемая на данном этапе сумма: 50 000 руб.
-          </p>
-          <p>
-            Итоговая сумма: 100 000 руб.
-          </p>
-          <p>
-            Контакты: АГУ ЮРИДИЧЕСКИЙ АДРЕС: 414056, Россия, г. Астрахань, ул. Татищева, 20а, Астраханский государственный университет.Телефоны: 8(8512) 24 - 64 - 00.Факс: 8(8512) 49 - 41 - 57.E - mail: asu @asu.edu.ru
-          </p>
-        </div>
-        <mat-chip-list>
-          <mat-chip color="primary">информация и СМИ</mat-chip>
-          <mat-chip color="primary">электроника</mat-chip>
-          <mat-chip color="primary">IT-технологии</mat-chip>
-        </mat-chip-list>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
-
-
 </mat-grid-list>
 
-
-
+<mat-paginator *ngIf="projects && projects.length > 0"
+               [length]="itemsLength"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               (page)="pageEvent = handlePage($event)">
+</mat-paginator>
 
 

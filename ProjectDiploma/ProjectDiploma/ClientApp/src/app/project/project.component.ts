@@ -1,39 +1,52 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageEvent } from '@angular/material';
+import { User } from '../models/user';
+import { AuthenticationService } from '../services/authentication.service';
+import { Role } from '../models/role';
+
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
+  templateUrl: './project.component.html'
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit {
   public projects: Project[];
-  public oneProject: Project;
   public itemsLength: number;
   public pageIndex: number;
   public pageSize: number;
 
   pageEvent: PageEvent;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.pageSize = 2;
+  currentUser: User;
+
+  constructor(public authenticationService: AuthenticationService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.pageSize = 1;
     this.pageIndex = 0;
+
+    this.authenticationService.currentUser.subscribe(x => {
+      if (x != null) {
+        this.currentUser = x;
+      }
+      else {
+        this.currentUser = null;
+      }
+    });
   }
 
   ngOnInit(): void {
     this.handlePage(null);
   }
-  //constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-  //  http.get<Project>(baseUrl + 'api/Project/GetRandomProject').subscribe(result => {
-  //    this.oneProject = result;
-  //  }, error => console.error(error));
-  //}
+
+  get canAdd() {
+    return this.currentUser && (this.currentUser.role == Role.Admin || this.currentUser.role == Role.University);
+  }
+
   public handlePage(event?: PageEvent) {
 
     this.http.get<number>(this.baseUrl + 'api/Project/GetCount').subscribe(result => {
       this.itemsLength = result;
-    }, error => console.log('error in project'));
+    }, error => console.log('error in event'));
 
     if (event != null) {
       this.pageIndex = event.pageIndex;
@@ -48,7 +61,9 @@ export class ProjectComponent {
       params: args
     }).subscribe(result => {
       this.projects = result;
-    }, error => console.log('error in project'));
+      console.log(1);
+      console.log(this.projects);
+    }, error => console.log('error in event'));
 
   }
 }
@@ -94,7 +109,6 @@ interface News {
   id: number;
   header: string;
   annotation?: string;
-  link: string;
   date: Date;
   text: string;
   tags: NewsTags;
@@ -102,34 +116,17 @@ interface News {
   sectionId: number;
 }
 
-interface ProjectStage {
-  Founding,
-  Start,
-  Prototype,
-  PreProduction,
-  Production
-}
-
-interface University {
+interface Company {
+  id: number;
   name: string;
-  contactinformation: string;
+  contactInformation: string;
 }
-
 
 interface Project {
   id: number;
   name: string;
-  description: string;
-  risks: string;
-  stage: ProjectStage;
   start: Date;
   finish: Date;
   cost: number;
-  startdate: Date;
-  finishdate: Date;
-  costcurrent: number;
-  costfull: number;
-  date: Date;
-  isclosed: boolean;
-  initializer: University;
+  initializer: Company;
 }
