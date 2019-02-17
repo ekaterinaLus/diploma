@@ -7,12 +7,13 @@
   <mat-sidenav #sidenav (keydown.escape)="close('escape') " opened role="navigation" disableClose class="main-nav-bar nav-menu-width">
     <mat-nav-list>
       <button mat-button (click)="sidenav.close()" class="sidenav_button_close">
-        <mat-icon aria-label="Side nav toggle icon" >menu</mat-icon>  
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <a mat-list-item button [routerLink]="['/']" class="style_text_menu"> <mat-icon mat-list-icon>home</mat-icon><strong>Главная</strong></a>
       <a mat-list-item button [routerLink]="['/event']" class="style_text_menu"><mat-icon mat-list-icon>event</mat-icon><strong>События</strong></a>
       <a mat-list-item button [routerLink]="['/news']" class="style_text_menu"><mat-icon mat-list-icon>speaker_notes</mat-icon><strong>Новости</strong></a>
       <a mat-list-item button [routerLink]="['/project']" class="style_text_menu"><mat-icon mat-list-icon>trending_up</mat-icon><strong>Проекты</strong></a>
+      <a mat-list-item button [routerLink]="['/newproject']" class="style_text_menu"><mat-icon mat-list-icon>trending_up</mat-icon><strong>Проекты</strong></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

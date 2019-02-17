@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material';
 import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication.service';
 import { Role } from '../models/role';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,11 @@ export class ProjectComponent implements OnInit {
 
   currentUser: User;
 
-  constructor(public authenticationService: AuthenticationService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(
+    private router: Router,
+    public authenticationService: AuthenticationService,
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string) {
     this.pageSize = 1;
     this.pageIndex = 0;
 
@@ -42,6 +47,10 @@ export class ProjectComponent implements OnInit {
     return this.currentUser && (this.currentUser.role == Role.Admin || this.currentUser.role == Role.University);
   }
 
+  public AddNewProject() {
+    this.router.navigate(['/newproject']);
+  }
+
   public handlePage(event?: PageEvent) {
 
     this.http.get<number>(this.baseUrl + 'api/Project/GetCount').subscribe(result => {
@@ -61,8 +70,6 @@ export class ProjectComponent implements OnInit {
       params: args
     }).subscribe(result => {
       this.projects = result;
-      console.log(1);
-      console.log(this.projects);
     }, error => console.log('error in event'));
 
   }
@@ -125,8 +132,8 @@ interface Company {
 interface Project {
   id: number;
   name: string;
-  start: Date;
-  finish: Date;
+  startDate: Date;
+  finishDate: Date;
   cost: number;
   initializer: Company;
 }

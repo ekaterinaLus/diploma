@@ -1,0 +1,34 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+</head>
+
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <h1 class="style-text">Добавить проект</h1>
+  <mat-card class="form" mat-elevation-z24>
+
+    <mat-form-field class="input">
+      <input matInput formControlName="name" required autocomplete="off" placeholder="Имя проекта">
+    </mat-form-field>
+
+    <mat-form-field class="input">
+      <input matInput [matDatepicker]="picker1" placeholder="Дата начала" formControlName="start">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="input">
+      <input matInput [matDatepicker]="picker2" placeholder="Дата окончания" formControlName="finish">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="input">
+      <input matInput formControlName="cost" autocomplete="off" placeholder="Цена">
+    </mat-form-field>
+
+    <p class="input">
+      <button mat-raised-button type="submit" [disabled]="loading" class="button_login" color="primary">Добавить</button>
+    <p>
+
+  </mat-card>
+</form>

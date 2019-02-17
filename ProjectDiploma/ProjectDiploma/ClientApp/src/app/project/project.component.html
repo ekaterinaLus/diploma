@@ -1,4 +1,4 @@
-<button *ngIf="canAdd" mat-button (onclick)="AddNewProject()">Add Project</button>
+<button *ngIf="canAdd" mat-button (click)="AddNewProject();">Add Project</button>
 
 <mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
 <mat-grid-list cols="2" rowHeight="2:1" *ngIf="projects && projects.length > 0">
@@ -14,7 +14,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (onclick)="OpenProject(pr.id);">Подробнее</button>        
+        <button mat-button (onclick)="OpenProject(pr.id);">Подробнее</button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>
@@ -26,5 +26,6 @@
                [pageSizeOptions]="[1, 5, 10, 25, 100]"
                (page)="pageEvent = handlePage($event)">
 </mat-paginator>
+
 
 

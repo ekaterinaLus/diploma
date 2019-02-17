@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { NewComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
 import { ProjectComponent } from './project/project.component';
+import { AddProject } from './project/project.add';
 import { UserComponent } from './user/user.component';
 import { NewsPageComponent } from './newspage/newspage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +36,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -54,7 +57,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     UserComponent,
     NewsPageComponent,
     LoginComponent,
-    LoginDialog
+    LoginDialog,
+    AddProject
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -79,6 +83,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatExpansionModule,
     MatChipsModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
@@ -86,7 +92,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
       { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] },
       { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'newspage', component: NewsPageComponent }
+      { path: 'newspage', component: NewsPageComponent },
+      { path: 'newproject', component: AddProject }
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],
