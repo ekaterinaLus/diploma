@@ -11,7 +11,7 @@ namespace ProjectDiploma
 {
     public class Program
     {
-        private static bool NeedUpdateDatabase { get => false; }
+        private static bool NeedUpdateDatabase { get => true; }
 
         public static void Main(string[] args)
         {

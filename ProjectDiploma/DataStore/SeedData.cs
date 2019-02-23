@@ -259,6 +259,17 @@ namespace DataStore
                                 .Select(x => new EventsTags { Tag = x }).ToList(),
                     Description = "Тренинги профессионального и личностного развития для преподавателей и сотрудников университета",
                     Address = "ул. Татищева, 20а"
+                },
+
+                     new Event
+                {
+                    Date = new DateTime(2019, 6, 5),
+                    Title = "Курсы для сотрудников организаций",
+                    Tags = tags.Where(tag =>
+                            tag.Name == "тренинг" || tag.Name == "развитие")
+                                .Select(x => new EventsTags { Tag = x }).ToList(),
+                    Description = "Курсы повышения квалификации для сотрудников организаий в области экономики",
+                    Address = "ул. Татищева, 20а"
                 }
             };
             

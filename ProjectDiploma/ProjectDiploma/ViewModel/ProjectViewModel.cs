@@ -28,6 +28,8 @@ namespace ProjectDiploma.ViewModel
 
         public bool IsClosed { get; set; }
 
+        public string FileName { get; set; }
+
         public OrganizationViewModel Initializer { get; set; }
 
         public HashSet<OrganizationViewModel> Sponsors { get; set; }
