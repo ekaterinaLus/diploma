@@ -8,6 +8,7 @@
         <mat-card-title>{{pr.name}}</mat-card-title>
         <mat-card-subtitle>{{pr.initializer.name}}</mat-card-subtitle>
       </mat-card-header>
+      <img *ngIf="pr.fileName" mat-card-image src="{{url}}{{pr.fileName}}">
       <mat-card-content>
         <p>
           {{pr.description}}

@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication.service';
 import { Role } from '../models/role';
 import { Router } from '@angular/router';
+import { FileService } from '../services/file.service';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './project.component.html'
 })
 export class ProjectComponent implements OnInit {
+  public url: string;
   public projects: Project[];
   public itemsLength: number;
   public pageIndex: number;
@@ -24,10 +26,13 @@ export class ProjectComponent implements OnInit {
   constructor(
     private router: Router,
     public authenticationService: AuthenticationService,
+    private fileService: FileService,
     private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) {
     this.pageSize = 1;
     this.pageIndex = 0;
+
+    this.url = this.fileService.loadFileUrl();
 
     this.authenticationService.currentUser.subscribe(x => {
       if (x != null) {
@@ -76,51 +81,9 @@ export class ProjectComponent implements OnInit {
 }
 
 //прописать ньюс таг
-
-interface NewsTags {
-  newsId: number;
-  news: News;
-  tagsId: number;
-  tags: Tag;
-}
-
-interface NewsType {
-  id: number;
-  name: string;
-}
-
-interface Event {
-  id: number;
-  date: Date;
-  title: string;
-  description: string;
-  adress: string;
-  cost: number;
-  tags: Tag;
-}
-
-interface EventsTags {
-  eventId: number;
-  events: Event;
-  tagsId: number;
-  tags: Tag;
-}
-
 interface Tag {
   id: number;
   name: string;
-  news: NewsTags;
-  events: EventsTags;
-}
-interface News {
-  id: number;
-  header: string;
-  annotation?: string;
-  date: Date;
-  text: string;
-  tags: NewsTags;
-  section: NewsType;
-  sectionId: number;
 }
 
 interface Company {
@@ -135,5 +98,8 @@ interface Project {
   startDate: Date;
   finishDate: Date;
   cost: number;
+  fileName: string;
   initializer: Company;
+  sponsors: Company[];
+  tags: Tag[];
 }

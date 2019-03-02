@@ -53,7 +53,7 @@ namespace DataStore.Entities
         [Required]
         public University Initializer { get; set; }
 
-        //public string FileName { get; set; }
+        public string FileName { get; set; }
 
         public  ICollection<ProjectsCompanies> Sponsors { get; set; } = new HashSet<ProjectsCompanies>();
 

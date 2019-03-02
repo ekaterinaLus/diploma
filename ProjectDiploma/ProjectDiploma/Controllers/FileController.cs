@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProjectDiploma.Controllers
 {
@@ -13,12 +11,19 @@ namespace ProjectDiploma.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private const string FILE_FOLDER_PATH = "./Content/";
+        private const string FILE_FOLDER_PATH = @"\Content\";
+
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public FileController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
 
         [HttpPost("[action]")]
         public Response UploadFile([FromForm]IFormFile file)
         {
-            var filePath = $"{FILE_FOLDER_PATH}{Guid.NewGuid().ToString()}{Path.GetExtension(file.FileName)}";
+            var filePath = $"{_hostingEnvironment.ContentRootPath}{FILE_FOLDER_PATH}{Guid.NewGuid().ToString()}{Path.GetExtension(file.FileName)}";
 
             var response = new Response<string>(string.Empty);
 
@@ -39,8 +44,8 @@ namespace ProjectDiploma.Controllers
             return response;
         }
 
-        [HttpPost("[action]")]
-        public IActionResult LoadFile([FromBody] string fileName)
+        [HttpGet("[action]/{fileName}")]
+        public IActionResult LoadFile([FromRoute] string fileName)
         {
             var fileExtension = Path.GetExtension(fileName).ToLower();
             var produces = string.Empty;
@@ -55,7 +60,7 @@ namespace ProjectDiploma.Controllers
                     break;
             }
 
-            return PhysicalFile($"{FILE_FOLDER_PATH}{fileName}", $"image/{produces}");
+            return PhysicalFile($"{_hostingEnvironment.ContentRootPath}{FILE_FOLDER_PATH}{fileName}", $"image/{produces}");
         }
     }
 }

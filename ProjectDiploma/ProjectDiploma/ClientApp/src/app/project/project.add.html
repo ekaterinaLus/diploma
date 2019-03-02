@@ -27,9 +27,8 @@
     </mat-form-field>
 
     <div>
-      <button (click)="Send()">Send</button>
-      <label mat-raised-button for="file">Загрузить файл</label>
-      <input type="file"
+      <span mat-raised-button for="file">Загрузить файл</span>
+      <input mat-raised-button type="file"
              id="file"
              (change)="handleFileInput($event.target.files)">
     </div>

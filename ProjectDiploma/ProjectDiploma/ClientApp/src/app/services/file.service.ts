@@ -7,12 +7,14 @@ import { Response } from '../models/response';
 @Injectable({ providedIn: 'root' })
 export class FileService {
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  private readonly endpoint: string;
 
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.endpoint = `${this.baseUrl}api/File`;
   }
 
   postFile(fileToUpload: File): Observable<Response<string>> {
-    const endpoint = `${this.baseUrl}api/File/UploadFile`;
+    const uploadEndpoint = `${this.endpoint}/UploadFile`;
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
@@ -22,7 +24,11 @@ export class FileService {
     });
 
     return this.http
-      .post<Response<string>>(endpoint, formData, { headers: options } );
+      .post<Response<string>>(uploadEndpoint, formData, { headers: options } );
+  }
+
+  loadFileUrl(): string {
+    return `${this.endpoint}/LoadFile/`;
   }
 
 }
