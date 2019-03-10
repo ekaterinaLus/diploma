@@ -53,6 +53,10 @@ export class NavMenuComponent {
     });
   }
 
+  public userRegistration() {
+    this.router.navigate(['/user']);
+  }
+
   public logout() {
     this.authenticationService.logout();
   }

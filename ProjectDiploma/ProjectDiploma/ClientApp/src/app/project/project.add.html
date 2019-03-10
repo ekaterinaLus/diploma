@@ -2,40 +2,82 @@
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 
-<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-  <h1 class="style-text">Добавить проект</h1>
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="text_padding">
+  <h1>Добавить проект</h1>
   <mat-card class="form" mat-elevation-z24>
+    <mat-grid-list cols="4" rowHeight="75px" gutterSize="10px">
 
-    <mat-form-field class="input">
-      <input matInput formControlName="name" required autocomplete="off" placeholder="Имя проекта">
-    </mat-form-field>
+      <mat-grid-tile [colspan]="4">
+        <mat-form-field class="project_tile">
+          <input matInput formControlName="name" required autocomplete="off" placeholder="Имя проекта">
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <mat-form-field class="input">
-      <input matInput [matDatepicker]="picker1" placeholder="Дата начала" formControlName="start">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
+      <mat-grid-tile>
+        <mat-form-field class="project_tile">
+          <input matInput [matDatepicker]="picker1" placeholder="Дата начала" formControlName="start">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <mat-form-field class="input">
-      <input matInput [matDatepicker]="picker2" placeholder="Дата окончания" formControlName="finish">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
+      <mat-grid-tile>
+        <mat-form-field class="project_tile">
+          <input matInput [matDatepicker]="picker2" placeholder="Дата окончания" formControlName="finish">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <mat-form-field class="input">
-      <input matInput formControlName="cost" autocomplete="off" placeholder="Цена">
-    </mat-form-field>
+      <mat-grid-tile>
+        <mat-form-field class="project_tile">
+          <input matInput formControlName="costCurrent" autocomplete="off" placeholder="Средств собрано">
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <div>
-      <span mat-raised-button for="file">Загрузить файл</span>
-      <input mat-raised-button type="file"
-             id="file"
-             (change)="handleFileInput($event.target.files)">
-    </div>
+      <mat-grid-tile>
+        <mat-form-field class="project_tile">
+          <input matInput formControlName="costFull" autocomplete="off" placeholder="Общая стоимость">
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <p class="input">
-      <button mat-raised-button type="submit" [disabled]="loading" class="button_login" color="primary">Добавить</button>
-    <p>
+      <mat-grid-tile [colspan]="4">
+        <mat-divider></mat-divider>
+      </mat-grid-tile>
 
+      <mat-grid-tile [colspan]="4" [rowspan]="3">
+        <mat-form-field class="project_tile">
+          <textarea matInput class="project_textarea" formControlName="description" autocomplete="off" placeholder="Описание"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="4">
+        <mat-divider></mat-divider>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="4" [rowspan]="3">
+        <mat-form-field class="project_tile">
+          <textarea matInput class="project_textarea" formControlName="risks" autocomplete="off" placeholder="Риски"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <td-file-upload id="file" (select)="handleFileInput($event)">
+          <mat-icon>file_upload</mat-icon><span>{{ fileToUpload?.name }}</span>
+          <ng-template td-file-input-label>
+            <mat-icon>attach_file</mat-icon>
+            <span>
+              Выберите файл...
+            </span>
+          </ng-template>
+        </td-file-upload>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button type="submit" [disabled]="loading" class="button_login" color="primary">Сохранить</button>
+      </mat-grid-tile>
+
+    </mat-grid-list>
   </mat-card>
 </form>
+

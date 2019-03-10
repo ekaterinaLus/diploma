@@ -6,11 +6,13 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Role } from '../models/role';
 import { Router } from '@angular/router';
 import { FileService } from '../services/file.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html'
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
   public url: string;
@@ -102,4 +104,5 @@ interface Project {
   initializer: Company;
   sponsors: Company[];
   tags: Tag[];
+  description: string;
 }

@@ -1,17 +1,17 @@
-<button *ngIf="canAdd" mat-button (click)="AddNewProject();">Add Project</button>
+<button class="add_project" *ngIf="canAdd" mat-stroked-button (click)="AddNewProject();">Добавить проект</button>
 
 <mat-spinner *ngIf="!projects" class="spinner">Загрузка...</mat-spinner>
-<mat-grid-list cols="2" rowHeight="2:1" *ngIf="projects && projects.length > 0">
-  <mat-grid-tile *ngFor="let pr of projects">
-    <mat-card>
+<mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px" *ngIf="projects && projects.length > 0">
+  <mat-grid-tile style="margin-bottom:70px" *ngFor="let pr of projects">
+    <mat-card class="project_row">
       <mat-card-header>
         <mat-card-title>{{pr.name}}</mat-card-title>
         <mat-card-subtitle>{{pr.initializer.name}}</mat-card-subtitle>
       </mat-card-header>
       <img *ngIf="pr.fileName" mat-card-image src="{{url}}{{pr.fileName}}">
       <mat-card-content>
-        <p>
-          {{pr.description}}
+        <p *ngIf="pr.description">
+          {{pr.description.length > 303 ? pr.description.substring(0, 300) + '...' : pr.description}}
         </p>
       </mat-card-content>
       <mat-card-actions>
@@ -25,7 +25,8 @@
                [length]="itemsLength"
                [pageSize]="pageSize"
                [pageSizeOptions]="[1, 5, 10, 25, 100]"
-               (page)="pageEvent = handlePage($event)">
+               (page)="pageEvent = handlePage($event)"
+               class="paginator">
 </mat-paginator>
 
 

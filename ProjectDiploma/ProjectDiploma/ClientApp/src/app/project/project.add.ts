@@ -7,12 +7,13 @@ import { FileService } from '../services/file.service';
 
 @Component({
   selector: 'add-project',
-  templateUrl: './project.add.html'
+  templateUrl: './project.add.html',
+  styleUrls: ['./project.component.css']
 })
 export class AddProject implements OnInit {
   projectForm: FormGroup;
 
-  fileToUpload: File = null;
+  public fileToUpload: File = null;
 
   loading = false;
   error = '';
@@ -41,8 +42,8 @@ export class AddProject implements OnInit {
 
   get f() { return this.projectForm.controls; }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+  handleFileInput(file: File) {
+    this.fileToUpload = file;
   }
 
   Send() {

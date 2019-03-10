@@ -37,7 +37,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
+import { CovalentFileModule } from '@covalent/core/file';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -49,7 +50,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    //SidenavDisableCloseExample,
     HomeComponent,
     EventComponent,
     NewComponent,
@@ -85,6 +85,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    CovalentFileModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
@@ -97,7 +98,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true } ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

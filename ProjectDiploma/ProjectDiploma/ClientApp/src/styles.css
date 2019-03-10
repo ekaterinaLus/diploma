@@ -15,3 +15,13 @@
   right: 0;
 }
 
+.paginator {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  display: block;
+}
+
+button:focus {
+  outline: 0 !important;
+}

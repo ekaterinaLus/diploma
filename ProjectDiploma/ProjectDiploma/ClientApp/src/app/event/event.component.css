@@ -19,3 +19,7 @@
 .text{
   padding-left: 0pt;
 }
+
+.event_title {
+  width: 100px;
+}

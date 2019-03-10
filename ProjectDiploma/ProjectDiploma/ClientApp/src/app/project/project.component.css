@@ -1,88 +1,18 @@
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-/*.column {
-  -webkit-column-width: 50px;
-  -moz-column-width: 50px;
-  column-width: 50px;
-  -webkit-column-count: 2;
-  -moz-column-count: 2;
-  column-count: 2;
-  -webkit-column-gap: 20px;
-  -moz-column-gap: 20px;
-  column-gap: 20px;
-  -webkit-column-rule: 1px solid #ccc;
-  -moz-column-rule: 1px solid #ccc;
-  column-rule: 1px solid #ccc;
-}*/
-
-/*P:first-letter {
-  font-family: "Times New Roman", Times, serif; /* Гарнитура шрифта первой буквы 
-  font-size: 200%; /* Размер шрифта первого символа 
-  color: darkslateblue;*/
-p {
-  text-indent: 46px;
-  line-height: 1.8;
-  font-family: 'Times New Roman';
+.project_row {
+  height: 330px;
+  display: inline-grid;
 }
 
-mat-grid-tile {
-  background: white;
-  height: 180px;
-  grid-gap: 1em;
+.add_project {
+  margin-bottom: 7px;
+  margin-left: 7px;
+  margin-top: 7px;
 }
 
-.width_panel {
-  position: absolute;
+.project_tile {
+  width: 100%;
 }
 
-.height_panel {
-  top: 2px;
-  margin: 28px 7px 2px 4px;
-  position: absolute;
-}
-
-.example-card {
-  max-width: 560px;
-  position: absolute;
-  top: 10px;
-  padding: 0px;
-  height: 1100px;
-}
-
-.text-card {
-  text-align: justify;
-
-}
-
-.padding {
-  padding-left: 10px;
-}
-
-.example-header-image {
-  background-image: url('http://rylik.ru/uploads/posts/2015-01/1420826088_4v9crmyljugxbrt.jpg');
-  background-size: cover;
-}
-
-.example-header-image2 {
-  width: 560px;
-  height: 250px;
-  margin: 0 0 0 0%;
-  position: relative;
-}
-
-.link {
-  margin: 0px 0px 5px 0px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 0fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 1em;
-}
-
-.annotation {
-  text-align: justify;
-  padding: 5px;
-  font-size: 12pt;
-  font-style: italic;
+.project_textarea {
+  height: 200px;
 }

@@ -44,10 +44,10 @@
             <mat-icon aria-label="Side nav toggle icon">reply</mat-icon>
           </mat-menu>
         </div>
-        <a *ngIf="!currentUser" mat-button href='{{baseUrl}}user' class="icon_registration link1">
+        <button *ngIf="!currentUser" mat-button (click)="userRegistration()" class="icon_registration link1">
           <mat-icon>person_add</mat-icon>
           Зарегистрироваться
-        </a>
+        </button>
         <button *ngIf="!currentUser && showLoginButton" mat-button (click)="openLoginDialog()">
           <mat-icon>account_circle</mat-icon>
           Войти
