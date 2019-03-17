@@ -10,7 +10,6 @@ namespace ProjectDiploma.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProjectController : ControllerBase, IPagingController<ProjectViewModel>
     {
         private readonly BusinessUniversityContext _context;

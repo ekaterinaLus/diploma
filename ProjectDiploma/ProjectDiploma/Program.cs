@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace ProjectDiploma
 {
@@ -13,7 +14,7 @@ namespace ProjectDiploma
     {
         private static bool NeedUpdateDatabase { get => false; }
 
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
 
@@ -27,7 +28,7 @@ namespace ProjectDiploma
 
                     try
                     {
-                        SeedData.Initialize(services).Wait();
+                        await SeedData.Initialize(services);
                     }
                     catch (Exception ex)
                     {

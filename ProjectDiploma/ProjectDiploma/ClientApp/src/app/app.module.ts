@@ -39,6 +39,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { CovalentFileModule } from '@covalent/core/file';
+import { MatStepperModule } from '@angular/material/stepper';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -86,11 +87,12 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatDatepickerModule,
     MatNativeDateModule,
     CovalentFileModule,
+    MatStepperModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
       { path: 'news', component: NewComponent },
-      { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] },
+      { path: 'project', component: ProjectComponent /*, canActivate: [AuthGuard] */},
       { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent },
       { path: 'newspage', component: NewsPageComponent },

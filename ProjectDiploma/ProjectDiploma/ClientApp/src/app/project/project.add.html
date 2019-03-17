@@ -2,82 +2,148 @@
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 
-<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="text_padding">
-  <h1>Добавить проект</h1>
-  <mat-card class="form" mat-elevation-z24>
-    <mat-grid-list cols="4" rowHeight="75px" gutterSize="10px">
+<mat-horizontal-stepper [linear]="true" #stepper class="add_project_form">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Основная информация</ng-template>
 
-      <mat-grid-tile [colspan]="4">
-        <mat-form-field class="project_tile">
-          <input matInput formControlName="name" required autocomplete="off" placeholder="Имя проекта">
-        </mat-form-field>
-      </mat-grid-tile>
+      <mat-grid-list cols="4" rowHeight="75px" gutterSize="10px">
 
-      <mat-grid-tile>
-        <mat-form-field class="project_tile">
-          <input matInput [matDatepicker]="picker1" placeholder="Дата начала" formControlName="start">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile [colspan]="4">
+          <mat-form-field class="project_tile">
+            <input matInput formControlName="name" required autocomplete="off" placeholder="Имя проекта">
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="project_tile">
-          <input matInput [matDatepicker]="picker2" placeholder="Дата окончания" formControlName="finish">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="project_tile">
+            <input matInput [matDatepicker]="picker1" placeholder="Дата начала" formControlName="start">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="project_tile">
-          <input matInput formControlName="costCurrent" autocomplete="off" placeholder="Средств собрано">
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="project_tile">
+            <input matInput [matDatepicker]="picker2" placeholder="Дата окончания" formControlName="finish">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="project_tile">
-          <input matInput formControlName="costFull" autocomplete="off" placeholder="Общая стоимость">
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="project_tile">
+            <input matInput required formControlName="costCurrent" autocomplete="off" placeholder="Средств собрано">
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="4">
-        <mat-divider></mat-divider>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="project_tile">
+            <input matInput required formControlName="costFull" autocomplete="off" placeholder="Общая стоимость">
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="4" [rowspan]="3">
-        <mat-form-field class="project_tile">
-          <textarea matInput class="project_textarea" formControlName="description" autocomplete="off" placeholder="Описание"></textarea>
-        </mat-form-field>
-      </mat-grid-tile>
+      </mat-grid-list>
 
-      <mat-grid-tile [colspan]="4">
-        <mat-divider></mat-divider>
-      </mat-grid-tile>
+      <div>
+        <button mat-stroked-button matStepperNext>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </form>
 
-      <mat-grid-tile [colspan]="4" [rowspan]="3">
-        <mat-form-field class="project_tile">
-          <textarea matInput class="project_textarea" formControlName="risks" autocomplete="off" placeholder="Риски"></textarea>
-        </mat-form-field>
-      </mat-grid-tile>
+  </mat-step>
 
-      <mat-grid-tile>
-        <td-file-upload id="file" (select)="handleFileInput($event)">
-          <mat-icon>file_upload</mat-icon><span>{{ fileToUpload?.name }}</span>
-          <ng-template td-file-input-label>
-            <mat-icon>attach_file</mat-icon>
-            <span>
-              Выберите файл...
-            </span>
-          </ng-template>
-        </td-file-upload>
-      </mat-grid-tile>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Описание</ng-template>
+      <mat-form-field class="project_tile">
+        <textarea matInput required class="project_textarea" formControlName="description" autocomplete="off" placeholder="Описание"></textarea>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-stroked-button matStepperNext>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </form>
+  </mat-step>
 
-      <mat-grid-tile>
-        <button mat-raised-button type="submit" [disabled]="loading" class="button_login" color="primary">Сохранить</button>
-      </mat-grid-tile>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Риски</ng-template>
+      <mat-form-field class="project_tile">
+        <textarea matInput class="project_textarea" formControlName="risks" autocomplete="off" placeholder="Риски"></textarea>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-stroked-button matStepperNext>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </form>
+  </mat-step>
 
-    </mat-grid-list>
-  </mat-card>
-</form>
+  <mat-step [stepControl]="forthFormGroup">
+    <form [formGroup]="forthFormGroup">
+      <ng-template matStepLabel>Дополнительная информация</ng-template>
 
+      <td-file-upload id="file" (select)="handleFileInput($event)">
+        <mat-icon>file_upload</mat-icon><span>{{ fileToUpload?.name }}</span>
+        <ng-template td-file-input-label>
+          <mat-icon>attach_file</mat-icon>
+          <span>
+            Выберите файл...
+          </span>
+        </ng-template>
+      </td-file-upload>
+
+      <mat-form-field>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let tag of tags"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(tag)">
+            {{tag.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Добавить теги..."
+                 #tagInput
+                 formControlName="tagsCtrl"
+                 [matAutocomplete]="auto"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+            {{tag.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div>
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-stroked-button matStepperNext>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Завершение</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

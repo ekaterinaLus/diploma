@@ -14,5 +14,16 @@
 }
 
 .project_textarea {
-  height: 200px;
+  height: 75px;
+}
+
+.add_project_form {
+  height: calc(100% - 75px);
+}
+
+.nav_button {
+  position: fixed;
+  bottom: 25px;
+  width: 100%;
+  display: block;
 }
