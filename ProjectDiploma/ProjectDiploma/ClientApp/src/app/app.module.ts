@@ -40,6 +40,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { CovalentFileModule } from '@covalent/core/file';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -88,6 +89,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     MatNativeDateModule,
     CovalentFileModule,
     MatStepperModule,
+    MatAutocompleteModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },

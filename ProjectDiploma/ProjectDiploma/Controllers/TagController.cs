@@ -20,7 +20,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult Get([FromBody] int count, [FromBody] string tagName)
+        public IActionResult Get([FromQuery] int count, [FromQuery] string tagName)
         {
             return new JsonResult(_model.Get(count, tagName));
         }

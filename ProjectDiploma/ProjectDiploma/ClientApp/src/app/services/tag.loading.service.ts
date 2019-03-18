@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Response } from '../models/response';
@@ -14,15 +14,13 @@ export class TagService {
     this.endpoint = `${this.baseUrl}api/Tag`;
   }
 
-  loadTags(count: number, filter: string): Observable<Response<string>> {
+  loadTags(count: number, filter: string): Observable<Response<Tag[]>> {
     const loadEndpoint = `${this.endpoint}/Get`;
 
-    return this.http
-      .get<Response<Tag>>(loadEndpoint, { count, filter });
-  }
+    var args = new HttpParams()
+      .append("count", count.toString())
+      .append("tagName", filter);
 
-  loadFileUrl(): string {
-    return `${this.endpoint}/LoadFile/`;
+    return this.http.get<Response<Tag[]>>(loadEndpoint, { params: args });
   }
-
 }

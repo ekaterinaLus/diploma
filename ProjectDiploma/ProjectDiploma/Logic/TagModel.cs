@@ -27,10 +27,11 @@ namespace ProjectDiploma.Logic
             var query = Repository
                             .GetAll()
                             .AsNoTracking();
-
+            
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(item => item.Name.StartsWith(name));
+                name = name.ToLower();
+                query = query.Where(item => item.Name.ToLower().StartsWith(name));
             }
 
             query = query

@@ -2,13 +2,14 @@ import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Router } from '@angular/router';
 import { FileService } from '../services/file.service';
 import { Tag } from '../models/tag';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocomplete } from '@angular/material';
 import { map, startWith } from 'rxjs/operators';
+import { TagService } from '../services/tag.loading.service';
 
 @Component({
   selector: 'add-project',
@@ -26,8 +27,8 @@ export class AddProject implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  tags: Tag[];
-  filteredTags: Observable<Tag[]>;
+  tags: string[] = [];
+  filteredTags: string[];
 
   public fileToUpload: File = null;
 
@@ -42,13 +43,13 @@ export class AddProject implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
+    private tagService: TagService,
     private authenticationService: AuthenticationService,
     private fileService: FileService,
     @Inject('BASE_URL') public baseUrl: string
   ) {
-    this.filteredTags = this.forthFormGroup.controls["tagsCtrl"].valueChanges.pipe(
-        startWith(null),
-        map((tag: string | null) => tag ? this._filter(tag) : this.allFruits.slice()));
+    
+
   }
 
   ngOnInit(): void {
@@ -69,8 +70,19 @@ export class AddProject implements OnInit {
     });
 
     this.forthFormGroup = this.formBuilder.group({
-      
+      tagsCtrl: ['']
     });
+
+    this.forthFormGroup.controls["tagsCtrl"].valueChanges
+      .pipe(startWith(null))
+      .subscribe(
+        (tag: string | null) => {
+          this.tagService.loadTags(5, tag).subscribe(result => {
+            if (!result.hasErrors) {
+              this.filteredTags = result.itemResult.map(x => x.name);
+            }
+          }, errorResult => console.error(errorResult))
+        }, errorValue => console.error(errorValue));
   }
 
   //get f() { return this.projectForm.controls; }
@@ -86,6 +98,27 @@ export class AddProject implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  add(event: MatChipInputEvent): void {
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.tags.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.filteredTags = null;
+    }
   }
 
   onSubmit() {
@@ -104,7 +137,7 @@ export class AddProject implements OnInit {
     //};
 
     //this.loading = true;
-    
+
     this.http.post<string>(this.baseUrl + 'api/Project/Add', value)
       .subscribe(result => {
         this.success = true;
@@ -114,13 +147,7 @@ export class AddProject implements OnInit {
         this.loading = false;
         console.error(error);
       });
-    
-  }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 }
 
