@@ -37,6 +37,10 @@ export class AddProject implements OnInit {
   success = false;
   submitted = false;
 
+  projectName: string;
+  fileImage: string;
+  projectDescription: string;
+
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   constructor(
@@ -74,7 +78,6 @@ export class AddProject implements OnInit {
     });
 
     this.forthFormGroup.controls["tagsCtrl"].valueChanges
-      .pipe(startWith(null))
       .subscribe(
         (tag: string | null) => {
           this.tagService.loadTags(5, tag).subscribe(result => {
@@ -82,13 +85,34 @@ export class AddProject implements OnInit {
               this.filteredTags = result.itemResult.map(x => x.name);
             }
           }, errorResult => console.error(errorResult))
-        }, errorValue => console.error(errorValue));
+      }, errorValue => console.error(errorValue));
+
+    this.firstFormGroup.controls["name"].valueChanges
+      .subscribe((name: string) => this.projectName = name);
+
+    this.secondFormGroup.controls["description"].valueChanges
+      .subscribe((desc: string) => this.projectDescription = desc);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.tags.push(event.option.viewValue);
+    this.tagInput.nativeElement.value = '';
+    this.forthFormGroup.controls["tagsCtrl"].setValue(null);
   }
 
   //get f() { return this.projectForm.controls; }
 
   handleFileInput(file: File) {
-    this.fileToUpload = file;
+    if (file) {
+      this.fileToUpload = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileImage = reader.result.toString();
+      };
+      reader.readAsDataURL(file);
+    }
+    
   }
 
   Send() {

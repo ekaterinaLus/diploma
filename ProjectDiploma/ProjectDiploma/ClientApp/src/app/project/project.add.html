@@ -92,6 +92,8 @@
     <form [formGroup]="forthFormGroup">
       <ng-template matStepLabel>Дополнительная информация</ng-template>
 
+      <label>Заглавная картинка: </label>
+
       <td-file-upload id="file" (select)="handleFileInput($event)">
         <mat-icon>file_upload</mat-icon><span>{{ fileToUpload?.name }}</span>
         <ng-template td-file-input-label>
@@ -102,7 +104,9 @@
         </ng-template>
       </td-file-upload>
 
-      <mat-form-field>
+      <mat-divider class="project_tile project_elements_divider"></mat-divider>
+
+      <mat-form-field class="project_tile">
         <mat-chip-list #chipList>
           <mat-chip *ngFor="let tag of tags"
                     [selectable]="selectable"
@@ -140,10 +144,26 @@
 
   <mat-step>
     <ng-template matStepLabel>Завершение</ng-template>
-    You are now done.
+    Готово!
+
+    <mat-card class="project_row">
+      <mat-card-header>
+        <mat-card-title>{{projectName}}</mat-card-title>
+      </mat-card-header>
+      <img *ngIf="fileImage" mat-card-image src="{{fileImage}}">
+      <mat-card-content>
+        <p *ngIf="projectDescription">
+          {{projectDescription.length > 303 ? projectDescription.substring(0, 300) + '...' : projectDescription}}
+        </p>
+      </mat-card-content>      
+    </mat-card>
+
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-stroked-button matStepperPrevious>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="stepper.reset()">Очистить всё</button>
+      <button mat-stroked-button (click)="onSubmit()">Сохранить</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

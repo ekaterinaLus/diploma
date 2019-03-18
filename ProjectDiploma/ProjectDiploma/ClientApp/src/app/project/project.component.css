@@ -27,3 +27,8 @@
   width: 100%;
   display: block;
 }
+
+.project_elements_divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
