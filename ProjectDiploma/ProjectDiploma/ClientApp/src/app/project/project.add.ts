@@ -52,7 +52,7 @@ export class AddProject implements OnInit {
     private fileService: FileService,
     @Inject('BASE_URL') public baseUrl: string
   ) {
-    
+
 
   }
 
@@ -85,7 +85,7 @@ export class AddProject implements OnInit {
               this.filteredTags = result.itemResult.map(x => x.name);
             }
           }, errorResult => console.error(errorResult))
-      }, errorValue => console.error(errorValue));
+        }, errorValue => console.error(errorValue));
 
     this.firstFormGroup.controls["name"].valueChanges
       .subscribe((name: string) => this.projectName = name);
@@ -112,11 +112,10 @@ export class AddProject implements OnInit {
       };
       reader.readAsDataURL(file);
     }
-    
+
   }
 
   Send() {
-    console.log(123);
     this.fileService.postFile(this.fileToUpload).subscribe(data => {
       console.log(data);
     }, error => {
@@ -152,26 +151,46 @@ export class AddProject implements OnInit {
     //if (this.projectForm.invalid) {
     //  return;
     //}
-    var value = {};
-    //var value = {
-    //  name: this.f.name.value,
-    //  startDate: this.f.start.value,
-    //  finishDate: this.f.finish.value,
-    //  cost: this.f.cost.value,
-    //};
 
-    //this.loading = true;
+    this.fileService.postFile(this.fileToUpload).subscribe(data => {
 
-    this.http.post<string>(this.baseUrl + 'api/Project/Add', value)
-      .subscribe(result => {
-        this.success = true;
-        this.loading = false;
-      }, error => {
-        this.error = error;
-        this.loading = false;
-        console.error(error);
-      });
+      var loadedFileName: string = null;
+      if (!data.hasErrors) {
+        loadedFileName = data.itemResult;
+      }
 
+      this.CreateProject(loadedFileName);
+    }, error => {
+      this.CreateProject(null);
+    });
+
+
+
+  }
+
+  private CreateProject(loadedFileName: string) {
+      var tagObjects = this.tags.map<Tag>(x => { return { id: 0, name: x }; });
+      var value = {
+          name: this.firstFormGroup.controls.name.value,
+          description: this.secondFormGroup.controls.description.value,
+          risks: this.thirdFormGroup.controls.risks.value,
+          startDate: this.firstFormGroup.controls.start.value,
+          finishDate: this.firstFormGroup.controls.finish.value,
+          costCurrent: this.firstFormGroup.controls.costCurrent.value,
+          costFull: this.firstFormGroup.controls.costFull.value,
+          fileName: loadedFileName,
+          tags: tagObjects
+      };
+      this.loading = true;
+      this.http.post<string>(this.baseUrl + 'api/Project/Add', value)
+          .subscribe(result => {
+              this.success = true;
+              this.loading = false;
+          }, error => {
+              this.error = error;
+              this.loading = false;
+              console.error(error);
+          });
   }
 }
 

@@ -53,7 +53,6 @@ namespace ProjectDiploma.Logic
         {
             var dbEntity = projectViewModel.ToType<Project>();
 
-            dbEntity.Description = "test";
             dbEntity.Initializer = DbContext.Universities.Find(1);
 
             Repository.Create(dbEntity);

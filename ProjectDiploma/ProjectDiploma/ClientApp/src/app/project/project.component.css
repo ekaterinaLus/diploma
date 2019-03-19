@@ -28,6 +28,11 @@
   display: block;
 }
 
+.project_card_result {
+  width: 330px;
+  margin-bottom: 30px;
+}
+
 .project_elements_divider {
   margin-top: 12px;
   margin-bottom: 12px;

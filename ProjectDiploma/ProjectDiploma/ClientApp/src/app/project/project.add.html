@@ -2,7 +2,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 
-<mat-horizontal-stepper [linear]="true" #stepper class="add_project_form">
+<mat-horizontal-stepper [linear]="false" #stepper class="add_project_form">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Основная информация</ng-template>
@@ -144,9 +144,9 @@
 
   <mat-step>
     <ng-template matStepLabel>Завершение</ng-template>
-    Готово!
+    <p>Готово!</p>
 
-    <mat-card class="project_row">
+    <mat-card class="project_card_result">
       <mat-card-header>
         <mat-card-title>{{projectName}}</mat-card-title>
       </mat-card-header>
@@ -163,7 +163,7 @@
         <mat-icon>navigate_before</mat-icon>
       </button>
       <button mat-stroked-button (click)="stepper.reset()">Очистить всё</button>
-      <button mat-stroked-button (click)="onSubmit()">Сохранить</button>
+      <button mat-stroked-button (click)="onSubmit()" color="primary">Сохранить</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
