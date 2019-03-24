@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+.style-text {
+  top: 20px;
+  font-family: 'Lobster', cursive;
+  text-align: center;
+  font-size: 32px;
+}
+
+.example-card {
+  width: 400px;
+  hight: 400px;
+  margin: 0;
+  position: absolute;
+  top:22%;
+  left: 35%;
+
+}
+
+.example-header-image {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Lv_vHbbHV_OagqjW00WrBupe4DZVSkSzaFjkktA3TOcqV0PAKQ');
+  background-size: cover;
+}
+
+.top {
+  line-height: 4.5;
+}

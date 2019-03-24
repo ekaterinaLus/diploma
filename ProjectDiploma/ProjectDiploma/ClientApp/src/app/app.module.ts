@@ -40,13 +40,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { CovalentFileModule } from '@covalent/core/file';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge'
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     NewsPageComponent,
     LoginComponent,
     LoginDialog,
-    AddProject
+    AddProject,
+    ProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -90,6 +93,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     CovalentFileModule,
     MatStepperModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
@@ -98,7 +102,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
       { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent },
       { path: 'newspage', component: NewsPageComponent },
-      { path: 'newproject', component: AddProject }
+      { path: 'newproject', component: AddProject },
+      { path: 'profile', component: ProfileComponent }
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],

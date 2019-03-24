@@ -16,10 +16,10 @@
   width: calc(25% - 20px);
 }*/
 
-/*.nav-menu-button button:focus {
+.nav-menu-button button:focus {
   outline: none;
   border: 0;
-}*/
+}
 
 .example-container {
   position: absolute;

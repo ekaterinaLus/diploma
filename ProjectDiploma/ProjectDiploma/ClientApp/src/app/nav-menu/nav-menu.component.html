@@ -42,6 +42,8 @@
           <mat-menu #menu="matMenu">
             <button mat-button (click)="logout()" class="nav-menu-button">Выйти</button>
             <mat-icon aria-label="Side nav toggle icon">reply</mat-icon>
+            <button class="nav-menu-button" mat-button [routerLink]="['/profile']">Профиль</button>
+            <mat-icon aria-label="Side nav toggle icon" >assignment_ind</mat-icon>
           </mat-menu>
         </div>
         <button *ngIf="!currentUser" mat-button (click)="userRegistration()" class="icon_registration link1">
