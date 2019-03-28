@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataStore.Entities;
+using DataStore.Repositories;
+using Diploma.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ProjectDiploma.Entities;
 using ProjectDiploma.ViewModel;
 
 namespace ProjectDiploma.Controllers
@@ -16,11 +19,12 @@ namespace ProjectDiploma.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly BusinessUniversityContext _dbContext;
+                public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, BusinessUniversityContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _dbContext = dbContext;
         }
 
         [HttpPost("[action]")]
@@ -39,8 +43,27 @@ namespace ProjectDiploma.Controllers
                     result = await _userManager.AddToRoleAsync(user, model.Role);
                     if (result.Succeeded)
                     {
-                        // установка куки
-                        //await _signInManager.SignInAsync(user, false);
+                        IOrganization organization = null;
+
+                        if (model.Organization.Type == OrganizationViewModel.OrganizationType.Company)
+                        {
+                            organization = _dbContext.Companies.FirstOrDefault(x => x.Name == model.Organization.Name);
+                            if (organization == null)
+                            {
+                                organization = _dbContext.Companies.Add(new Company { Name = model.Organization.Name, ContactInformation = model.Organization.ContactInformation }).Entity;
+                            }                                
+                        }
+                        else
+                        {
+                            organization = _dbContext.Universities.FirstOrDefault(x => x.Name == model.Organization.Name);
+                            if (organization == null)
+                            {
+                                organization = _dbContext.Universities.Add(new University { Name = model.Organization.Name, ContactInformation = model.Organization.ContactInformation }).Entity;
+                            }
+                        }
+
+                        organization.Employees.Add(user);
+                        await _dbContext.SaveChangesAsync();
 
                         var roles = await _userManager.GetRolesAsync(user);
                         var role = roles.FirstOrDefault();

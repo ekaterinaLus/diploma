@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SharedLogic.Mapper;
+using System.Collections.Generic;
 
 namespace DataStore.Entities
 {
-    public interface IOrganization
+    public interface IOrganization : IMappable
     {
         string Name { get; set; }
 

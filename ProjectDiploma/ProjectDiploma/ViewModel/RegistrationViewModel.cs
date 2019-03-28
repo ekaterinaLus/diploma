@@ -5,7 +5,7 @@ namespace ProjectDiploma.ViewModel
 {
     public class RegistrationViewModel
     {
-        [Required]    
+        [Required]
         public string Email { get; set; }
 
         [Required]
@@ -15,5 +15,8 @@ namespace ProjectDiploma.ViewModel
         [Required]
         [CheckRole]
         public string Role { get; set; }
+
+        [Required]
+        public OrganizationViewModel Organization {get; set;}
     }
 }
