@@ -13,11 +13,24 @@
     </mat-form-field>
 
     <mat-form-field class="input">
-      <mat-select placeholder="Роль" formControlName="role" required>
-        <mat-option *ngFor="let role of roles" [value]="role.value">
+      <mat-select placeholder="Роль" formControlName="role" required [(ngModel)]="selectedRole.value">
+        <mat-option *ngFor="let role of roles" [value]="role.value" >
           {{role.viewValue}}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="input">
+      <input type="text" placeholder="Введите имя организации" aria-label="Assignee" matInput formControlName="organizationName" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)='getSelectedInfo($event.option.value)'>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="input">
+      <input matInput formControlName="contactInfo" required autocomplete="off" placeholder="Контактная информация" [(ngModel)]="selectedOrganizationInfo">
     </mat-form-field>
 
     <p class="input">
