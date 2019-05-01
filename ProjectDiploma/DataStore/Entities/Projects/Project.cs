@@ -32,17 +32,17 @@ namespace DataStore.Entities
         public string Risks { get; set; }
 
         [Required]
-        public ProjectStage Stage { get; set; }
+        public ProjectStage Stage { get; set; } // +
 
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartDate { get; set; } // +
 
-        public DateTime? FinishDate { get; set; }
-
-        [Required]
-        public decimal CostCurrent { get; set; }
+        public DateTime? FinishDate { get; set; } // +
 
         [Required]
-        public decimal CostFull { get; set; }
+        public decimal CostCurrent { get; set; } // +
+
+        [Required]
+        public decimal CostFull { get; set; } // +
 
         [Required]
         public DateTime Date { get; set; }
@@ -51,13 +51,13 @@ namespace DataStore.Entities
         public bool IsClosed { get; set; }
 
         [Required]
-        public University Initializer { get; set; }
+        public University Initializer { get; set; } // +
 
         public string FileName { get; set; }
 
         public  ICollection<ProjectsCompanies> Sponsors { get; set; } = new HashSet<ProjectsCompanies>();
 
-        public ICollection<ProjectsTags> Tags { get; set; } = new HashSet<ProjectsTags>();
+        public ICollection<ProjectsTags> Tags { get; set; } = new HashSet<ProjectsTags>(); //не более 10 тегов на проект
     }
 }
 

@@ -111,14 +111,14 @@ export class UserComponent implements OnInit {
       password: this.f.password.value,
       role: this.f.role.value,
       organization: {
-        name: this.f.organizationName.value.name,
+        name: this.f.organizationName.value.name ? this.f.organizationName.value.name : this.f.organizationName.value,
         contactInformation: this.f.contactInfo.value,
         type: this.f.role.value == Role.University ? OrganizationType.University : OrganizationType.Company
       }
     };
 
     this.loading = true;
-    this.http.post<string>(this.baseUrl + 'api/Account/Register', value)
+    this.http.post<object>(this.baseUrl + 'api/Account/Register', value)
       .subscribe(result => {
         this.success = true;
         this.loading = false;
@@ -127,8 +127,5 @@ export class UserComponent implements OnInit {
         this.loading = false;
         console.error(error);
       });
-    //this.success = true;
-    //delay(20000); 
-    //this.loading = false;
   }
 }
