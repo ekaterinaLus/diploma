@@ -1,4 +1,5 @@
 ﻿using CNTK;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,32 +16,35 @@ namespace NeuralNetwork
 
     public class NeuralNetwork
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private static NeuralNetwork currentNetwork = null;
 
-        private static double? EmptyFunction(string param) => null;
+        //private static double? EmptyFunction(string param) => null;
 
-        private static double? DoubleParse(string param) => double.Parse(param, System.Globalization.CultureInfo.InvariantCulture);
+        //private static double? DoubleParse(string param) => double.Parse(param, System.Globalization.CultureInfo.InvariantCulture);
 
-        private readonly Func<string, double?>[] ParseFunctions = new Func<string, double?>[]
-        {
-            EmptyFunction,                                      //1
-            c1 => DateTime.Parse(c1).Ticks / 1_000_000_000,     //2
-            EmptyFunction,                                      //3
-            DoubleParse,                                         //4
-            DoubleParse,                                         //5
-            DoubleParse,                                         //6
-            DoubleParse,                                         //7
-            EmptyFunction,                                      //8
-            DoubleParse,                                         //9
-            DoubleParse,                                         //10
-            DoubleParse,                                         //11
-            c11 => c11 == "conventional" ? -1d : 1d,            //12
-            EmptyFunction,                                      //13
-            c13 => c13.GetHashCode()                            //14
-        };
+        //private readonly Func<string, double?>[] ParseFunctions = new Func<string, double?>[]
+        //{
+        //    EmptyFunction,                                      //1
+        //    c1 => DateTime.Parse(c1).Ticks / 1_000_000_000,     //2
+        //    EmptyFunction,                                      //3
+        //    DoubleParse,                                         //4
+        //    DoubleParse,                                         //5
+        //    DoubleParse,                                         //6
+        //    DoubleParse,                                         //7
+        //    EmptyFunction,                                      //8
+        //    DoubleParse,                                         //9
+        //    DoubleParse,                                         //10
+        //    DoubleParse,                                         //11
+        //    c11 => c11 == "conventional" ? -1d : 1d,            //12
+        //    EmptyFunction,                                      //13
+        //    c13 => c13.GetHashCode()                            //14
+        //};
 
         private const string SAVED_MODEL_FILE_NAME = "businessUniversity.bin";
         private const string SAVED_BATCH_FILE_NAME = "currentNNBatch.tmp";
+        private const string SAVED_GLOBAL_TRAIN_DATA_FILE_NAME = "trainData.bin";
 
         private Random rnd = new Random();
 
@@ -48,6 +52,7 @@ namespace NeuralNetwork
         private const int outputDim = 1;
         private const int hiddenDim = 24;
         private const int batchSize = 60;
+        private const int globalTrainDataSize = batchSize * 15;
 
         private Trainer trainer;
         private Function model;
@@ -55,62 +60,68 @@ namespace NeuralNetwork
         private readonly NDShape inputShape = new NDShape(1, inputDim);
         private readonly NDShape outputShape = new NDShape(1, outputDim);
 
-        private List<NeuralNetworkData> dataCache = new List<NeuralNetworkData>(batchSize + 1);
+        private List<NeuralNetworkData> globalTrainData = new List<NeuralNetworkData>();
+        private List<NeuralNetworkData> trainDataCache = new List<NeuralNetworkData>(batchSize + 1);
 
-        private NeuralNetwork() { }
+        private NeuralNetwork()
+        {
+            globalTrainData = Serializer.Load<List<NeuralNetworkData>>(SAVED_GLOBAL_TRAIN_DATA_FILE_NAME);
+            trainDataCache = Serializer.Load<List<NeuralNetworkData>>(SAVED_BATCH_FILE_NAME);
+        }
 
         ~NeuralNetwork()
         {
             try
             {
-                Serializer.Save(SAVED_BATCH_FILE_NAME, dataCache);
+                Serializer.Save(SAVED_BATCH_FILE_NAME, trainDataCache);
+                Serializer.Save(SAVED_GLOBAL_TRAIN_DATA_FILE_NAME, globalTrainData);
             }
             catch { }
         }
 
-        private IEnumerable<NeuralNetworkData> ReadFromFile(string fileName)
-        {
-            var file = File.ReadLines(fileName);
-            var result = file
-                            .Skip(1)
-                            .Select(x => x.Split(','))
-                            .Select(x => new NeuralNetworkData
-                            {
-                                Labels = new[] { double.Parse(x[2], System.Globalization.CultureInfo.InvariantCulture) },
-                                Features = x
-                                            .Select((param, indx) => ParseFunctions[indx].Invoke(param))
-                                            .Where(param => param != null)
-                                            .Select(param => param.Value)
-                                            .ToArray()
-                            })
-                            .ToArray();
+        //private IEnumerable<NeuralNetworkData> ReadFromFile(string fileName)
+        //{
+        //    var file = File.ReadLines(fileName);
+        //    var result = file
+        //                    .Skip(1)
+        //                    .Select(x => x.Split(','))
+        //                    .Select(x => new NeuralNetworkData
+        //                    {
+        //                        Labels = new[] { double.Parse(x[2], System.Globalization.CultureInfo.InvariantCulture) },
+        //                        Features = x
+        //                                    .Select((param, indx) => ParseFunctions[indx].Invoke(param))
+        //                                    .Where(param => param != null)
+        //                                    .Select(param => param.Value)
+        //                                    .ToArray()
+        //                    })
+        //                    .ToArray();
 
-            var vector = new double[result[0].Features.Length];
+        //    var vector = new double[result[0].Features.Length];
 
-            foreach (var item in result)
-            {
-                for (int i = 0; i < vector.Length; i++)
-                {
-                    if (Math.Abs(item.Features[i]) > vector[i])
-                    {
-                        vector[i] = Math.Abs(item.Features[i]);
-                    }
-                }
-            }
+        //    foreach (var item in result)
+        //    {
+        //        for (int i = 0; i < vector.Length; i++)
+        //        {
+        //            if (Math.Abs(item.Features[i]) > vector[i])
+        //            {
+        //                vector[i] = Math.Abs(item.Features[i]);
+        //            }
+        //        }
+        //    }
 
-            foreach (var item in result)
-            {
-                for (int i = 0; i < vector.Length; i++)
-                {
-                    if (Math.Abs(item.Features[i]) != 1d)
-                    {
-                        item.Features[i] /= vector[i] + 0.1d;
-                    }
-                }
-            }
+        //    foreach (var item in result)
+        //    {
+        //        for (int i = 0; i < vector.Length; i++)
+        //        {
+        //            if (Math.Abs(item.Features[i]) != 1d)
+        //            {
+        //                item.Features[i] /= vector[i] + 0.1d;
+        //            }
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         private Function AddLayer(Function previousLayer, int outputDimension)
         {
@@ -129,7 +140,7 @@ namespace NeuralNetwork
 
         private Function AddActivationFunction(Function layer)
         {
-            return CNTKLib.ReLU(layer);
+            return CNTKLib.Tanh(layer);
         }
 
         public static NeuralNetwork GetNeuralNetwork()
@@ -148,8 +159,6 @@ namespace NeuralNetwork
             {
                 result = currentNetwork;
             }
-
-            result.dataCache = Serializer.Load<List<NeuralNetworkData>>(SAVED_BATCH_FILE_NAME);
 
             return result;
         }
@@ -179,43 +188,63 @@ namespace NeuralNetwork
             trainer = Trainer.CreateTrainer(model, loss, evalError, parameterLearners);
         }
 
-        public void Train()
+        public void Train(NeuralNetworkData trainData)
         {
-            var trainData = ReadFromFile("avocado.csv").ToArray();
-
-            //var trainData = GetTrainData(500).ToList();
-
-            
-
-            
-
-            var epoch = 1000;
-            int j = 0, i = 0;
-            var batchSize = 20;
-
-            while (epoch > -1)
+            if (trainDataCache.Count >= batchSize)
             {
-                if (j + batchSize > trainData.Count())
+                globalTrainData.AddRange(trainDataCache);
+
+                List<NeuralNetworkData> currentTrainData = null;
+
+                if (globalTrainData.Count >= globalTrainDataSize)
                 {
-                    j = 0;
+                    currentTrainData = globalTrainData;
+                }
+                else
+                {
+                    currentTrainData = trainDataCache;
                 }
 
-                var featuresData = trainData.Skip(j).Take(batchSize).Select(x => x.Features);
-                var labelsData = trainData.Skip(j).Take(batchSize).Select(x => x.Labels);
+                var epoch = currentTrainData.Count / batchSize;
+                int i = 0;                
+                var features = model.Arguments[0];
+                var label = model.Output;
 
-                j += batchSize;
-
-                var arguments = new Dictionary<Variable, Value>
+                while (epoch > -1)
                 {
-                    { features, Value.CreateBatchOfSequences(inputShape, featuresData, device) },
-                    { label, Value.CreateBatchOfSequences(outputShape, labelsData, device) }
-                };
+                    if (i + batchSize > currentTrainData.Count())
+                    {
+                        i = 0;
+                    }
 
-                trainer.TrainMinibatch(arguments, false, device);
+                    var featuresData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Features);
+                    var labelsData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Labels);
 
-                PrintTrainingProgress(trainer, i++, 10);
+                    i += batchSize;
 
-                epoch--;
+                    var arguments = new Dictionary<Variable, Value>
+                    {
+                        { features, Value.CreateBatchOfSequences(inputShape, featuresData, device) },
+                        { label, Value.CreateBatchOfSequences(outputShape, labelsData, device) }
+                    };
+
+                    trainer.TrainMinibatch(arguments, false, device);
+
+                    PrintTrainingProgress(i / batchSize - 1, 5);
+
+                    epoch--;
+                }
+
+                trainDataCache.Clear();
+
+                if (globalTrainData.Count >= globalTrainDataSize)
+                {
+                    globalTrainData.Clear();
+                }
+            }
+            else
+            {
+                trainDataCache.Add(trainData);
             }
         }
 
@@ -244,13 +273,13 @@ namespace NeuralNetwork
             return actualLabels;
         }
 
-        private static void PrintTrainingProgress(Trainer trainer, int minibatchIdx, int outputFrequencyInMinibatches)
+        private void PrintTrainingProgress(int minibatchIdx, int outputFrequencyInMinibatches)
         {
             if ((minibatchIdx % outputFrequencyInMinibatches) == 0 && trainer.PreviousMinibatchSampleCount() != 0)
             {
                 float trainLossValue = (float)trainer.PreviousMinibatchLossAverage();
                 float evaluationValue = (float)trainer.PreviousMinibatchEvaluationAverage();
-                Console.WriteLine($"Minibatch: {minibatchIdx} CrossEntropyLoss = {trainLossValue}, EvaluationCriterion = {evaluationValue}");
+                logger.Info($"CrossEntropyLoss = {trainLossValue}, EvaluationCriterion = {evaluationValue}");
             }
         }
     }
