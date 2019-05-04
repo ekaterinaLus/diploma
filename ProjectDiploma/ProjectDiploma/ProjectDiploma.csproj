@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataStore\DataStore.csproj" />
+    <ProjectReference Include="..\NeuralNetwork\NeuralNetwork.csproj" />
     <ProjectReference Include="..\SharedLogic\SharedLogic.csproj" />
   </ItemGroup>
 

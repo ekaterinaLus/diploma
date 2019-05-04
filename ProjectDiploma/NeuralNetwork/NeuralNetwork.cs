@@ -48,8 +48,8 @@ namespace NeuralNetwork
 
         private Random rnd = new Random();
 
-        private const int inputDim = 17;
-        private const int outputDim = 1;
+        public const int inputDim = 17;
+        public const int outputDim = 1;
         private const int hiddenDim = 24;
         private const int batchSize = 60;
         private const int globalTrainDataSize = batchSize * 15;
@@ -190,6 +190,8 @@ namespace NeuralNetwork
 
         public void Train(NeuralNetworkData trainData)
         {
+            trainDataCache.Add(trainData);
+
             if (trainDataCache.Count >= batchSize)
             {
                 globalTrainData.AddRange(trainDataCache);
@@ -206,7 +208,7 @@ namespace NeuralNetwork
                 }
 
                 var epoch = currentTrainData.Count / batchSize;
-                int i = 0;                
+                int i = 0;
                 var features = model.Arguments[0];
                 var label = model.Output;
 
@@ -241,10 +243,6 @@ namespace NeuralNetwork
                 {
                     globalTrainData.Clear();
                 }
-            }
-            else
-            {
-                trainDataCache.Add(trainData);
             }
         }
 

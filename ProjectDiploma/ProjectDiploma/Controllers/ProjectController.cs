@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Diploma.DataBase;
-using Microsoft.AspNetCore.Authorization;
+﻿using Diploma.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 using ProjectDiploma.ViewModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectDiploma.Controllers
 {
@@ -14,6 +13,7 @@ namespace ProjectDiploma.Controllers
     {
         private readonly BusinessUniversityContext _context;
         private readonly ProjectModel _model;
+        private readonly NeuralNetworkModel _nnModel = new NeuralNetworkModel();
 
         public ProjectController(BusinessUniversityContext context)
         {
