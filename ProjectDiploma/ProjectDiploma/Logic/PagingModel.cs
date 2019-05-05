@@ -15,7 +15,7 @@ namespace ProjectDiploma.Logic
                 
         public int GetItemsCount() => Repository.GetItemsCount();
 
-        public IEnumerable<TViewModel> GetPagingItems(int pageIndex, int pageSize)
+        public virtual IEnumerable<TViewModel> GetPagingItems(int pageIndex, int pageSize)
         {
             var items = Repository.GetPaging(pageIndex, pageSize).ToArray();
             return items.Select(item => item.ToType<TViewModel>());

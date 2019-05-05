@@ -10,6 +10,29 @@ import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { map, startWith } from 'rxjs/operators';
 import { TagService } from '../services/tag.loading.service';
+import { MatSnackBar } from '@angular/material';
+
+
+export class SnackBarComponentExample {
+
+  constructor(private snackBar: MatSnackBar) { }
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(PizzaPartyComponent);
+  }
+}
+
+@Component({
+  selector: 'snack-bar-component-example-snack',
+  templateUrl: 'snack-bar-component-example-snack.html',
+  styles: [`
+    .example-pizza-party {
+      color: hotpink;
+    }
+  `],
+})
+export class PizzaPartyComponent { }
+
 
 @Component({
   selector: 'add-project',
@@ -50,6 +73,7 @@ export class AddProject implements OnInit {
     private tagService: TagService,
     private authenticationService: AuthenticationService,
     private fileService: FileService,
+    private snackBar: MatSnackBar,
     @Inject('BASE_URL') public baseUrl: string
   ) {
 
@@ -192,5 +216,6 @@ export class AddProject implements OnInit {
               console.error(error);
           });
   }
+ 
 }
 

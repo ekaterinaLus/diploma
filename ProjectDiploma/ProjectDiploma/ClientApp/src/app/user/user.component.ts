@@ -9,11 +9,16 @@ import { Role } from '../models/role';
 import { IOrganizationData, OrganizationType } from '../models/organization';
 import { delay } from 'q';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 export interface IRole {
   value: Role,
   viewValue: string
 }
+
+
+
+
 
 @Component({
   selector: 'app-user',
@@ -38,6 +43,9 @@ export class UserComponent implements OnInit {
     { value: Role.University, viewValue: "Университет" }
   ];
 
+
+
+
   filteredOptions: Observable<IOrganizationData[]>;
 
   constructor(
@@ -45,6 +53,7 @@ export class UserComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private snackBar: MatSnackBar,
     @Inject('BASE_URL') public baseUrl: string
   ) {
     // redirect to home if already logged in
@@ -57,6 +66,7 @@ export class UserComponent implements OnInit {
     }, error => console.log('error in event'));
   }
 
+
   ngOnInit() {
     this.userForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -64,7 +74,7 @@ export class UserComponent implements OnInit {
       role: ['', Validators.required],
       organizationName: ['', Validators.required],
       contactInfo: ['', Validators.required]
-    });    
+    });
 
     this.filteredOptions = this.userForm.controls["organizationName"].valueChanges
       .pipe(
@@ -127,5 +137,11 @@ export class UserComponent implements OnInit {
         this.loading = false;
         console.error(error);
       });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

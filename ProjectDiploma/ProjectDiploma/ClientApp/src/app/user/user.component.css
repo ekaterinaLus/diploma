@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
+mat-form-field {
+  margin-right: 12px;
+}
 .style-text {
   font-family: 'Lobster', cursive;
   text-align: center;

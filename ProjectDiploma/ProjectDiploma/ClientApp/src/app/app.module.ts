@@ -41,7 +41,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 import { CovalentFileModule } from '@covalent/core/file';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge'
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material';
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -94,6 +95,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatStepperModule,
     MatAutocompleteModule,
     MatBadgeModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },

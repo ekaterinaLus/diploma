@@ -48,6 +48,8 @@ namespace ProjectDiploma
                 .AddEntityFrameworkStores<BusinessUniversityContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddMemoryCache();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Events.OnRedirectToLogin = (context) =>

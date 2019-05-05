@@ -163,7 +163,11 @@
         <mat-icon>navigate_before</mat-icon>
       </button>
       <button mat-stroked-button (click)="stepper.reset()">Очистить всё</button>
-      <button mat-stroked-button (click)="onSubmit()" color="primary">Сохранить</button>
-    </div>
+      <p class="input">
+
+       
+
+        <button mat-stroked-button (click)="openSnackBar()" color="primary" >Сохранить</button> <!--onSubmit();-->
+</div>
   </mat-step>
 </mat-horizontal-stepper>

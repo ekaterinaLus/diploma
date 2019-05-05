@@ -29,18 +29,32 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="input">
+    <mat-form-field class="input" >
       <input matInput formControlName="contactInfo" required autocomplete="off" placeholder="Контактная информация" [(ngModel)]="selectedOrganizationInfo">
     </mat-form-field>
 
     <p class="input">
-      <button mat-raised-button type="submit" [disabled]="loading" class="button_login" color="primary">Зарегистрироваться</button>
-    <p>
+      <mat-form-field>
+        <input matInput value="Disco party!" placeholder="Message" #message>
+      </mat-form-field>
+
+      <mat-form-field value="Ошибка" placeholder="Action" #action>
+        <input matInput value="Ошибка" placeholder="Action" #action>
+      </mat-form-field>
+
+      <button mat-button (click)="openSnackBar(error.value, action.value)" mat-raised-button type="submit" [disabled]="loading"
+              class="button_login" color="primary">
+        Зарегистрироваться
+      </button>
+
+
+</p>
+      
       <div *ngIf="loading" class="sk-folding-cube">
         <div class="sk-cube1 sk-cube"></div>
         <div class="sk-cube2 sk-cube"></div>
         <div class="sk-cube4 sk-cube"></div>
         <div class="sk-cube3 sk-cube"></div>
       </div>
-  </mat-card>
+</mat-card>
 </form>

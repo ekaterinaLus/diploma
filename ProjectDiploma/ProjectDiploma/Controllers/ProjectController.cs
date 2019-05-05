@@ -1,9 +1,11 @@
 ﻿using Diploma.DataBase;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ProjectDiploma.Logic;
 using ProjectDiploma.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace ProjectDiploma.Controllers
 {
@@ -15,10 +17,10 @@ namespace ProjectDiploma.Controllers
         private readonly ProjectModel _model;
         private readonly NeuralNetworkModel _nnModel = new NeuralNetworkModel();
 
-        public ProjectController(BusinessUniversityContext context)
+        public ProjectController(BusinessUniversityContext context, MemoryCache memCache)
         {
             _context = context;
-            _model = new ProjectModel(context);
+            _model = new ProjectModel(context, memCache);
         }
 
         [HttpGet("[action]")]
@@ -27,6 +29,8 @@ namespace ProjectDiploma.Controllers
         [HttpGet("[action]")]
         public IEnumerable<ProjectViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
+            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return _model.GetPagingItems(pageIndex, pageSize);
         }
 
@@ -45,6 +49,7 @@ namespace ProjectDiploma.Controllers
             {
                 return new JsonResult(GetErrorsFromModel());
             }
+            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return new JsonResult(_model.Add(item));
         }
@@ -57,6 +62,8 @@ namespace ProjectDiploma.Controllers
                 return new JsonResult(GetErrorsFromModel());
             }
 
+            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return new JsonResult(_model.Update(item));
         }
 
@@ -67,6 +74,8 @@ namespace ProjectDiploma.Controllers
             {
                 return new JsonResult(GetErrorsFromModel());
             }
+
+            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return new JsonResult(_model.Delete(id));
         }
