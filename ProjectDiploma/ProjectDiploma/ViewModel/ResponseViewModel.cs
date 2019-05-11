@@ -20,14 +20,26 @@ namespace ProjectDiploma.ViewModel
         }
     }
 
+    public struct Message
+    {
+        public MessageType MessageType;
+        public string Text;
+
+        public Message(MessageType messageType, string text)
+        {
+            MessageType = messageType;
+            Text = text;
+        }
+    }
+
     public class Response
     {
         public bool HasErrors { get => Messages.Any(message => message.MessageType == MessageType.ERROR); }
-        public List<(MessageType MessageType, string Text)> Messages { get; } = new List<(MessageType, string)>();
+        public List<Message> Messages { get; } = new List<Message>();
 
         public Response AddMessage(MessageType messageType, string text)
         {
-            Messages.Add((messageType, text));
+            Messages.Add(new Message(messageType, text));
             return this;
         }
     }

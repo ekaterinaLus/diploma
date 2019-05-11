@@ -1,11 +1,15 @@
 ﻿using Diploma.DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Logic;
 using System.Security.Claims;
+using System.Linq;
+using DataStore.Entities.Projects;
 
 namespace ProjectDiploma.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class NeuralNetworkController : ControllerBase
     {
@@ -18,10 +22,25 @@ namespace ProjectDiploma.Controllers
             _model = new NeuralNetworkModel(_context); 
         }
 
-        [HttpGet("[action]")]
-        public void Train([FromQuery] int projectId, [FromQuery] int interest)
+        [HttpPost("[action]")]
+        public IActionResult Train([FromQuery] int projectId, [FromQuery] int interest)
         {
-            _model.Train(projectId, interest, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ProjectRate rate = null; 
+            if ((rate = _context.ProjectsRates.FirstOrDefault(x => x.ProjectId == projectId && x.UserId == userId)) == null)
+            {
+                _context.ProjectsRates.Add(new ProjectRate { ProjectId = projectId, UserId = userId, Rate = interest });
+                _context.SaveChanges();
+            }
+            else if (rate.Rate != interest)
+            {
+                rate.Rate = interest;
+                _context.SaveChanges();
+            }
+
+            _model.Train(projectId, interest, userId);
+            return Ok();
         }
 
     }

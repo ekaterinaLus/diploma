@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-
-namespace DataStore.Entities
+﻿namespace DataStore.Entities
 {
     public class ProjectsTags
     {
-        
-
         public int ProjectId { get; set; }
         public Project Project { get; set; }
 

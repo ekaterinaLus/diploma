@@ -2,25 +2,28 @@
 using DataStore.Repositories.ProjectRepository;
 using Diploma.DataBase;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 using ProjectDiploma.ViewModel;
 using SharedLogic.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace ProjectDiploma.Logic
 {
     public class ProjectModel : PagingModel<ProjectsRepository, Project, ProjectViewModel>
     {
+        private static CancellationTokenSource _resetCacheToken = new CancellationTokenSource();
+
         public string UserId { get; set; }
 
-        private MemoryCache MemoryCache { get; }
+        private IMemoryCache MemoryCache { get; }
 
         protected override ProjectsRepository Repository { get; }
-        //TODO:
         protected BusinessUniversityContext DbContext { get; }
 
-        public ProjectModel(BusinessUniversityContext dbContext, MemoryCache memCache)
+        public ProjectModel(BusinessUniversityContext dbContext, IMemoryCache memCache)
         { 
             Repository = new ProjectsRepository(dbContext);
             DbContext = dbContext;
@@ -53,15 +56,12 @@ namespace ProjectDiploma.Logic
 
             Repository.Delete(item);
 
-            if (MemoryCache.TryGetValue(UserId, out List<ProjectViewModel> cachingResult))
+            if (_resetCacheToken != null && !_resetCacheToken.IsCancellationRequested && _resetCacheToken.Token.CanBeCanceled)
             {
-                cachingResult.RemoveAll(x => x.Id == id);
-
-                MemoryCache.Set(UserId, cachingResult, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-                });
+                _resetCacheToken.Cancel();
+                _resetCacheToken.Dispose();
             }
+            _resetCacheToken = new CancellationTokenSource();
 
             DbContext.SaveChanges();
 
@@ -78,15 +78,12 @@ namespace ProjectDiploma.Logic
 
             DbContext.SaveChanges();
 
-            if (MemoryCache.TryGetValue(UserId, out List<ProjectViewModel> cachingResult))
+            if (_resetCacheToken != null && !_resetCacheToken.IsCancellationRequested && _resetCacheToken.Token.CanBeCanceled)
             {
-                cachingResult.Add(dbEntity.ToType<ProjectViewModel>());
-
-                MemoryCache.Set(UserId, cachingResult, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-                });
+                _resetCacheToken.Cancel();
+                _resetCacheToken.Dispose();
             }
+            _resetCacheToken = new CancellationTokenSource();
 
             return new Response<ProjectViewModel>(dbEntity.ToType<ProjectViewModel>());
         }
@@ -105,15 +102,12 @@ namespace ProjectDiploma.Logic
 
             DbContext.SaveChanges();
 
-            if (MemoryCache.TryGetValue(UserId, out List<ProjectViewModel> cachingResult))
+            if (_resetCacheToken != null && !_resetCacheToken.IsCancellationRequested && _resetCacheToken.Token.CanBeCanceled)
             {
-                cachingResult.Add(item.ToType<ProjectViewModel>());
-
-                MemoryCache.Set(UserId, cachingResult, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-                });
+                _resetCacheToken.Cancel();
+                _resetCacheToken.Dispose();
             }
+            _resetCacheToken = new CancellationTokenSource();
 
             return new Response<ProjectViewModel>(projectViewModel);
         }
@@ -132,8 +126,9 @@ namespace ProjectDiploma.Logic
                 var options = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-                };
-
+                }
+                .AddExpirationToken(new CancellationChangeToken(_resetCacheToken.Token));
+                
                 foreach (var project in projects)
                 {
                     var features = NeuralNetworkModel.ExtractFeatures(UserId, project);
@@ -146,7 +141,17 @@ namespace ProjectDiploma.Logic
                     nnResult.Add((project, evalResult));
                 }
 
-                var result = nnResult.OrderByDescending(x => x.Item2).Select(x => x.Item1.ToType<ProjectViewModel>()).ToList();
+                var rates = DbContext.ProjectsRates.Where(x => x.UserId == UserId);
+
+                var result = nnResult
+                        .OrderByDescending(x => x.Item2)
+                        .Select(x =>
+                        {
+                            var res = x.Item1.ToType<ProjectViewModel>();
+                            res.Rate = rates.FirstOrDefault(y => y.ProjectId == res.Id)?.Rate ?? -1;
+                            return res;
+                        })
+                        .ToList();
 
                 MemoryCache.Set(UserId, result, options);
 

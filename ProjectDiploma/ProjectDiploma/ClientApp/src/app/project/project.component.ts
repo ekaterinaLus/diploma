@@ -54,8 +54,32 @@ export class ProjectComponent implements OnInit {
     return this.currentUser && (this.currentUser.role == Role.Admin || this.currentUser.role == Role.University);
   }
 
+  get canRate() {
+    return this.currentUser && (this.currentUser.role == Role.Admin || this.currentUser.role == Role.Business);
+  }
+
   public AddNewProject() {
     this.router.navigate(['/newproject']);
+  }
+
+  public onLike(id: number) {
+    
+    var args = new HttpParams()
+      .append("projectId", id.toString())
+      .append("interest", "1");
+
+    this.http.post<any>(this.baseUrl + 'api/NeuralNetwork/Train', null, { params: args }).subscribe(() => {
+    }, error => console.log(error));
+  }
+
+  public onDislike(id: number) {
+
+    var args = new HttpParams()
+      .append("projectId", id.toString())
+      .append("interest", "0");
+
+    this.http.post<any>(this.baseUrl + 'api/NeuralNetwork/Train', null, { params: args }).subscribe(() => {
+    }, error => console.log(error));
   }
 
   public handlePage(event?: PageEvent) {
@@ -105,4 +129,5 @@ interface Project {
   sponsors: Company[];
   tags: Tag[];
   description: string;
+  rate: number;
 }

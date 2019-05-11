@@ -12,28 +12,6 @@ import { map, startWith } from 'rxjs/operators';
 import { TagService } from '../services/tag.loading.service';
 import { MatSnackBar } from '@angular/material';
 
-
-export class SnackBarComponentExample {
-
-  constructor(private snackBar: MatSnackBar) { }
-
-  openSnackBar() {
-    this.snackBar.openFromComponent(PizzaPartyComponent);
-  }
-}
-
-@Component({
-  selector: 'snack-bar-component-example-snack',
-  templateUrl: 'snack-bar-component-example-snack.html',
-  styles: [`
-    .example-pizza-party {
-      color: hotpink;
-    }
-  `],
-})
-export class PizzaPartyComponent { }
-
-
 @Component({
   selector: 'add-project',
   templateUrl: './project.add.html',

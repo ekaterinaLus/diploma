@@ -1,4 +1,5 @@
 ﻿using Diploma.DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using ProjectDiploma.Logic;
@@ -17,7 +18,7 @@ namespace ProjectDiploma.Controllers
         private readonly ProjectModel _model;
         private readonly NeuralNetworkModel _nnModel = new NeuralNetworkModel();
 
-        public ProjectController(BusinessUniversityContext context, MemoryCache memCache)
+        public ProjectController(BusinessUniversityContext context, IMemoryCache memCache)
         {
             _context = context;
             _model = new ProjectModel(context, memCache);
@@ -43,6 +44,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Roles = "ADMIN;UNIVERSITY")]
         public IActionResult Add([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
@@ -55,6 +57,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpPut("[action]")]
+        [Authorize(Roles = "ADMIN;UNIVERSITY")]
         public IActionResult Update([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
@@ -68,6 +71,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpDelete("[action]/{id}")]
+        [Authorize(Roles = "ADMIN;UNIVERSITY")]
         public IActionResult Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)

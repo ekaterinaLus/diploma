@@ -54,7 +54,7 @@ namespace ProjectDiploma.Logic
 
             var orderedTags = project.Tags.OrderBy(x => x.TagId).ToArray();
 
-            for (int i = 0; i < tagsLength; i++)
+            for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
                 features[i + 7] = orderedTags[i].TagId;
             }
@@ -75,7 +75,7 @@ namespace ProjectDiploma.Logic
 
             var orderedTags = project.Tags.OrderBy(x => x.Id).ToArray();
 
-            for (int i = 0; i < tagsLength; i++)
+            for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
                 features[i + 7] = orderedTags[i].Id;
             }

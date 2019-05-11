@@ -6,7 +6,7 @@ namespace Tester
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
         }
     }
 }

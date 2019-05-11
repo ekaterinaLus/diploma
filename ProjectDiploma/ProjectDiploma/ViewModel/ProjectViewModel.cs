@@ -35,5 +35,7 @@ namespace ProjectDiploma.ViewModel
         public HashSet<OrganizationViewModel> Sponsors { get; set; }
 
         public HashSet<TagViewModel> Tags { get; set; } 
+
+        public int Rate { get; set; }
     }
 }

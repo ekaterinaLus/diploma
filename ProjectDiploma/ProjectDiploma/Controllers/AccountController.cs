@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using DataStore.Entities;
 using DataStore.Repositories;
@@ -68,11 +69,12 @@ namespace ProjectDiploma.Controllers
                         var roles = await _userManager.GetRolesAsync(user);
                         var role = roles.FirstOrDefault();
 
-                        return Ok(new UserViewModel
-                        {
-                            Email = user.Email,
-                            Role = role
-                        });
+                        return new JsonResult(new Response<UserViewModel>(
+                            new UserViewModel
+                            {
+                                Email = user.Email,
+                                Role = role
+                            }));
                     }
                     else
                     {
@@ -86,10 +88,18 @@ namespace ProjectDiploma.Controllers
 
                 foreach (var error in errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError("Ошибка при создании пользователя", error.Description);
                 }
             }
-            return BadRequest(ModelState);
+
+            var errorResponse = new Response();
+
+            foreach (var error in ModelState)
+            {
+                errorResponse.AddMessage(MessageType.ERROR, $"{error.Key}: {error.Value.Errors.Aggregate(string.Empty, (x, y) => x += $"{y.ErrorMessage};")}");
+            }
+            
+            return new JsonResult(errorResponse);
         }
 
         [HttpPost("[action]")]

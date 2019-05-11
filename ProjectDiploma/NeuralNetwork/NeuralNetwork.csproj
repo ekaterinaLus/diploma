@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CNTK.CPUOnly" Version="2.7.0" />
+    <PackageReference Include="CNTK.CPUOnly" Version="2.6.0" />
+    <PackageReference Include="CNTK.Deps.MKL" Version="2.6.0" />
+    <PackageReference Include="CNTK.Deps.OpenCV.Zip" Version="2.6.0" />
     <PackageReference Include="NLog" Version="4.6.3" />
     <PackageReference Include="NLog.Config" Version="4.6.3" />
   </ItemGroup>

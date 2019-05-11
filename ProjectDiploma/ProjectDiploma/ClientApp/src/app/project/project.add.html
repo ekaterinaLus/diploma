@@ -94,7 +94,7 @@
 
       <label>Заглавная картинка: </label>
 
-      <td-file-upload id="file" (select)="handleFileInput($event)">
+      <td-file-upload id="file" (select)="handleFileInput($event)" accept="image/jpeg,image/png">
         <mat-icon>file_upload</mat-icon><span>{{ fileToUpload?.name }}</span>
         <ng-template td-file-input-label>
           <mat-icon>attach_file</mat-icon>
@@ -167,7 +167,7 @@
 
        
 
-        <button mat-stroked-button (click)="openSnackBar()" color="primary" >Сохранить</button> <!--onSubmit();-->
+        <button mat-stroked-button (click)="OnSubmit()" color="primary" >Сохранить</button> <!--onSubmit();-->
 </div>
   </mat-step>
 </mat-horizontal-stepper>

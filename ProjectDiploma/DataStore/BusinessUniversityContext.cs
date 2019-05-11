@@ -1,4 +1,5 @@
 ﻿using DataStore.Entities;
+using DataStore.Entities.Projects;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,10 @@ namespace Diploma.DataBase
         public DbSet<Tag> Tags { get; set; }
         public DbSet<University> Universities { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<ProjectRate> ProjectsRates { get; set; }   
 
         public BusinessUniversityContext(DbContextOptions<BusinessUniversityContext> options) : base(options)
-        {}        
+        { }
 
         public BusinessUniversityContext()
         {
@@ -30,6 +32,14 @@ namespace Diploma.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProjectRate>()
+                .HasKey(x => new { x.UserId, x.ProjectId });
+            
+            modelBuilder.Entity<EventsTags>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.Events)
+                .HasForeignKey(pt => pt.TagId);
+
             modelBuilder.Entity<EventsTags>()
                 .HasKey(x => new { x.EventId, x.TagId });
 
@@ -73,9 +83,9 @@ namespace Diploma.DataBase
                 .HasKey(x => new { x.ProjectId, x.CompanyId });
 
             modelBuilder.Entity<ProjectsCompanies>()
-    .HasOne(pt => pt.Project)
-    .WithMany(p => p.Sponsors)
-    .HasForeignKey(pt => pt.ProjectId);
+                .HasOne(pt => pt.Project)
+                .WithMany(p => p.Sponsors)
+                .HasForeignKey(pt => pt.ProjectId);
 
             modelBuilder.Entity<ProjectsCompanies>()
                 .HasOne(pt => pt.Company)
@@ -83,10 +93,9 @@ namespace Diploma.DataBase
                 .HasForeignKey(pt => pt.CompanyId);
 
             base.OnModelCreating(modelBuilder);
-         
+
         }
 
 
     }
 }
- 

@@ -10,15 +10,12 @@ import { IOrganizationData, OrganizationType } from '../models/organization';
 import { delay } from 'q';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { Message, MessageType, Response } from "../models/response";
 
 export interface IRole {
   value: Role,
   viewValue: string
 }
-
-
-
-
 
 @Component({
   selector: 'app-user',
@@ -43,9 +40,6 @@ export class UserComponent implements OnInit {
     { value: Role.University, viewValue: "Университет" }
   ];
 
-
-
-
   filteredOptions: Observable<IOrganizationData[]>;
 
   constructor(
@@ -63,7 +57,7 @@ export class UserComponent implements OnInit {
 
     this.http.get<IOrganizationData[]>(this.baseUrl + 'api/Organization/GetAll').subscribe(result => {
       this.organizations = result;
-    }, error => console.log('error in event'));
+    }, error => console.log('error in organization'));
   }
 
 
@@ -128,10 +122,15 @@ export class UserComponent implements OnInit {
     };
 
     this.loading = true;
-    this.http.post<object>(this.baseUrl + 'api/Account/Register', value)
+    this.http.post<Response<any>>(this.baseUrl + 'api/Account/Register', value)
       .subscribe(result => {
-        this.success = true;
+        this.success = result.hasErrors;
         this.loading = false;
+
+        if (result.hasErrors) {
+          var errors = result.messages.filter(x => x.messageType != MessageType.ERROR);
+          this.openSnackBar(errors[0].text, "Ошибка");
+        }
       }, error => {
         this.error = error;
         this.loading = false;
@@ -141,7 +140,7 @@ export class UserComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4500,
     });
   }
 }

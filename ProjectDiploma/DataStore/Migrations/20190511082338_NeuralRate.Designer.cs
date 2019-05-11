@@ -3,15 +3,17 @@ using System;
 using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataStore.Migrations
 {
     [DbContext(typeof(BusinessUniversityContext))]
-    partial class BusinessUniversityContextModelSnapshot : ModelSnapshot
+    [Migration("20190511082338_NeuralRate")]
+    partial class NeuralRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
