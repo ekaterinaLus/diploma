@@ -1,4 +1,5 @@
 ﻿using ProjectDiploma.Helpers.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectDiploma.ViewModel
@@ -18,5 +19,9 @@ namespace ProjectDiploma.ViewModel
 
         [Required]
         public OrganizationViewModel Organization {get; set;}
+
+        [Required]
+        [CheckUserTags]
+        public HashSet<TagViewModel> Tags { get; set; }
     }
 }

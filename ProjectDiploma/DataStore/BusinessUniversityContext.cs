@@ -44,22 +44,18 @@ namespace Diploma.DataBase
                 .HasKey(x => new { x.EventId, x.TagId });
 
             modelBuilder.Entity<EventsTags>()
-            .HasOne(pt => pt.Event)
-            .WithMany(p => p.Tags)
-            .HasForeignKey(pt => pt.EventId);
+                .HasOne(pt => pt.Event)
+                .WithMany(p => p.Tags)
+                .HasForeignKey(pt => pt.EventId);
 
-            modelBuilder.Entity<EventsTags>()
-                .HasOne(pt => pt.Tag)
-                .WithMany(t => t.Events)
-                .HasForeignKey(pt => pt.TagId);
 
             modelBuilder.Entity<NewsTags>()
                 .HasKey(x => new { x.NewsId, x.TagId });
 
             modelBuilder.Entity<NewsTags>()
-           .HasOne(pt => pt.News)
-           .WithMany(p => p.Tags)
-           .HasForeignKey(pt => pt.NewsId);
+               .HasOne(pt => pt.News)
+               .WithMany(p => p.Tags)
+               .HasForeignKey(pt => pt.NewsId);
 
             modelBuilder.Entity<NewsTags>()
                 .HasOne(pt => pt.Tag)
@@ -70,9 +66,9 @@ namespace Diploma.DataBase
                 .HasKey(x => new { x.ProjectId, x.TagId });
 
             modelBuilder.Entity<ProjectsTags>()
-           .HasOne(pt => pt.Project)
-           .WithMany(p => p.Tags)
-           .HasForeignKey(pt => pt.ProjectId);
+               .HasOne(pt => pt.Project)
+               .WithMany(p => p.Tags)
+               .HasForeignKey(pt => pt.ProjectId);
 
             modelBuilder.Entity<ProjectsTags>()
                 .HasOne(pt => pt.Tag)
@@ -91,6 +87,19 @@ namespace Diploma.DataBase
                 .HasOne(pt => pt.Company)
                 .WithMany(t => t.Projects)
                 .HasForeignKey(pt => pt.CompanyId);
+
+            modelBuilder.Entity<UsersTags>()
+               .HasKey(x => new { x.UserId, x.TagId });
+
+            modelBuilder.Entity<UsersTags>()
+               .HasOne(pt => pt.User)
+               .WithMany(p => p.Tags)
+               .HasForeignKey(pt => pt.UserId);
+
+            modelBuilder.Entity<UsersTags>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.Users)
+                .HasForeignKey(pt => pt.TagId);
 
             base.OnModelCreating(modelBuilder);
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, startWith, map } from 'rxjs/operators';
@@ -9,8 +9,10 @@ import { Role } from '../models/role';
 import { IOrganizationData, OrganizationType } from '../models/organization';
 import { delay } from 'q';
 import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
 import { Message, MessageType, Response } from "../models/response";
+import { TagService } from '../services/tag.loading.service';
+import { Tag } from '../models/tag';
 
 export interface IRole {
   value: Role,
@@ -28,6 +30,8 @@ export class UserComponent implements OnInit {
   submitted = false;
   error = '';
   success = false;
+  tags: string[] = [];
+  filteredTags: string[];
 
   public selectedOrganizationInfo: string = '';
 
@@ -42,12 +46,15 @@ export class UserComponent implements OnInit {
 
   filteredOptions: Observable<IOrganizationData[]>;
 
+  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private authenticationService: AuthenticationService,
     private snackBar: MatSnackBar,
+    private tagService: TagService,
     @Inject('BASE_URL') public baseUrl: string
   ) {
     // redirect to home if already logged in
@@ -67,7 +74,8 @@ export class UserComponent implements OnInit {
       password: ['', Validators.required],
       role: ['', Validators.required],
       organizationName: ['', Validators.required],
-      contactInfo: ['', Validators.required]
+      contactInfo: ['', Validators.required],
+      tagsCtrl: ['']
     });
 
     this.filteredOptions = this.userForm.controls["organizationName"].valueChanges
@@ -75,7 +83,17 @@ export class UserComponent implements OnInit {
         startWith<string | IOrganizationData>(''),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter(name) : this.organizations.slice())
-      );
+    );
+
+    this.userForm.controls["tagsCtrl"].valueChanges
+      .subscribe(
+        (tag: string | null) => {
+          this.tagService.loadTags(5, tag).subscribe(result => {
+            if (!result.hasErrors) {
+              this.filteredTags = result.itemResult.map(x => x.name);
+            }
+          }, errorResult => console.error(errorResult))
+        }, errorValue => console.error(errorValue));
   }
 
   getSelectedInfo(organization: IOrganizationData) {
@@ -110,6 +128,8 @@ export class UserComponent implements OnInit {
       return;
     }
 
+    var tagObjects = this.tags.map<Tag>(x => { return { id: 0, name: x }; });
+
     var value = {
       email: this.f.username.value,
       password: this.f.password.value,
@@ -118,7 +138,8 @@ export class UserComponent implements OnInit {
         name: this.f.organizationName.value.name ? this.f.organizationName.value.name : this.f.organizationName.value,
         contactInformation: this.f.contactInfo.value,
         type: this.f.role.value == Role.University ? OrganizationType.University : OrganizationType.Company
-      }
+      },
+      tags: tagObjects
     };
 
     this.loading = true;
@@ -142,5 +163,32 @@ export class UserComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 4500,
     });
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.tags.push(event.option.viewValue);
+    this.tagInput.nativeElement.value = '';
+    this.userForm.controls["tagsCtrl"].setValue(null);
+  }
+
+  add(event: MatChipInputEvent): void {
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.tags.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.filteredTags = null;
+    }
   }
 }

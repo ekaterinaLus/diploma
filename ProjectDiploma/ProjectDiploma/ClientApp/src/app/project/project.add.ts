@@ -145,6 +145,7 @@ export class AddProject implements OnInit {
       this.filteredTags = null;
     }
   }
+  
 
   onSubmit() {
     this.submitted = true;
@@ -154,19 +155,19 @@ export class AddProject implements OnInit {
     //  return;
     //}
 
-    this.fileService.postFile(this.fileToUpload).subscribe(data => {
+    //this.fileService.postFile(this.fileToUpload).subscribe(data => {
 
-      var loadedFileName: string = null;
-      if (!data.hasErrors) {
-        loadedFileName = data.itemResult;
-      }
+    //  var loadedFileName: string = null;
+    //  if (!data.hasErrors) {
+    //    loadedFileName = data.itemResult;
+    //  }
 
-      this.CreateProject(loadedFileName);
-    }, error => {
-      this.CreateProject(null);
-    });
+    //  this.CreateProject(loadedFileName);
+    //}, error => {
+    //  this.CreateProject(null);
+    //});
 
-
+    this.CreateProject(null);
 
   }
 

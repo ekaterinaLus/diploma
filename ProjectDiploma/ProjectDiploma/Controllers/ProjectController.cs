@@ -44,7 +44,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpPost("[action]")]
-        [Authorize(Roles = "ADMIN;UNIVERSITY")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
         public IActionResult Add([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpPut("[action]")]
-        [Authorize(Roles = "ADMIN;UNIVERSITY")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
         public IActionResult Update([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpDelete("[action]/{id}")]
-        [Authorize(Roles = "ADMIN;UNIVERSITY")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
         public IActionResult Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)

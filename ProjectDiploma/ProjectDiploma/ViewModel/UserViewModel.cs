@@ -1,4 +1,6 @@
-﻿namespace ProjectDiploma.ViewModel
+﻿using System.Collections.Generic;
+
+namespace ProjectDiploma.ViewModel
 {
     public class UserViewModel
     {

@@ -1,6 +1,8 @@
-﻿using DataStore.Entities;
+﻿using DataStore;
+using DataStore.Entities;
 using DataStore.Repositories.ProjectRepository;
 using Diploma.DataBase;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 using ProjectDiploma.ViewModel;
@@ -70,6 +72,19 @@ namespace ProjectDiploma.Logic
 
         public Response Add(ProjectViewModel projectViewModel)
         {
+            var entityTags = projectViewModel.Tags.Select(x => x.ToType<Tag>());
+
+            DbContext.Tags.AddUniqueElements(entityTags);
+            DbContext.SaveChanges();
+
+            var dbTags = DbContext.Tags.GetDatabaseElements(entityTags);
+
+            foreach (var tag in dbTags)
+            {
+                var viewModelTag = projectViewModel.Tags.FirstOrDefault(x => x.Name.ToLower() == tag.Name.ToLower());
+                viewModelTag.Id = tag.Id;
+            }
+
             var dbEntity = projectViewModel.ToType<Project>();
 
             dbEntity.Initializer = DbContext.Universities.Find(1);

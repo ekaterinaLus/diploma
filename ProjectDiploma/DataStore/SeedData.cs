@@ -120,7 +120,7 @@ namespace DataStore
 
             await context.Tags.AddUniqueElementsAsync(items);
 
-            return await context.Tags.GetDatabaseElements(items);
+            return await context.Tags.GetDatabaseElementsAsync(items);
         }
 
         private static async Task<IEnumerable<NewsType>> FillNewsType(BusinessUniversityContext context)
@@ -135,7 +135,7 @@ namespace DataStore
 
             await context.NewsTypes.AddUniqueElementsAsync(items);
 
-            return await context.NewsTypes.GetDatabaseElements(items);
+            return await context.NewsTypes.GetDatabaseElementsAsync(items);
         }
 
         private static async Task<IEnumerable<University>> FillUnivers(BusinessUniversityContext context)
@@ -156,7 +156,7 @@ namespace DataStore
             };
 
             await context.Universities.AddUniqueElementsAsync(items);
-            return await context.Universities.GetDatabaseElements(items);
+            return await context.Universities.GetDatabaseElementsAsync(items);
 
         }
 

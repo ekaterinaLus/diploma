@@ -23,5 +23,6 @@ namespace DataStore.Entities
 
         public virtual ICollection<ProjectsTags> Projects { get; set; } = new HashSet<ProjectsTags>();
 
+        public virtual ICollection<UsersTags> Users { get; set; } = new HashSet<UsersTags>();
     }
 }

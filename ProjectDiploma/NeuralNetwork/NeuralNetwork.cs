@@ -143,17 +143,24 @@ namespace NeuralNetwork
             return CNTKLib.Tanh(layer);
         }
 
+        public static void Delete()
+        {
+            currentNetwork = null;
+        }
+
         public static NeuralNetwork GetNeuralNetwork()
         {
-            NeuralNetwork result = new NeuralNetwork();
-
+            NeuralNetwork result = null;
+            
             if (currentNetwork == null)
             {
+                result = new NeuralNetwork();
                 result.CreateNN();
                 if (File.Exists(SAVED_MODEL_FILE_NAME))
                 {
                     result.trainer.RestoreFromCheckpoint(SAVED_MODEL_FILE_NAME);
                 }
+                currentNetwork = result;
             }
             else
             {

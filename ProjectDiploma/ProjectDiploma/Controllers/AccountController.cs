@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DataStore;
 using DataStore.Entities;
 using DataStore.Repositories;
 using Diploma.DataBase;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectDiploma.Entities;
 using ProjectDiploma.ViewModel;
+using SharedLogic.Mapper;
 
 namespace ProjectDiploma.Controllers
 {
@@ -35,6 +37,7 @@ namespace ProjectDiploma.Controllers
             {
                 //TODO: сделать проверку на пользователя
                 User user = new User { Email = model.Email, UserName = model.Email };
+
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 var errors = new List<IdentityError>();
@@ -64,6 +67,29 @@ namespace ProjectDiploma.Controllers
                         }
 
                         organization.Employees.Add(user);
+
+                        var entityTags = model.Tags.Select(x => x.ToType<Tag>());
+
+                        await _dbContext.Tags.AddUniqueElementsAsync(entityTags);
+                        await _dbContext.SaveChangesAsync();
+
+                        var dbTags = await _dbContext.Tags.GetDatabaseElementsAsync(entityTags);
+
+                        foreach (var tag in dbTags)
+                        {
+                            var viewModelTag = model.Tags.FirstOrDefault(x => x.Name.ToLower() == tag.Name.ToLower());
+                            viewModelTag.Id = tag.Id;
+                        }
+
+                        foreach (var tag in model.Tags)
+                        {
+                            user.Tags.Add(new UsersTags
+                            {
+                                TagId = tag.Id,
+                                UserId = user.Id
+                            });
+                        }
+
                         await _dbContext.SaveChangesAsync();
 
                         var roles = await _userManager.GetRolesAsync(user);
@@ -132,6 +158,8 @@ namespace ProjectDiploma.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Logout()
         {
+            NeuralNetwork.NeuralNetwork.Delete();
+            GC.Collect();
             await _signInManager.SignOutAsync();
             return Ok();
         }
