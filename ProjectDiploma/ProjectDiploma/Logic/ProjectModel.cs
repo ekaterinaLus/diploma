@@ -18,7 +18,7 @@ namespace ProjectDiploma.Logic
     {
         private static CancellationTokenSource _resetCacheToken = new CancellationTokenSource();
 
-        public string UserId { get; set; }
+        public User User { get; set; }
 
         private IMemoryCache MemoryCache { get; }
 
@@ -129,7 +129,7 @@ namespace ProjectDiploma.Logic
 
         public override IEnumerable<ProjectViewModel> GetPagingItems(int pageIndex, int pageSize)
         {
-            if (MemoryCache.TryGetValue(UserId, out List<ProjectViewModel> cacheResult))
+            if (MemoryCache.TryGetValue(User.Id, out List<ProjectViewModel> cacheResult))
             {
                 return cacheResult.Skip(pageIndex * pageSize).Take(pageSize);
             }
@@ -146,7 +146,7 @@ namespace ProjectDiploma.Logic
                 
                 foreach (var project in projects)
                 {
-                    var features = NeuralNetworkModel.ExtractFeatures(UserId, project);
+                    var features = NeuralNetworkModel.ExtractFeatures(User, project);
 
                     var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
                     {
@@ -156,7 +156,7 @@ namespace ProjectDiploma.Logic
                     nnResult.Add((project, evalResult));
                 }
 
-                var rates = DbContext.ProjectsRates.Where(x => x.UserId == UserId);
+                var rates = DbContext.ProjectsRates.Where(x => x.UserId == User.Id);
 
                 var result = nnResult
                         .OrderByDescending(x => x.Item2)
@@ -168,7 +168,7 @@ namespace ProjectDiploma.Logic
                         })
                         .ToList();
 
-                MemoryCache.Set(UserId, result, options);
+                MemoryCache.Set(User.Id, result, options);
 
                 return result.Skip(pageIndex * pageSize).Take(pageSize);
             }

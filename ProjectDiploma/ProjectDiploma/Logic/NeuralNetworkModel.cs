@@ -13,6 +13,7 @@ namespace ProjectDiploma.Logic
         private readonly ProjectsRepository projectsRepository = null;
 
         private const int tagsLength = 10;
+        private const int userTagsLength = 10;
 
         public NeuralNetworkModel(BusinessUniversityContext context)
         {
@@ -24,13 +25,13 @@ namespace ProjectDiploma.Logic
 
         }
 
-        public void Train(int id, int interest, string userId)
+        public void Train(int id, int interest, User user)
         {
             var project = projectsRepository.Get(id);
 
             if (project != null)
             {
-                double[] features = ExtractFeatures(userId, project);
+                double[] features = ExtractFeatures(user, project);
 
                 var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
                 nn.Train(new NeuralNetwork.NeuralNetworkData
@@ -41,55 +42,69 @@ namespace ProjectDiploma.Logic
             }
         }
 
-        public static double[] ExtractFeatures(string userId, Project project)
+        public static double[] ExtractFeatures(User user, Project project)
         {
             var features = new double[NeuralNetwork.NeuralNetwork.inputDim];
-            features[0] = userId.GetHashCode();
-            features[1] = (double)project.Stage;
-            features[2] = project.StartDate?.Ticks ?? -1d;
-            features[3] = project.FinishDate?.Ticks ?? -1d;
-            features[4] = (double)project.CostCurrent;
-            features[5] = (double)project.CostFull;
-            features[6] = project.Initializer.Id;
+            
+            features[0] = (double)project.Stage;
+            features[1] = project.StartDate?.Ticks ?? -1d;
+            features[2] = project.FinishDate?.Ticks ?? -1d;
+            features[3] = (double)project.CostCurrent;
+            features[4] = (double)project.CostFull;
+            features[5] = project.Initializer.Id;
+
+            var orderedUserTags = user.Tags.OrderBy(x => x.TagId).ToArray();
+
+            for (int i = 0; i < userTagsLength && i < orderedUserTags.Length; i++)
+            {
+                features[i + 6] = orderedUserTags[i].TagId;
+            }
 
             var orderedTags = project.Tags.OrderBy(x => x.TagId).ToArray();
 
             for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
-                features[i + 7] = orderedTags[i].TagId;
+                features[i + 16] = orderedTags[i].TagId;
             }
 
             return features;
         }
 
-        public static double[] ExtractFeatures(string userId, ProjectViewModel project)
+        public static double[] ExtractFeatures(User user, ProjectViewModel project)
         {
             var features = new double[NeuralNetwork.NeuralNetwork.inputDim];
-            features[0] = userId.GetHashCode();
-            features[1] = (double)Enum.Parse(typeof(Project.ProjectStage), project.Stage);
-            features[2] = project.StartDate?.Ticks ?? -1d;
-            features[3] = project.FinishDate?.Ticks ?? -1d;
-            features[4] = (double)project.CostCurrent;
-            features[5] = (double)project.CostFull;
-            features[6] = project.Initializer.Id;
+
+            features[0] = (double)Enum.Parse(typeof(Project.ProjectStage), project.Stage);
+            features[1] = project.StartDate?.Ticks ?? -1d;
+            features[2] = project.FinishDate?.Ticks ?? -1d;
+            features[3] = (double)project.CostCurrent;
+            features[4] = (double)project.CostFull;
+            features[5] = project.Initializer.Id;
+
+            var orderedUserTags = user.Tags.OrderBy(x => x.TagId).ToArray();
+
+            for (int i = 0; i < userTagsLength && i < orderedUserTags.Length; i++)
+            {
+                features[i + 6] = orderedUserTags[i].TagId;
+            }
 
             var orderedTags = project.Tags.OrderBy(x => x.Id).ToArray();
 
             for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
-                features[i + 7] = orderedTags[i].Id;
+                features[i + 16] = orderedTags[i].Id;
             }
 
             return features;
         }
 
-        public IEnumerable<ProjectViewModel> SortProjects(string userId, IEnumerable<ProjectViewModel> items)
+        public IEnumerable<ProjectViewModel> SortProjects(User user, IEnumerable<ProjectViewModel> items)
         {
             var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
 
             return items.OrderByDescending(x => nn.Evaluate(new NeuralNetwork.NeuralNetworkData
             {
-                Features = ExtractFeatures(userId, x)
+                Features = ExtractFeatures(user, x)
             }));
         }
     }

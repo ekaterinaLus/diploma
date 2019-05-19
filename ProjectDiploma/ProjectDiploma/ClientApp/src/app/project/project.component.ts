@@ -104,6 +104,11 @@ export class ProjectComponent implements OnInit {
     }, error => console.log('error in event'));
 
   }
+
+  public response(universityId: number, projectId: number) {
+    var count = 0;
+    
+  }
 }
 
 //прописать ньюс таг

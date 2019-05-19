@@ -48,9 +48,9 @@ namespace NeuralNetwork
 
         private Random rnd = new Random();
 
-        public const int inputDim = 17;
+        public const int inputDim = 26;
         public const int outputDim = 1;
-        private const int hiddenDim = 24;
+        private const int hiddenDim = 42;
         private const int batchSize = 60;
         private const int globalTrainDataSize = batchSize * 15;
 

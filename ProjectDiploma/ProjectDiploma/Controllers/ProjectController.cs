@@ -1,5 +1,7 @@
-﻿using Diploma.DataBase;
+﻿using DataStore.Entities;
+using Diploma.DataBase;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using ProjectDiploma.Logic;
@@ -7,20 +9,23 @@ using ProjectDiploma.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ProjectDiploma.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase, IPagingController<ProjectViewModel>
+    public class ProjectController : ControllerBase
     {
         private readonly BusinessUniversityContext _context;
         private readonly ProjectModel _model;
+        private readonly UserManager<User> _userManager;
         private readonly NeuralNetworkModel _nnModel = new NeuralNetworkModel();
 
-        public ProjectController(BusinessUniversityContext context, IMemoryCache memCache)
+        public ProjectController(BusinessUniversityContext context, UserManager<User> userManager, IMemoryCache memCache)
         {
             _context = context;
+            _userManager = userManager;
             _model = new ProjectModel(context, memCache);
         }
 
@@ -28,9 +33,11 @@ namespace ProjectDiploma.Controllers
         public int GetCount() => _model.GetItemsCount();
 
         [HttpGet("[action]")]
-        public IEnumerable<ProjectViewModel> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
+        public async Task<IEnumerable<ProjectViewModel>> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            _model.User = user;
 
             return _model.GetPagingItems(pageIndex, pageSize);
         }
@@ -45,41 +52,49 @@ namespace ProjectDiploma.Controllers
 
         [HttpPost("[action]")]
         [Authorize(Roles = "ADMIN,UNIVERSITY")]
-        public IActionResult Add([FromBody] ProjectViewModel item)
+        public async Task<IActionResult> Add([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
             {
                 return new JsonResult(GetErrorsFromModel());
             }
-            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            _model.User = user;
+
 
             return new JsonResult(_model.Add(item));
         }
 
         [HttpPut("[action]")]
         [Authorize(Roles = "ADMIN,UNIVERSITY")]
-        public IActionResult Update([FromBody] ProjectViewModel item)
+        public async Task<IActionResult> Update([FromBody] ProjectViewModel item)
         {
             if (!ModelState.IsValid)
             {
                 return new JsonResult(GetErrorsFromModel());
             }
 
-            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            _model.User = user;
 
             return new JsonResult(_model.Update(item));
         }
 
         [HttpDelete("[action]/{id}")]
         [Authorize(Roles = "ADMIN,UNIVERSITY")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return new JsonResult(GetErrorsFromModel());
             }
 
-            _model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            _model.User = user;
 
             return new JsonResult(_model.Delete(id));
         }
