@@ -35,9 +35,7 @@ namespace ProjectDiploma.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable<ProjectViewModel>> GetPage([FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            _model.User = user;
+            await SetupUserInfo();
 
             return _model.GetPagingItems(pageIndex, pageSize);
         }
@@ -59,10 +57,7 @@ namespace ProjectDiploma.Controllers
                 return new JsonResult(GetErrorsFromModel());
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            _model.User = user;
-
+            await SetupUserInfo();
 
             return new JsonResult(_model.Add(item));
         }
@@ -76,9 +71,7 @@ namespace ProjectDiploma.Controllers
                 return new JsonResult(GetErrorsFromModel());
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            _model.User = user;
+            await SetupUserInfo();
 
             return new JsonResult(_model.Update(item));
         }
@@ -92,11 +85,23 @@ namespace ProjectDiploma.Controllers
                 return new JsonResult(GetErrorsFromModel());
             }
 
+            await SetupUserInfo();
+
+            return new JsonResult(_model.Delete(id));
+        }
+
+        private async Task SetupUserInfo()
+        {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
             _model.User = user;
 
-            return new JsonResult(_model.Delete(id));
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+                _model.UseNeuralNetwork = role.ToUpper() == nameof(BusinessUniversityContext.RoleValues.BUSINESS);
+            }
         }
 
         private Response GetErrorsFromModel()

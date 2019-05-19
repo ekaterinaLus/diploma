@@ -8,7 +8,7 @@ namespace ProjectDiploma.Helpers.Attributes
     {
         public override bool IsValid(object value)
         {
-            return value is HashSet<TagViewModel> castedValue && castedValue.Count == 10;
+            return value is HashSet<TagViewModel> castedValue && castedValue.Count == 5;
         }
     }
 }

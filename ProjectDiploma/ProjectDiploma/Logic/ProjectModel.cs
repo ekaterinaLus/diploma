@@ -2,7 +2,6 @@
 using DataStore.Entities;
 using DataStore.Repositories.ProjectRepository;
 using Diploma.DataBase;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 using ProjectDiploma.ViewModel;
@@ -19,6 +18,12 @@ namespace ProjectDiploma.Logic
         private static CancellationTokenSource _resetCacheToken = new CancellationTokenSource();
 
         public User User { get; set; }
+
+        /// <summary>
+        /// Признак того, нужно ли использовать нейронку при выводе результатов
+        /// Например, для университета и для админа нейронка не используется.
+        /// </summary>
+        public bool UseNeuralNetwork { get; set; }
 
         private IMemoryCache MemoryCache { get; }
 
@@ -87,7 +92,7 @@ namespace ProjectDiploma.Logic
 
             var dbEntity = projectViewModel.ToType<Project>();
 
-            dbEntity.Initializer = DbContext.Universities.Find(1);
+            dbEntity.Initializer = DbContext.Universities.FirstOrDefault(x => x.Employees.Contains(User));
 
             Repository.Create(dbEntity);
 
@@ -129,6 +134,11 @@ namespace ProjectDiploma.Logic
 
         public override IEnumerable<ProjectViewModel> GetPagingItems(int pageIndex, int pageSize)
         {
+            if (User == null || !UseNeuralNetwork)
+            {
+                return base.GetPagingItems(pageIndex, pageSize); // Если сидим под анонимным пользователем - получаем проекты по-обычному
+            }
+
             if (MemoryCache.TryGetValue(User.Id, out List<ProjectViewModel> cacheResult))
             {
                 return cacheResult.Skip(pageIndex * pageSize).Take(pageSize);

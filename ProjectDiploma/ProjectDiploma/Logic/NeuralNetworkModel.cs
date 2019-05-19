@@ -13,7 +13,7 @@ namespace ProjectDiploma.Logic
         private readonly ProjectsRepository projectsRepository = null;
 
         private const int tagsLength = 10;
-        private const int userTagsLength = 10;
+        private const int userTagsLength = 5;
 
         public NeuralNetworkModel(BusinessUniversityContext context)
         {
@@ -64,7 +64,7 @@ namespace ProjectDiploma.Logic
 
             for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
-                features[i + 16] = orderedTags[i].TagId;
+                features[i + 11] = orderedTags[i].TagId;
             }
 
             return features;
@@ -92,7 +92,7 @@ namespace ProjectDiploma.Logic
 
             for (int i = 0; i < tagsLength && i < orderedTags.Length; i++)
             {
-                features[i + 16] = orderedTags[i].Id;
+                features[i + 11] = orderedTags[i].Id;
             }
 
             return features;
