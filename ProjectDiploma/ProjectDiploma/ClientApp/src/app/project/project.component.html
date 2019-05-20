@@ -22,6 +22,9 @@
         <button *ngIf="canRate" mat-icon-button (click)="onDislike(pr.id);" [color]="pr.rate == 0 ? 'primary' : ''">
           <mat-icon>thumb_down</mat-icon>
         </button>
+        <button *ngIf="canRate" mat-icon-button (click)="subscribe(pr.id);" >
+          <mat-icon>done</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>
