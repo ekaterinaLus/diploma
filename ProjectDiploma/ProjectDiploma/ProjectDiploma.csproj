@@ -49,6 +49,7 @@
     <None Remove="ClientApp\src\app\newspage\newspage.ts" />
     <None Remove="ClientApp\src\app\news\news.component.ts" />
     <None Remove="ClientApp\src\app\profile\profile.component.ts" />
+    <None Remove="ClientApp\src\app\profile\profilemore.component.ts" />
     <None Remove="ClientApp\src\app\project\project.add.ts" />
     <None Remove="ClientApp\src\app\project\project.component.ts" />
     <None Remove="ClientApp\src\app\user\user.component.ts" />
@@ -66,6 +67,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\nav-menu\nav-menu-search.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\newspage\newspage.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\news\news.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\profile\profilemore.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\profile\profile.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.add.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\project\project.component.ts" />

@@ -43,6 +43,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 //LOGIN
 import { LoginComponent } from './login/login.component';
@@ -50,6 +53,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileMoreComponent } from './profile/profilemore.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +68,8 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     LoginDialog,
     AddProject,
-    ProfileComponent
+    ProfileComponent,
+    ProfileMoreComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -96,6 +101,8 @@ import { ProfileComponent } from './profile/profile.component';
     MatAutocompleteModule,
     MatBadgeModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatTabsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
@@ -105,7 +112,8 @@ import { ProfileComponent } from './profile/profile.component';
       { path: 'login', component: LoginComponent },
       { path: 'newspage', component: NewsPageComponent },
       { path: 'newproject', component: AddProject },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'more', component: ProfileMoreComponent },
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],

@@ -5,35 +5,24 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  selector: 'app-profilemore',
+  templateUrl: './profilemore.component.html',
+  styleUrls: ['./profilemore.component.css'],
 
 })
-export class ProfileComponent  {
+export class ProfileMoreComponent  {
   public currentUser: User;
   public projects: Project[];
+  displayedColumns: string[] = ['name', 'contactInformation' ];
   
   constructor(@Inject('BASE_URL') private baseUrl: string,
-              public authenticationService: AuthenticationService,
               private http: HttpClient,
               private router: Router) {
-    this.authenticationService.currentUser.subscribe(x => {
-      if (x != null) {
-        this.currentUser = x;
-      }
-      else {
-        this.currentUser = null;
-      }
-    });
+
 
     this.http.get<Project[]>(this.baseUrl + 'api/Project/GetProjectsByUser').subscribe(result => {
       this.projects = result;
     }, error => console.log('error in event'));
-  }
-
-  clickMore() {
-    this.router.navigate(['/more']);
   }
 }
 
