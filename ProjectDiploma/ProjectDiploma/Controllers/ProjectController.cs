@@ -40,6 +40,15 @@ namespace ProjectDiploma.Controllers
             return _model.GetPagingItems(pageIndex, pageSize);
         }
 
+        [HttpGet("[action]")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
+        public async Task<IEnumerable<ProjectViewModel>> GetProjectsByUser()
+        {
+            await SetupUserInfo();
+
+            return _model.GetProjectByUser();
+        }
+
         //TODO: interface
 
         [HttpGet("[action]/{id}")]

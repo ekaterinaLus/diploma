@@ -160,6 +160,12 @@ namespace ProjectDiploma.Logic
             return new Response<ProjectViewModel>(projectViewModel);
         }
 
+        public IEnumerable<ProjectViewModel> GetProjectByUser()
+        {
+            var result = Repository.GetAll().Where(x => x.Initializer == DbContext.Universities.FirstOrDefault(y => y.Employees.Contains(User)));
+            return result.Select(x => x.ToType<ProjectViewModel>());
+        }
+
         public override IEnumerable<ProjectViewModel> GetPagingItems(int pageIndex, int pageSize)
         {
             if (User == null || !IsBusiness)

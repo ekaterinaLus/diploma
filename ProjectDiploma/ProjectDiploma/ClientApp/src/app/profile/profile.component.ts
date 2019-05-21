@@ -1,9 +1,7 @@
-import { Component } from "@angular/core";
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, Inject } from "@angular/core";
 import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication.service';
-import { MatDialog } from '@angular/material';
-import { filter, first } from 'rxjs/operators';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-profile',
@@ -13,9 +11,11 @@ import { filter, first } from 'rxjs/operators';
 })
 export class ProfileComponent  {
   public currentUser: User;
-  public showLoginButton: boolean;
-
-  constructor(public authenticationService: AuthenticationService, private router: Router, private dialog: MatDialog) {
+  public projects: Project[];
+  
+  constructor(@Inject('BASE_URL') private baseUrl: string,
+              public authenticationService: AuthenticationService,
+              private http: HttpClient) {
     this.authenticationService.currentUser.subscribe(x => {
       if (x != null) {
         this.currentUser = x;
@@ -25,7 +25,34 @@ export class ProfileComponent  {
       }
     });
 
-    this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd))
-      .subscribe(event => { this.showLoginButton = !event.url.startsWith("/login"); });
+    this.http.get<Project[]>(this.baseUrl + 'api/Project/GetProjectsByUser').subscribe(result => {
+      this.projects = result;
+    }, error => console.log('error in event'));
   }
+}
+
+//прописать ньюс таг
+interface Tag {
+  id: number;
+  name: string;
+}
+
+interface Company {
+  id: number;
+  name: string;
+  contactInformation: string;
+}
+
+interface Project {
+  id: number;
+  name: string;
+  startDate: Date;
+  finishDate: Date;
+  cost: number;
+  fileName: string;
+  initializer: Company;
+  sponsors: Company[];
+  tags: Tag[];
+  description: string;
+  rate: number;
 }
