@@ -73,6 +73,7 @@ namespace NeuralNetwork
         {
             try
             {
+                trainer.SaveCheckpoint(SAVED_MODEL_FILE_NAME);
                 Serializer.Save(SAVED_BATCH_FILE_NAME, trainDataCache);
                 Serializer.Save(SAVED_GLOBAL_TRAIN_DATA_FILE_NAME, globalTrainData);
             }
@@ -198,7 +199,7 @@ namespace NeuralNetwork
         public void Train(NeuralNetworkData trainData)
         {
             trainDataCache.Add(trainData);
-
+        
             if (trainDataCache.Count >= batchSize)
             {
                 globalTrainData.AddRange(trainDataCache);
@@ -218,37 +219,44 @@ namespace NeuralNetwork
                 int i = 0;
                 var features = model.Arguments[0];
                 var label = model.Output;
-
-                while (epoch > -1)
+                try
                 {
-                    if (i + batchSize > currentTrainData.Count())
+                    while (epoch > -1)
                     {
-                        i = 0;
-                    }
+                        if (i + batchSize > currentTrainData.Count())
+                        {
+                            i = 0;
+                        }
 
-                    var featuresData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Features);
-                    var labelsData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Labels);
+                        var featuresData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Features);
+                        var labelsData = currentTrainData.Skip(i).Take(batchSize).Select(x => x.Labels);
 
-                    i += batchSize;
+                        i += batchSize;
 
-                    var arguments = new Dictionary<Variable, Value>
+                        var arguments = new Dictionary<Variable, Value>
                     {
                         { features, Value.CreateBatchOfSequences(inputShape, featuresData, device) },
                         { label, Value.CreateBatchOfSequences(outputShape, labelsData, device) }
                     };
 
-                    trainer.TrainMinibatch(arguments, false, device);
+                        trainer.TrainMinibatch(arguments, false, device);
 
-                    PrintTrainingProgress(i / batchSize - 1, 5);
+                        PrintTrainingProgress(i / batchSize - 1, 5);
 
-                    epoch--;
+                        epoch--;
+                    }
                 }
 
-                trainDataCache.Clear();
+                catch(Exception e)
+                {
+                    e.ToString();
+                }
+
+                trainDataCache = new List<NeuralNetworkData>();
 
                 if (globalTrainData.Count >= globalTrainDataSize)
                 {
-                    globalTrainData.Clear();
+                    globalTrainData = new List<NeuralNetworkData>();
                 }
             }
         }

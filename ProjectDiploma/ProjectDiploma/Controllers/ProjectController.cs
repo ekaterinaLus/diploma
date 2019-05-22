@@ -116,6 +116,14 @@ namespace ProjectDiploma.Controllers
 
             return result;
         }
+
+        //[HttpPost("[action]")]
+        //public async Task<IActionResult> Open([FromQuery] int projectId)
+        //{
+        //    if (_context.Projects.Select(x => x.Id == projectId))
+        //    { }
+        //    return new JsonResult(_model.Get(projectId));
+        //}
     }
    
 }

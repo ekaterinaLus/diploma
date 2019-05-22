@@ -31,7 +31,7 @@ export class ProjectComponent implements OnInit {
     private fileService: FileService,
     private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string) {
-    this.pageSize = 1;
+    this.pageSize = 6;
     this.pageIndex = 0;
 
     this.url = this.fileService.loadFileUrl();
@@ -105,9 +105,11 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  public response(universityId: number, projectId: number) {
-    var count = 0;
-    
+  public OpenProject(id: number) {
+    var args = new HttpParams()
+      .append("projectId", id.toString());
+    this.http.get<Project>(this.baseUrl + 'api/Project/Get', { params: args }).subscribe(() => {
+    }, error => console.log(error));
   }
 }
 

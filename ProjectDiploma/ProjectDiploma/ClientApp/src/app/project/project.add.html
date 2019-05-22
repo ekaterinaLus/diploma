@@ -33,13 +33,13 @@
 
         <mat-grid-tile>
           <mat-form-field class="project_tile">
-            <input matInput required formControlName="costCurrent" autocomplete="off" placeholder="Средств собрано">
+            <input matInput required formControlName="costCurrent" autocomplete="off" placeholder="Средств собрано (в руб.)">
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field class="project_tile">
-            <input matInput required formControlName="costFull" autocomplete="off" placeholder="Общая стоимость">
+            <input matInput required formControlName="costFull" autocomplete="off" placeholder="Общая стоимость (в руб.)">
           </mat-form-field>
         </mat-grid-tile>
 
@@ -148,11 +148,11 @@
 
     <mat-card class="project_card_result">
       <mat-card-header>
-        <mat-card-title>{{projectName}}</mat-card-title>
+        <mat-card-title align="center">{{projectName}}</mat-card-title>
       </mat-card-header>
       <img *ngIf="fileImage" mat-card-image src="{{fileImage}}">
       <mat-card-content>
-        <p *ngIf="projectDescription">
+        <p *ngIf="projectDescription" align ="justify" class="retreat">
           {{projectDescription.length > 303 ? projectDescription.substring(0, 300) + '...' : projectDescription}}
         </p>
       </mat-card-content>      
@@ -163,11 +163,8 @@
         <mat-icon>navigate_before</mat-icon>
       </button>
       <button mat-stroked-button (click)="stepper.reset()">Очистить всё</button>
-      <p class="input">
 
-       
-
-        <button mat-stroked-button (click)="onSubmit()" color="primary" >Сохранить</button> <!--onSubmit();-->
+      <button mat-raised-button (click)="onSubmit()" color="primary" class="btn-space">Сохранить</button> <!--onSubmit();-->
 
 </div>
   </mat-step>

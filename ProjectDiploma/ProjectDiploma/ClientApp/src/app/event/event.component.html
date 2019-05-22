@@ -12,7 +12,7 @@
         {{e.title}}
       </mat-panel-title>
       <mat-panel-description class="position">
-        <a>  <mat-icon aria-label="Side nav toggle icon" class="icon">calendar_today</mat-icon><p class="padding">Дата: {{e.date|date:'dd-MM-yyyy'}} &nbsp; Адрес: {{e.adress}} </p></a>
+        <a>  <mat-icon aria-label="Side nav toggle icon" class="icon">calendar_today</mat-icon><p class="padding">Дата: {{e.date|date:'dd-MM-yyyy'}} &nbsp; Адрес: {{e.address}} </p></a>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{e.description}}</p>
@@ -27,7 +27,7 @@
 <mat-paginator *ngIf="events && events.length > 0"
                [length]="itemsLength"
                [pageSize]="pageSize"
-               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="pageEvent = handlePage($event)"
                class="paginator">
 </mat-paginator>

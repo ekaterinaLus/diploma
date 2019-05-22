@@ -4,13 +4,17 @@
 <mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px" *ngIf="projects && projects.length > 0">
   <mat-grid-tile style="margin-bottom:70px" *ngFor="let pr of projects">
     <mat-card class="project_row">
+      <mat-icon>wb_incandescent</mat-icon>
       <mat-card-header>
-        <mat-card-title>{{pr.name}}</mat-card-title>
+        <mat-card-title align="center">{{pr.name}}</mat-card-title>
         <mat-card-subtitle>{{pr.initializer.name}}</mat-card-subtitle>
+        <mat-chip-list>
+          <mat-chip *ngFor="let tag of pr.tags">{{tag.name}}</mat-chip>
+        </mat-chip-list>
       </mat-card-header>
       <img *ngIf="pr.fileName" mat-card-image src="{{url}}{{pr.fileName}}">
       <mat-card-content>
-        <p *ngIf="pr.description">
+        <p *ngIf="pr.description" class="retreat" align="justify">
           {{pr.description.length > 303 ? pr.description.substring(0, 300) + '...' : pr.description}}
         </p>
       </mat-card-content>
@@ -30,7 +34,7 @@
 <mat-paginator *ngIf="projects && projects.length > 0"
                [length]="itemsLength"
                [pageSize]="pageSize"
-               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               [pageSizeOptions]="[6, 10, 25, 100]"
                (page)="pageEvent = handlePage($event)"
                class="paginator">
 </mat-paginator>

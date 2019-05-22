@@ -19,7 +19,7 @@ export class EventComponent implements OnInit {
   pageEvent: PageEvent;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.pageSize = 1;
+    this.pageSize = 5;
     this.pageIndex = 0;
   }
 
@@ -74,7 +74,7 @@ interface Event {
   date: Date;
   title: string;
   description: string;
-  adress: string;
+  address: string;
   cost?: number;
   tags: Tag[];
 }
