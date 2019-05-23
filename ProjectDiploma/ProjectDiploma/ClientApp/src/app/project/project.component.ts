@@ -82,6 +82,11 @@ export class ProjectComponent implements OnInit {
     }, error => console.log(error));
   }
 
+  public subscribe(id: number) {
+    this.http.post<any>(this.baseUrl + 'api/Project/Subscribe/' + id.toString(), null).subscribe(() => {
+    }, error => console.log(error));
+  }
+
   public handlePage(event?: PageEvent) {
 
     this.http.get<number>(this.baseUrl + 'api/Project/GetCount').subscribe(result => {

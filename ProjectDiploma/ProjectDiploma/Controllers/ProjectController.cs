@@ -40,6 +40,15 @@ namespace ProjectDiploma.Controllers
             return _model.GetPagingItems(pageIndex, pageSize);
         }
 
+        [HttpGet("[action]")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
+        public async Task<IEnumerable<ProjectViewModel>> GetProjectsByUser()
+        {
+            await SetupUserInfo();
+
+            return _model.GetProjectByUser();
+        }
+
         //TODO: interface
 
         [HttpGet("[action]/{id}")]
@@ -60,6 +69,20 @@ namespace ProjectDiploma.Controllers
             await SetupUserInfo();
 
             return new JsonResult(_model.Add(item));
+        }
+
+        [HttpPost("[action]/{id}")]
+        [Authorize(Roles = "ADMIN,BUSINESS")]
+        public async Task<IActionResult> Subscribe([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult(GetErrorsFromModel());
+            }
+
+            await SetupUserInfo();
+
+            return new JsonResult(_model.Subscribe(id));
         }
 
         [HttpPut("[action]")]
@@ -100,7 +123,7 @@ namespace ProjectDiploma.Controllers
             {
                 var roles = await _userManager.GetRolesAsync(user);
                 var role = roles.FirstOrDefault();
-                _model.UseNeuralNetwork = role.ToUpper() == nameof(BusinessUniversityContext.RoleValues.BUSINESS);
+                _model.IsBusiness = role.ToUpper() == nameof(BusinessUniversityContext.RoleValues.BUSINESS);
             }
         }
 

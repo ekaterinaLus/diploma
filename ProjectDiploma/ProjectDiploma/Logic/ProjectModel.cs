@@ -23,7 +23,7 @@ namespace ProjectDiploma.Logic
         /// Признак того, нужно ли использовать нейронку при выводе результатов
         /// Например, для университета и для админа нейронка не используется.
         /// </summary>
-        public bool UseNeuralNetwork { get; set; }
+        public bool IsBusiness { get; set; }
 
         private IMemoryCache MemoryCache { get; }
 
@@ -69,6 +69,34 @@ namespace ProjectDiploma.Logic
                 _resetCacheToken.Dispose();
             }
             _resetCacheToken = new CancellationTokenSource();
+
+            DbContext.SaveChanges();
+
+            return new Response();
+        }
+
+        public Response Subscribe(int id)
+        {
+            var project = Repository.Get(id);
+
+            if (project == null)
+            {
+                return new Response()
+                            .AddMessage(MessageType.ERROR, "Объект не найден в базе");
+            }
+
+            if (project.Sponsors.Count > 0 && project.Sponsors.Any(x => x.CompanyId == (DbContext.Companies.FirstOrDefault(y => y.Employees.Contains(User))?.Id ?? -1)))
+            {
+
+            }
+            else
+            {
+                project.Sponsors.Add(new ProjectsCompanies
+                {
+                    Company = DbContext.Companies.FirstOrDefault(x => x.Employees.Contains(User)),
+                    Project = project
+                });
+            }
 
             DbContext.SaveChanges();
 
@@ -132,9 +160,15 @@ namespace ProjectDiploma.Logic
             return new Response<ProjectViewModel>(projectViewModel);
         }
 
+        public IEnumerable<ProjectViewModel> GetProjectByUser()
+        {
+            var result = Repository.GetAll().Where(x => x.Initializer == DbContext.Universities.FirstOrDefault(y => y.Employees.Contains(User)));
+            return result.Select(x => x.ToType<ProjectViewModel>());
+        }
+
         public override IEnumerable<ProjectViewModel> GetPagingItems(int pageIndex, int pageSize)
         {
-            if (User == null || !UseNeuralNetwork)
+            if (User == null || !IsBusiness)
             {
                 return base.GetPagingItems(pageIndex, pageSize); // Если сидим под анонимным пользователем - получаем проекты по-обычному
             }

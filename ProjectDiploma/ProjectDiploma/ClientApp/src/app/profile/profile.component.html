@@ -21,34 +21,28 @@
   </mat-card>-->
 
 <h1 mat-dialog-title class="style-text">Профиль</h1>
-<div mat-dialog-content [formGroup]="loginForm" class="form">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"> </div>
-      <mat-card-title *ngFor="let pr of projects">Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Сведения о пользователе</mat-card-subtitle>
-    </mat-card-header>
-    <p></p>
-    <mat-card-content>
-      <p>Логин: {{currentUser.email}}</p>
-    </mat-card-content>
-    <mat-divider></mat-divider>
-    <mat-card-content class="top">
-      <p>Роль: {{currentUser.role}}</p>
-    </mat-card-content>
-    <mat-divider></mat-divider>
-    <mat-card-content class="top">
-      <p>Выложенные исследования: </p>
-    </mat-card-content>
-    <mat-divider></mat-divider>
-    <p class="top">
-      Отклики на исследования
-      <button mat-raised-button color="primary"
-              matBadge="5" matBadgePosition="before" matBadgeColor="accent">
-        Посмотреть
-      </button>
-    </p>
-  </mat-card>
-</div>
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"> </div>
+    <mat-card-title>{{currentUser.email}}</mat-card-title>
+    <mat-card-subtitle>Роль: {{currentUser.role}}</mat-card-subtitle>
+  </mat-card-header> 
+  <mat-card-content class="top">
+    <p>Выложенные исследования: </p>
+    <mat-chip-list *ngFor="let pr of projects">
+      <mat-chip>{{pr.name.length > 40 ? pr.name.substring(0, 40) + "..." : pr.name}}</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <p class="top">
+    Отклики на исследования
+    <button mat-raised-button color="primary"
+            matBadge="5" matBadgePosition="before" matBadgeColor="accent" (click)="clickMore()">
+      Посмотреть
+    </button>
+  </p>
+</mat-card>
+
 
 
