@@ -1,44 +1,32 @@
-﻿/*using Diploma.DataBase;
-using Diploma.Entities;
+﻿using DataStore.Entities;
+using Diploma.DataBase;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace DataStore.Repositories
 {
-    class UserRepository<User> : IGenericRepository<User> where User : class, IEntity
-    {
-        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public class UserRepository
+    {        
         protected BusinessUniversityContext DbContext { get; set; }
 
-
-        public User Create(User element)
+        public UserRepository(BusinessUniversityContext dbContext)
         {
-            return DbContext.Set<User>().Add(element).Entity;
+            DbContext = dbContext;
         }
 
-        public void Delete(User element)
+        public User Get(string id)
         {
-            DbContext.Set<User>().Remove(element);
-        }
-
-        public User Get(int id)
-        {
-            return DbContext.Set<User>().Find(id);
+            return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return DbContext.Set<User>();
+            return DbContext.Users.Include(x => x.Tags);
         }
 
-        public void Update(User element)
-        {
-            DbContext.Set<User>().Update(element);
-        }
     }
-}*/
+}
 
 
 

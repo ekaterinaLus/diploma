@@ -1,5 +1,6 @@
 ﻿using DataStore;
 using DataStore.Entities;
+using DataStore.Repositories;
 using DataStore.Repositories.ProjectRepository;
 using Diploma.DataBase;
 using Microsoft.Extensions.Caching.Memory;
@@ -201,6 +202,8 @@ namespace ProjectDiploma.Logic
                 //}
 
                 var rates = DbContext.ProjectsRates.Where(x => x.UserId == User.Id);
+
+                User = new UserRepository(DbContext).Get(User.Id);
 
                 var nnResult = projects.Select(x => new
                 {
