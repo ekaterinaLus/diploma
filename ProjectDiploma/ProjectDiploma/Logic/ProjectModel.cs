@@ -180,27 +180,33 @@ namespace ProjectDiploma.Logic
             else
             {
                 var projects = Repository.GetAllOrderedDesc().ToList();
-                var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
-                var nnResult = new List<(Project, double)>(projects.Count);
+                //var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
+                //var nnResult = new List<(Project, double)>(projects.Count);
                 var options = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
                 }
                 .AddExpirationToken(new CancellationChangeToken(_resetCacheToken.Token));
-                
-                foreach (var project in projects)
-                {
-                    var features = NeuralNetworkModel.ExtractFeatures(User, project);
 
-                    var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
-                    {
-                        Features = features
-                    });
+                //foreach (var project in projects)
+                //{
+                //var features = NeuralNetworkModel.ExtractFeatures(User, project);
 
-                    nnResult.Add((project, evalResult));
-                }
+                //    var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
+                //    {
+                //        Features = features
+                //    });
+
+                //    nnResult.Add((project, evalResult));
+                //}
 
                 var rates = DbContext.ProjectsRates.Where(x => x.UserId == User.Id);
+
+                var nnResult = projects.Select(x => new
+                {
+                    Item1 = x,
+                    Item2 = x.Tags.Count(y => User.Tags.Any(i => i.TagId == y.TagId))
+                });
 
                 var result = nnResult
                         .OrderByDescending(x => x.Item2)
