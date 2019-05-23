@@ -59,6 +59,8 @@ namespace NeuralNetwork
         private readonly DeviceDescriptor device = DeviceDescriptor.CPUDevice;
         private readonly NDShape inputShape = new NDShape(1, inputDim);
         private readonly NDShape outputShape = new NDShape(1, outputDim);
+        private Variable features;
+        private Variable label;
 
         private List<NeuralNetworkData> globalTrainData = new List<NeuralNetworkData>();
         private List<NeuralNetworkData> trainDataCache = new List<NeuralNetworkData>(batchSize + 1);
@@ -173,13 +175,10 @@ namespace NeuralNetwork
 
         private void CreateNN()
         {
-            var features = Variable.InputVariable(inputShape, DataType.Double);
-            var label = Variable.InputVariable(outputShape, DataType.Double);
+            features = Variable.InputVariable(inputShape, DataType.Double);
+            label = Variable.InputVariable(outputShape, DataType.Double);
 
             model = AddLayer(features, hiddenDim);
-            model = AddActivationFunction(model);
-
-            model = AddLayer(model, hiddenDim);
             model = AddActivationFunction(model);
 
             model = AddLayer(model, hiddenDim);
@@ -199,7 +198,7 @@ namespace NeuralNetwork
         public void Train(NeuralNetworkData trainData)
         {
             trainDataCache.Add(trainData);
-        
+
             if (trainDataCache.Count >= batchSize)
             {
                 globalTrainData.AddRange(trainDataCache);
@@ -217,8 +216,7 @@ namespace NeuralNetwork
 
                 var epoch = currentTrainData.Count / batchSize;
                 int i = 0;
-                var features = model.Arguments[0];
-                var label = model.Output;
+                
                 try
                 {
                     while (epoch > -1)
