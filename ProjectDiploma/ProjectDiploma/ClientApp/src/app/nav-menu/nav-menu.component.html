@@ -21,21 +21,7 @@
         <button mat-button (click)="sidenav.open()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipList class="shriftSearch">
-            <mat-chip *ngFor="let  event of events" [selectable]="selectable"
-                      [removable]="removable" (removed)="remove(event)">
-              {{event.title}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input  placeholder="Поиск..." 
-                   [matChipInputFor]="chipList"
-                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                   [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="add($event)">
-            <mat-icon aria-label="Side nav toggle icon">search</mat-icon>
-          </mat-chip-list>
-        </mat-form-field>
+
         <div *ngIf="currentUser">
           <button mat-button [matMenuTriggerFor]="menu">{{currentUser.email}}</button>
           <mat-menu #menu="matMenu">
@@ -45,6 +31,12 @@
             <mat-icon aria-label="Side nav toggle icon" >assignment_ind</mat-icon>
           </mat-menu>
         </div>
+           <mat-form-field  class="example-chip-list" >
+          <mat-chip-list  #chipList class="shriftSearch">
+            
+            
+          </mat-chip-list>
+        </mat-form-field>
         <button *ngIf="!currentUser" mat-button (click)="userRegistration()" class="icon_registration link1">
           <mat-icon>person_add</mat-icon>
           Зарегистрироваться
