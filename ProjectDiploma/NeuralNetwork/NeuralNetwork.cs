@@ -42,16 +42,16 @@ namespace NeuralNetwork
         //    c13 => c13.GetHashCode()                            //14
         //};
 
-        private const string SAVED_MODEL_FILE_NAME = "businessUniversity.bin";
-        private const string SAVED_BATCH_FILE_NAME = "currentNNBatch.tmp";
-        private const string SAVED_GLOBAL_TRAIN_DATA_FILE_NAME = "trainData.bin";
+        private const string SAVED_MODEL_FILE_NAME = @"C:\Users\Margo\Desktop\Network\businessUniversity.bin";
+        private const string SAVED_BATCH_FILE_NAME = @"C:\Users\Margo\Desktop\Network\currentNNBatch.tmp";
+        private const string SAVED_GLOBAL_TRAIN_DATA_FILE_NAME = @"C:\Users\Margo\Desktop\Network\trainData.bin";
 
         private Random rnd = new Random();
 
         public const int inputDim = 21;
         public const int outputDim = 1;
         private const int hiddenDim = 38;
-        private const int batchSize = 60;
+        private const int batchSize = 85;
         private const int globalTrainDataSize = batchSize * 15;
 
         private Trainer trainer;
@@ -143,7 +143,7 @@ namespace NeuralNetwork
 
         private Function AddActivationFunction(Function layer)
         {
-            return CNTKLib.Tanh(layer);
+            return CNTKLib.ReLU(layer);
         }
 
         public static void Delete()

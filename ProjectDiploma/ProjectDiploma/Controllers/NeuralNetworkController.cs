@@ -49,5 +49,12 @@ namespace ProjectDiploma.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]")]
+        public IActionResult PreTrain()
+        {
+            _model.PreTrain();
+            return Ok();
+        }
+
     }
 }
