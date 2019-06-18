@@ -52,8 +52,9 @@ namespace NeuralNetwork
         public const int inputDim = 21;
         public const int outputDim = 1;
         private const int hiddenDim = 38;
-        private const int batchSize = 85;
-        private const int globalTrainDataSize = batchSize * 15;
+        private const int batchSize = 55;
+        private const int globalTrainDataSize = batchSize * 7;
+        private const int epochCount = 100000;
 
         private Trainer trainer;
         private Function model;
@@ -140,7 +141,7 @@ namespace NeuralNetwork
 
         private Function AddActivationFunction(Function layer)
         {
-            return CNTKLib.ReLU(layer);
+            return CNTKLib.Tanh(layer);
         }
 
         public static NeuralNetwork GetNeuralNetwork()
@@ -176,22 +177,40 @@ namespace NeuralNetwork
             model = AddLayer(model, hiddenDim);
             model = AddActivationFunction(model);
 
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
+            model = AddLayer(model, hiddenDim);
+            model = AddActivationFunction(model);
+
             model = AddLayer(model, outputDim);
 
             var loss = CNTKLib.SquaredError(model, label);
             var evalError = CNTKLib.SquaredError(model, label);
             //0.002525
-            var learningRatePerSample = new TrainingParameterScheduleDouble(0.002525, 1);
+            var learningRatePerSample = new TrainingParameterScheduleDouble(0.0585, 1);
             var parameterLearners = new List<Learner>() { Learner.SGDLearner(model.Parameters(), learningRatePerSample) };
 
             trainer = Trainer.CreateTrainer(model, loss, evalError, parameterLearners);
         }
 
-        public void Train(NeuralNetworkData trainData)
+        public void Train(NeuralNetworkData trainData, bool onlyAdd = false)
         {
             trainDataCache.Add(trainData);
 
-            if (trainDataCache.Count >= batchSize)
+            if (trainDataCache.Count >= batchSize * 3 && !onlyAdd)
             {
                 globalTrainData.AddRange(trainDataCache);
 
@@ -206,7 +225,7 @@ namespace NeuralNetwork
                     currentTrainData = trainDataCache;
                 }
 
-                var epoch = currentTrainData.Count / batchSize;
+                var epoch = currentTrainData.Count >= globalTrainDataSize ? epochCount : 100;
                 int i = 0;
                 
                 try

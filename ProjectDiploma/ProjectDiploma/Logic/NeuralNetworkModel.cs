@@ -133,8 +133,10 @@ namespace ProjectDiploma.Logic
 
             foreach (var item in generatedTrainData)
             {
-                nn.Train(item);
+                nn.Train(item, true);
             }
+
+            nn.Train(generatedTrainData.Last());
         }
 
         public void Train(int id, int interest, User user)
