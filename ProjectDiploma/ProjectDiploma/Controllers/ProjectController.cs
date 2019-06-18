@@ -1,4 +1,5 @@
 ﻿using DataStore.Entities;
+using DataStore.Repositories;
 using Diploma.DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ namespace ProjectDiploma.Controllers
         private readonly BusinessUniversityContext _context;
         private readonly ProjectModel _model;
         private readonly UserManager<User> _userManager;
+        private readonly UserRepository _userRepository;
         private readonly NeuralNetworkModel _nnModel = new NeuralNetworkModel();
 
         public ProjectController(BusinessUniversityContext context, UserManager<User> userManager, IMemoryCache memCache)
@@ -27,6 +29,7 @@ namespace ProjectDiploma.Controllers
             _context = context;
             _userManager = userManager;
             _model = new ProjectModel(context, memCache);
+            _userRepository = new UserRepository(context);
         }
 
         [HttpGet("[action]")]
@@ -116,7 +119,7 @@ namespace ProjectDiploma.Controllers
         private async Task SetupUserInfo()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = _userRepository.Get(userId);
             _model.User = user;
 
             if (user != null)

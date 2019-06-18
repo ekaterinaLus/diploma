@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NeuralNetwork
 {
@@ -71,15 +72,11 @@ namespace NeuralNetwork
             trainDataCache = Serializer.Load<List<NeuralNetworkData>>(SAVED_BATCH_FILE_NAME);
         }
 
-        ~NeuralNetwork()
+        public async static void Unload()
         {
-            try
-            {
-                trainer.SaveCheckpoint(SAVED_MODEL_FILE_NAME);
-                Serializer.Save(SAVED_BATCH_FILE_NAME, trainDataCache);
-                Serializer.Save(SAVED_GLOBAL_TRAIN_DATA_FILE_NAME, globalTrainData);
-            }
-            catch { }
+            await TryAction(() => currentNetwork.trainer.SaveCheckpoint(SAVED_MODEL_FILE_NAME), 3, 1000).ConfigureAwait(true);
+            await TryAction(() => Serializer.Save(SAVED_BATCH_FILE_NAME, currentNetwork.trainDataCache), 3).ConfigureAwait(true);
+            await TryAction(() => Serializer.Save(SAVED_GLOBAL_TRAIN_DATA_FILE_NAME, currentNetwork.globalTrainData), 3).ConfigureAwait(true);
         }
 
         //private IEnumerable<NeuralNetworkData> ReadFromFile(string fileName)
@@ -144,11 +141,6 @@ namespace NeuralNetwork
         private Function AddActivationFunction(Function layer)
         {
             return CNTKLib.ReLU(layer);
-        }
-
-        public static void Delete()
-        {
-            currentNetwork = null;
         }
 
         public static NeuralNetwork GetNeuralNetwork()
@@ -232,10 +224,10 @@ namespace NeuralNetwork
                         i += batchSize;
 
                         var arguments = new Dictionary<Variable, Value>
-                    {
-                        { features, Value.CreateBatchOfSequences(inputShape, featuresData, device) },
-                        { label, Value.CreateBatchOfSequences(outputShape, labelsData, device) }
-                    };
+                        {
+                            { features, Value.CreateBatchOfSequences(inputShape, featuresData, device) },
+                            { label, Value.CreateBatchOfSequences(outputShape, labelsData, device) }
+                        };
 
                         trainer.TrainMinibatch(arguments, false, device);
 
@@ -292,6 +284,30 @@ namespace NeuralNetwork
                 float evaluationValue = (float)trainer.PreviousMinibatchEvaluationAverage();
                 logger.Info($"CrossEntropyLoss = {trainLossValue}, EvaluationCriterion = {evaluationValue}");
             }
+        }
+
+        private async static Task<bool> TryAction(Action action, int tryCount, int waitTime = 0)
+        {
+            var result = false;
+
+            for (int i = 0; i < tryCount; i++)
+            {
+                try
+                {
+                    action();
+                    result = true;                    
+                }
+                catch
+                {
+                    result = false;
+                    if (waitTime > 0)
+                    {
+                        await Task.Delay(waitTime).ConfigureAwait(true);
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

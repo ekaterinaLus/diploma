@@ -174,42 +174,50 @@ namespace ProjectDiploma.Logic
                 return base.GetPagingItems(pageIndex, pageSize); // Если сидим под анонимным пользователем - получаем проекты по-обычному
             }
 
-            if (MemoryCache.TryGetValue(User.Id, out List<ProjectViewModel> cacheResult))
-            {
-                return cacheResult.Skip(pageIndex * pageSize).Take(pageSize);
-            }
-            else
-            {
+            //if (MemoryCache.TryGetValue(User.Id, out List<ProjectViewModel> cacheResult))
+            //{
+            //    return cacheResult.Skip(pageIndex * pageSize).Take(pageSize);
+            //}
+            //else
+            //{
                 var projects = Repository.GetAllOrderedDesc().ToList();
-                //var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
-                //var nnResult = new List<(Project, double)>(projects.Count);
+                var maxId = projects.Max(x => x.Id);
+                var startDateMax = projects.Max(x => x.StartDate)?.Ticks ?? -1;
+                var finishDateMax = projects.Max(x => x.FinishDate)?.Ticks ?? -1;
+                var maxCurrentCost = projects.Max(x => x.CostCurrent);
+                var maxFullCost = projects.Max(x => x.CostFull);
+                var maxInitId = projects.Max(x => x.Initializer.Id);
+
+                var nn = NeuralNetwork.NeuralNetwork.GetNeuralNetwork();
+                var nnResult = new List<(Project, double)>(projects.Count);
                 var options = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
                 }
                 .AddExpirationToken(new CancellationChangeToken(_resetCacheToken.Token));
 
-                //foreach (var project in projects)
-                //{
-                //var features = NeuralNetworkModel.ExtractFeatures(User, project);
+                foreach (var project in projects)
+                {
+                    var features = NeuralNetworkModel.ExtractFeatures(User, project, maxId, 
+                        startDateMax, finishDateMax, (double)maxCurrentCost, (double)maxFullCost, maxInitId);
 
-                //    var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
-                //    {
-                //        Features = features
-                //    });
+                    var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
+                    {
+                        Features = features
+                    });
 
-                //    nnResult.Add((project, evalResult));
-                //}
+                    nnResult.Add((project, evalResult));
+                }
 
                 var rates = DbContext.ProjectsRates.Where(x => x.UserId == User.Id);
 
-                User = new UserRepository(DbContext).Get(User.Id);
+                //User = new UserRepository(DbContext).Get(User.Id);
 
-                var nnResult = projects.Select(x => new
-                {
-                    Item1 = x,
-                    Item2 = x.Tags.Count(y => User.Tags.Any(i => i.TagId == y.TagId))
-                });
+                //var nnResult = projects.Select(x => new
+                //{
+                //    Item1 = x,
+                //    Item2 = x.Tags.Count(y => User.Tags.Any(i => i.TagId == y.TagId))
+                //});
 
                 var result = nnResult
                         .OrderByDescending(x => x.Item2)
@@ -224,7 +232,7 @@ namespace ProjectDiploma.Logic
                 MemoryCache.Set(User.Id, result, options);
 
                 return result.Skip(pageIndex * pageSize).Take(pageSize);
-            }
+            //}
         }
     }
 }

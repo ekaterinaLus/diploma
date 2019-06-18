@@ -158,8 +158,8 @@ namespace ProjectDiploma.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Logout()
         {
-            NeuralNetwork.NeuralNetwork.Delete();
-            GC.Collect();
+            NeuralNetwork.NeuralNetwork.Unload();
+            
             await _signInManager.SignOutAsync();
             return Ok();
         }
