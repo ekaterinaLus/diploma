@@ -23,7 +23,7 @@ namespace DataStore.Repositories.ProjectRepository
             return DbContext.Projects
                 .Include(x => x.Sponsors).ThenInclude(x => x.Company)
                 .Include(x => x.Tags).ThenInclude(x => x.Tag)
-                .Include(x => x.Initializer)
+                .Include(x => x.Initializer).ThenInclude(x => x.Employees)
                 .FirstOrDefault(x => x.Id == id);
         }
     }

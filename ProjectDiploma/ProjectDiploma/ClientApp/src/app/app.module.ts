@@ -107,7 +107,7 @@ import { ProfileMoreComponent } from './profile/profilemore.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'event', component: EventComponent },
       { path: 'news', component: NewComponent },
-      { path: 'project', component: ProjectComponent /*, canActivate: [AuthGuard] */},
+      { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] },
       { path: 'user', component: UserComponent },
       { path: 'login', component: LoginComponent },
       { path: 'newspage', component: NewsPageComponent },

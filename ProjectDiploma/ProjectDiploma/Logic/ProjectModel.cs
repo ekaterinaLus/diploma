@@ -92,6 +92,24 @@ namespace ProjectDiploma.Logic
             }
             else
             {
+                foreach (var item in project.Initializer.Employees)
+                {
+                    var historyItem = DbContext.SubscribesHistories.FirstOrDefault(x => x.UserId == item.Id);
+
+                    if (historyItem == null)
+                    {
+                        historyItem = new DataStore.Entities.Projects.SubscribesHistory()
+                        {
+                            User = item,
+                            ViewsCount = 0
+                        };
+
+                        DbContext.SubscribesHistories.Add(historyItem);
+                    }
+
+                    historyItem.ViewsCount++;
+                }
+
                 project.Sponsors.Add(new ProjectsCompanies
                 {
                     Company = DbContext.Companies.FirstOrDefault(x => x.Employees.Contains(User)),
@@ -165,6 +183,31 @@ namespace ProjectDiploma.Logic
         {
             var result = Repository.GetAll().Where(x => x.Initializer == DbContext.Universities.FirstOrDefault(y => y.Employees.Contains(User)));
             return result.Select(x => x.ToType<ProjectViewModel>());
+        }
+
+        public int GetSubscribesHistory()
+        {
+            var result = DbContext.SubscribesHistories.FirstOrDefault(x => x.UserId == User.Id)?.ViewsCount ?? 0;
+            return result;
+        }
+
+        public void CleanHistory()
+        {
+            var item = DbContext.SubscribesHistories.FirstOrDefault(x => x.UserId == User.Id);
+            if (item == null)
+            {
+                item = new DataStore.Entities.Projects.SubscribesHistory
+                {
+                    User = User,
+                    ViewsCount = 0
+                };
+                DbContext.SubscribesHistories.Add(item);
+            }
+            else
+            {
+                item.ViewsCount = 0;
+            }
+            DbContext.SaveChanges();
         }
 
         public override IEnumerable<ProjectViewModel> GetPagingItems(int pageIndex, int pageSize)

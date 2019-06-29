@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class ProfileComponent  {
   public currentUser: User;
   public projects: Project[];
+  public subscribesCount: number;
   
   constructor(@Inject('BASE_URL') private baseUrl: string,
               public authenticationService: AuthenticationService,
@@ -29,11 +30,17 @@ export class ProfileComponent  {
 
     this.http.get<Project[]>(this.baseUrl + 'api/Project/GetProjectsByUser').subscribe(result => {
       this.projects = result;
+
+      this.http.get<number>(this.baseUrl + 'api/Project/GetSubscribersCount').subscribe(result => {
+        this.subscribesCount = result;
+      }, error => console.log('error in count loading'));
     }, error => console.log('error in event'));
   }
 
   clickMore() {
-    this.router.navigate(['/more']);
+    this.http.get<void>(this.baseUrl + 'api/Project/CleanHistory').subscribe(result => {
+      this.router.navigate(['/more']);
+    }, error => console.log('error in count loading'));    
   }
 }
 

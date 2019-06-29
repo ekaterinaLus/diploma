@@ -52,6 +52,24 @@ namespace ProjectDiploma.Controllers
             return _model.GetProjectByUser();
         }
 
+        [HttpGet("[action]")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
+        public async Task<int> GetSubscribersCount()
+        {
+            await SetupUserInfo();
+
+            return _model.GetSubscribesHistory();
+        }
+
+        [HttpGet("[action]")]
+        [Authorize(Roles = "ADMIN,UNIVERSITY")]
+        public async Task CleanHistory()
+        {
+            await SetupUserInfo();
+
+            _model.CleanHistory();
+        }
+
         //TODO: interface
 
         [HttpGet("[action]/{id}")]

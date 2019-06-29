@@ -12,7 +12,7 @@ namespace ProjectDiploma
 {
     public class Program
     {
-        private static bool NeedUpdateDatabase { get => false; }
+        private static bool NeedUpdateDatabase { get => true; }
 
         public async static Task Main(string[] args)
         {

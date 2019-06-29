@@ -145,56 +145,66 @@ export class AddProject implements OnInit {
       this.filteredTags = null;
     }
   }
-  
+
 
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
+    //stop here if form is invalid
     //if (this.projectForm.invalid) {
     //  return;
     //}
 
-    //this.fileService.postFile(this.fileToUpload).subscribe(data => {
+    this.fileService.postFile(this.fileToUpload).subscribe(data => {
 
-    //  var loadedFileName: string = null;
-    //  if (!data.hasErrors) {
-    //    loadedFileName = data.itemResult;
-    //  }
+      var loadedFileName: string = null;
+      if (!data.hasErrors) {
+        loadedFileName = data.itemResult;
+      }
 
-    //  this.CreateProject(loadedFileName);
-    //}, error => {
-    //  this.CreateProject(null);
-    //});
+      this.CreateProject(loadedFileName);
+    }, error => {
+      this.CreateProject(null);
+    });
 
-    this.CreateProject(null);
+    //this.CreateProject(null);
 
+  }
+
+  remove(tagItem: string): void {
+    const index = this.tags.indexOf(tagItem);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   private CreateProject(loadedFileName: string) {
-      var tagObjects = this.tags.map<Tag>(x => { return { id: 0, name: x }; });
-      var value = {
-          name: this.firstFormGroup.controls.name.value,
-          description: this.secondFormGroup.controls.description.value,
-          risks: this.thirdFormGroup.controls.risks.value,
-          startDate: this.firstFormGroup.controls.start.value,
-          finishDate: this.firstFormGroup.controls.finish.value,
-          costCurrent: this.firstFormGroup.controls.costCurrent.value,
-          costFull: this.firstFormGroup.controls.costFull.value,
-          fileName: loadedFileName,
-          tags: tagObjects
-      };
-      this.loading = true;
-      this.http.post<string>(this.baseUrl + 'api/Project/Add', value)
-          .subscribe(result => {
-              this.success = true;
-              this.loading = false;
-          }, error => {
-              this.error = error;
-              this.loading = false;
-              console.error(error);
-          });
+    var tagObjects = this.tags.map<Tag>(x => { return { id: 0, name: x }; });
+    var value = {
+      name: this.firstFormGroup.controls.name.value,
+      description: this.secondFormGroup.controls.description.value,
+      risks: this.thirdFormGroup.controls.risks.value,
+      startDate: this.firstFormGroup.controls.start.value,
+      finishDate: this.firstFormGroup.controls.finish.value,
+      costCurrent: this.firstFormGroup.controls.costCurrent.value,
+      costFull: this.firstFormGroup.controls.costFull.value,
+      fileName: loadedFileName,
+      tags: tagObjects
+    };
+    this.loading = true;
+    this.http.post<string>(this.baseUrl + 'api/Project/Add', value)
+      .subscribe(result => {
+        this.success = true;
+        this.loading = false;
+
+        this.router.navigate(['/project'])
+      }, error => {
+        this.error = error;
+        this.loading = false;
+        console.error(error);
+      });
   }
- 
+
 }
 

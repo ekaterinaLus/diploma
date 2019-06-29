@@ -21,14 +21,18 @@ namespace DataStore
             {
                 //создаем админа
                 var adminId = await EnsureUserCreated(serviceProvider, "1234", "ekaterinatimofeeva20@gmail.com");
-                
+
+                var businessId = await EnsureUserCreated(serviceProvider, "1234", "tour@gmail.com");
+
+                var universityId = await EnsureUserCreated(serviceProvider, "1234", "aisi@gmail.com");
+
                 //создаем роли + добавляем админа в роль админ
                 await EnsureRoleCreated(serviceProvider, adminId, nameof(BusinessUniversityContext.RoleValues.ADMIN));
-                await EnsureRoleCreated(serviceProvider, string.Empty, nameof(BusinessUniversityContext.RoleValues.BUSINESS));
-                await EnsureRoleCreated(serviceProvider, string.Empty, nameof(BusinessUniversityContext.RoleValues.UNIVERSITY));
+                await EnsureRoleCreated(serviceProvider, businessId, nameof(BusinessUniversityContext.RoleValues.BUSINESS));
+                await EnsureRoleCreated(serviceProvider, universityId, nameof(BusinessUniversityContext.RoleValues.UNIVERSITY));
 
                 //создаем элементы таблиц
-                await SeedDB(context);
+                //await SeedDB(context);
             }
         }
 
@@ -75,16 +79,16 @@ namespace DataStore
         /// <returns></returns>
         private static async Task SeedDB(BusinessUniversityContext context)
         {
-            var tags = await FillTags(context);
+            //var tags = await FillTags(context);
 
-            var newsTypes = await FillNewsType(context);
-            var univers = await FillUnivers(context);
+            //var newsTypes = await FillNewsType(context);
+            //var univers = await FillUnivers(context);
             //сохраняем базу
-            await context.SaveChangesAsync();
+            //await context.SaveChangesAsync();
 
-            await FillEvents(context, tags);
-            await FillNews(context, tags, newsTypes);
-            await FillProjects(context, tags, univers);
+            //await FillEvents(context, tags);
+            //await FillNews(context, tags, newsTypes);
+            //await FillProjects(context, tags, univers);
 
             //сохраняем базу
             await context.SaveChangesAsync();
