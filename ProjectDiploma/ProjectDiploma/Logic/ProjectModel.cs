@@ -52,6 +52,50 @@ namespace ProjectDiploma.Logic
             return new Response<ProjectViewModel>(item.ToType<ProjectViewModel>());
         }
 
+        public void AddViewsToProject(int id)
+        {
+            var historyRepo = new ProjectViewHistoryRepository(DbContext);
+
+            var project = Repository.Get(id);
+
+            if (project != null)
+            {
+                var item = new ProjectViewHistory()
+                {
+                    Company = DbContext.Companies.FirstOrDefault(x => x.Employees.Any(y => y.Id == User.Id)),
+                    Project = project,
+                    ViewDate = DateTime.Now
+                };
+
+                historyRepo.Update(item);
+
+                try
+                {
+                    DbContext.SaveChanges();
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+        }
+
+        //TODO: class - CRUDModel (CRUD - Create Read Update Delete)
+        public Response GetProjectViews()
+        {
+            var historyRepo = new ProjectViewHistoryRepository(DbContext);
+
+            var items = historyRepo.GetAll().Where(x => x.Project.Initializer.Employees.Any(t => t.Id == User.Id));
+
+            if (items == null)
+            {
+                return new Response()
+                            .AddMessage(MessageType.ERROR, "Объект не найден в базе");
+            }
+
+            return new Response<IEnumerable<ProjectViewHistoryViewModel>>(items.Select(x => x.ToType<ProjectViewHistoryViewModel>()));
+        }
+
         public Response Delete(int id)
         {
             var item = Repository.Get(id);

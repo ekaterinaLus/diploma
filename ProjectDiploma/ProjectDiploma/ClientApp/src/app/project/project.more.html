@@ -1,0 +1,45 @@
+<!--<button class="add_project" *ngIf="canAdd" mat-stroked-button (click)="AddNewProject();">Добавить проект</button>-->
+
+<mat-spinner *ngIf="!project" class="spinner">Загрузка...</mat-spinner>
+
+<mat-card *ngIf="project" class="project_row">
+  <mat-icon>wb_incandescent</mat-icon>
+  <mat-card-header>
+    <mat-card-title align="center">{{project.name}}</mat-card-title>
+    <mat-card-subtitle>{{project.initializer.name}}</mat-card-subtitle>
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of project.tags">{{tag.name}}</mat-chip>
+    </mat-chip-list>
+  </mat-card-header>
+  <img *ngIf="project.fileName" mat-card-image src="{{url}}{{project.fileName}}">
+  <mat-card-content>
+    <p *ngIf="project.description" class="retreat" align="justify">
+      {{project.description}}
+    </p>
+    <!--<p *ngIf="pr.startDate" class="retreat" align="justify">
+    Дата начала исследования:
+    {{project.startDate|date:'dd-MM-yyyy'}}
+  </p>
+  <p *ngIf="pr.finishDate" class="retreat" align="justify">
+    Предполагаемая дата завершения:
+    {{project.finishDate|date:'dd-MM-yyyy'}}
+  </p>-->
+
+  </mat-card-content>
+  <mat-card-actions>
+    
+    <button *ngIf="canRate" mat-icon-button (click)="onLike(project.id);" [color]="project.rate == 1 ? 'primary' : ''">
+      <mat-icon>thumb_up</mat-icon>
+    </button>
+    <button *ngIf="canRate" mat-icon-button (click)="onDislike(project.id);" [color]="project.rate == 0 ? 'primary' : ''">
+      <mat-icon>thumb_down</mat-icon>
+    </button>
+    <button *ngIf="canRate" mat-icon-button (click)="subscribe(project.id);" >
+      <mat-icon>done</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<button mat-stroked-button color="primary" (click)="back()">Назад</button>
+
+

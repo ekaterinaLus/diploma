@@ -42,6 +42,12 @@ export class ProfileComponent  {
       this.router.navigate(['/more']);
     }, error => console.log('error in count loading'));    
   }
+
+  clickHistory() {
+    this.router.navigate(['/views']);    
+  }
+
+  //clickHistory
 }
 
 //прописать ньюс таг

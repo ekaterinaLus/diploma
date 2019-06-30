@@ -70,7 +70,23 @@ namespace ProjectDiploma.Controllers
             _model.CleanHistory();
         }
 
-        //TODO: interface
+        //TODO: interface GetProjectViews
+
+        [HttpGet("[action]/{id}")]
+        public async Task AddViewsToProject([FromRoute] int id)
+        {
+            await SetupUserInfo();
+
+            _model.AddViewsToProject(id);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProjectViews()
+        {
+            await SetupUserInfo();
+
+            return new JsonResult(_model.GetProjectViews());
+        }
 
         [HttpGet("[action]/{id}")]
         public IActionResult Get([FromRoute] int id)

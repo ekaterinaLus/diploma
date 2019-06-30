@@ -54,6 +54,8 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileMoreComponent } from './profile/profilemore.component';
+import { ProjectMoreComponent } from './project/project.more';
+import { ProfileViewsComponent } from './profile/profileviews.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { ProfileMoreComponent } from './profile/profilemore.component';
     LoginDialog,
     AddProject,
     ProfileComponent,
-    ProfileMoreComponent
+    ProfileMoreComponent,
+    ProjectMoreComponent,
+    ProfileViewsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -114,6 +118,8 @@ import { ProfileMoreComponent } from './profile/profilemore.component';
       { path: 'newproject', component: AddProject },
       { path: 'profile', component: ProfileComponent },
       { path: 'more', component: ProfileMoreComponent },
+      { path: 'views', component: ProfileViewsComponent },
+      { path: 'projectmore/:projectId', component: ProjectMoreComponent, canActivate: [AuthGuard] },
     ])
   ],
   entryComponents: [NavMenuComponent, LoginDialog],

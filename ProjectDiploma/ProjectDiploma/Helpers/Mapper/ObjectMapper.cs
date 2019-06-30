@@ -86,6 +86,20 @@ namespace ProjectDiploma.Logic.Mapper
                                     CompanyId = company.Id,
                                     ProjectId = src.Id
                                 })));
+
+                configuration.CreateMap<ProjectViewHistory, ProjectViewHistoryViewModel>()
+                    .ForMember(
+                        dest => dest.ContactInformation,
+                        opt => opt.MapFrom(
+                            src => src.Company.ContactInformation))
+                    .ForMember(
+                        dest => dest.OrganizationName,
+                        opt => opt.MapFrom(
+                            src => src.Company.Name))
+                    .ForMember(
+                        dest => dest.ProjectName,
+                        opt => opt.MapFrom(
+                            src => src.Project.Name));
             });
         }
 

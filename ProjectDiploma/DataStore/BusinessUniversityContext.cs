@@ -23,6 +23,7 @@ namespace Diploma.DataBase
         public DbSet<Company> Companies { get; set; }
         public DbSet<ProjectRate> ProjectsRates { get; set; }   
         public DbSet<SubscribesHistory> SubscribesHistories { get; set; }
+        public DbSet<ProjectViewHistory> ProjectViewHistories { get; set; }
 
         public BusinessUniversityContext(DbContextOptions<BusinessUniversityContext> options) : base(options)
         { }

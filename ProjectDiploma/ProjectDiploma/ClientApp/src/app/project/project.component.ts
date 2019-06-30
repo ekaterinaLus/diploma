@@ -111,10 +111,15 @@ export class ProjectComponent implements OnInit {
   }
 
   public OpenProject(id: number) {
-    var args = new HttpParams()
-      .append("projectId", id.toString());
-    this.http.get<Project>(this.baseUrl + 'api/Project/Get', { params: args }).subscribe(() => {
-    }, error => console.log(error));
+
+    this.http.get<void>(this.baseUrl + 'api/Project/AddViewsToProject/' + id.toString()).subscribe(result => {
+      this.router.navigate(['/projectmore/' + id.toString()]);
+    }, error => {
+      console.log('error in event');
+      this.router.navigate(['/projectmore/' + id.toString()])
+    });
+    
+
   }
 }
 

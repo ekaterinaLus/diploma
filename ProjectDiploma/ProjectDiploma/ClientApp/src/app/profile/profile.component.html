@@ -27,7 +27,7 @@
     <div mat-card-avatar class="example-header-image"> </div>
     <mat-card-title>{{currentUser.email}}</mat-card-title>
     <mat-card-subtitle>Роль: {{currentUser.role}}</mat-card-subtitle>
-  </mat-card-header> 
+  </mat-card-header>
   <mat-card-content class="top">
     <p>Выложенные исследования: </p>
     <mat-chip-list *ngFor="let pr of projects">
@@ -39,6 +39,13 @@
     Отклики на исследования
     <button mat-raised-button color="primary"
             [matBadge]="subscribesCount" matBadgePosition="before" matBadgeColor="accent" (click)="clickMore()">
+      Посмотреть
+    </button>
+  </p>
+
+  <p class="top">
+    Просмотры исследований
+    <button mat-raised-button color="primary" (click)="clickHistory()">
       Посмотреть
     </button>
   </p>

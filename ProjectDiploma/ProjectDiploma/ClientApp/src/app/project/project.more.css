@@ -1,0 +1,48 @@
+.project_row {
+  height: 330px;
+  display: inline-grid;
+}
+
+.add_project {
+  margin-bottom: 7px;
+  margin-left: 7px;
+  margin-top: 7px;
+}
+
+.project_tile {
+  width: 100%;
+}
+
+.project_textarea {
+  height: 75px;
+}
+
+.add_project_form {
+  height: calc(100% - 75px);
+}
+
+.nav_button {
+  position: fixed;
+  bottom: 25px;
+  width: 100%;
+  display: block;
+}
+
+.project_card_result {
+  width: 330px;
+  margin-bottom: 30px;
+}
+
+.project_elements_divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.retreat{
+  text-indent: 20px;
+}
+
+
+.btn-space {
+  margin-left: 20px;
+}
