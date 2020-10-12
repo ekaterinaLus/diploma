@@ -7,6 +7,7 @@ namespace DataStore
         public delegate dynamic Field(TItem obj);
         public Field GetComparableField { get; set; }
 
+
         public bool Equals(TItem x, TItem y)
         {
             return GetComparableField(x) == GetComparableField(y);
@@ -18,3 +19,5 @@ namespace DataStore
         }
     }
 }
+
+

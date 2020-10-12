@@ -155,17 +155,21 @@ export class AddProject implements OnInit {
     //  return;
     //}
 
-    this.fileService.postFile(this.fileToUpload).subscribe(data => {
+    if (this.fileToUpload != null) {
+      this.fileService.postFile(this.fileToUpload).subscribe(data => {
 
-      var loadedFileName: string = null;
-      if (!data.hasErrors) {
-        loadedFileName = data.itemResult;
-      }
+        var loadedFileName: string = null;
+        if (!data.hasErrors) {
+          loadedFileName = data.itemResult;
+        }
 
-      this.CreateProject(loadedFileName);
-    }, error => {
+        this.CreateProject(loadedFileName);
+      }, error => {
+        this.CreateProject(null);
+      });
+    } else {
       this.CreateProject(null);
-    });
+    }
 
     //this.CreateProject(null);
 

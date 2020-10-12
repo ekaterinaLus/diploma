@@ -4384,24 +4384,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Margo\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ekate\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Margo\\source\\repos\\diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "projectUniqueName": "D:\\diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
       "projectName": "DataStore",
-      "projectPath": "C:\\Users\\Margo\\source\\repos\\diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
-      "packagesPath": "C:\\Users\\Margo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Margo\\source\\repos\\diploma\\ProjectDiploma\\DataStore\\obj\\",
+      "projectPath": "D:\\diploma\\ProjectDiploma\\DataStore\\DataStore.csproj",
+      "packagesPath": "C:\\Users\\ekate\\.nuget\\packages\\",
+      "outputPath": "D:\\diploma\\ProjectDiploma\\DataStore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Margo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\ekate\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
@@ -4413,8 +4414,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\Margo\\source\\repos\\diploma\\ProjectDiploma\\SharedLogic\\SharedLogic.csproj": {
-              "projectPath": "C:\\Users\\Margo\\source\\repos\\diploma\\ProjectDiploma\\SharedLogic\\SharedLogic.csproj"
+            "D:\\diploma\\ProjectDiploma\\SharedLogic\\SharedLogic.csproj": {
+              "projectPath": "D:\\diploma\\ProjectDiploma\\SharedLogic\\SharedLogic.csproj"
             }
           }
         }
@@ -4454,10 +4455,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

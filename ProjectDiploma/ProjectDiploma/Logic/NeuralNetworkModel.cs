@@ -101,12 +101,7 @@ namespace ProjectDiploma.Logic
 
                 for (int j = 0; j < tagsLength; j++)
                 {
-                    if (j > 0 && rnd.NextDouble() > 0.70)
-                    {
-                        break;
-                    }
-
-                    var randomIndex = rnd.NextDouble() < 0.25 ? userIndexes.FirstOrDefault() : rnd.Next(0, tags.Length);
+                    var randomIndex = rnd.Next(0, tags.Length);
                     while (projectIndexes.Contains(randomIndex))
                     {
                         if (++randomIndex >= tags.Length)
@@ -117,6 +112,9 @@ namespace ProjectDiploma.Logic
                     projectIndexes.Add(randomIndex);
 
                     features[j + 11] = tags[randomIndex].Id / maxId;
+
+                    if (j >= 3)
+                        break;
                 }
 
                 userIndexes.IntersectWith(projectIndexes);

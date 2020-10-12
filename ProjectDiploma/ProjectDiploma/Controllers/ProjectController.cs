@@ -89,8 +89,10 @@ namespace ProjectDiploma.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
+            await SetupUserInfo();
+
             return new JsonResult(_model.Get(id));
         }
 

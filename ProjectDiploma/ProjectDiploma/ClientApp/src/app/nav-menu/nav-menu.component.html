@@ -23,7 +23,7 @@
         </button>
 
         <div *ngIf="currentUser" >
-          <button mat-button [matMenuTriggerFor]="menu" style="left: 650%;">{{currentUser.email}}</button>
+          <button mat-button [matMenuTriggerFor]="menu" style="left: 480%;">{{currentUser.email}}</button>
           <mat-menu #menu="matMenu" >
             <button mat-button (click)="logout()" class="nav-menu-button">Выйти</button>
             <mat-icon aria-label="Side nav toggle icon">reply</mat-icon>

@@ -43,13 +43,19 @@ namespace ProjectDiploma.Logic
         {
             var item = Repository.Get(id);
 
+            var rates = DbContext.ProjectsRates.FirstOrDefault(x => x.UserId == User.Id && x.ProjectId == id);
+
+            var result = item.ToType<ProjectViewModel>();
+
+            result.Rate = rates?.Rate ?? -1;
+
             if (item == null)
             {
                 return new Response()
                             .AddMessage(MessageType.ERROR, "Объект не найден в базе");
             }
 
-            return new Response<ProjectViewModel>(item.ToType<ProjectViewModel>());
+            return new Response<ProjectViewModel>(result);
         }
 
         public void AddViewsToProject(int id)
@@ -57,12 +63,13 @@ namespace ProjectDiploma.Logic
             var historyRepo = new ProjectViewHistoryRepository(DbContext);
 
             var project = Repository.Get(id);
+            var company = DbContext.Companies.FirstOrDefault(x => x.Employees.Any(y => y.Id == User.Id));
 
-            if (project != null)
+            if (project != null && company != null)
             {
                 var item = new ProjectViewHistory()
                 {
-                    Company = DbContext.Companies.FirstOrDefault(x => x.Employees.Any(y => y.Id == User.Id)),
+                    Company = company,
                     Project = project,
                     ViewDate = DateTime.Now
                 };
@@ -285,14 +292,15 @@ namespace ProjectDiploma.Logic
 
                 foreach (var project in projects)
                 {
-                    var features = NeuralNetworkModel.ExtractFeatures(User, project, maxId, 
-                        startDateMax, finishDateMax, (double)maxCurrentCost, (double)maxFullCost, maxInitId);
+                    //var features = NeuralNetworkModel.ExtractFeatures(User, project, maxId, 
+                    //    startDateMax, finishDateMax, (double)maxCurrentCost, (double)maxFullCost, maxInitId);
 
-                    var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
-                    {
-                        Features = features
-                    });
-
+                    //var evalResult = nn.Evaluate(new NeuralNetwork.NeuralNetworkData
+                    //{
+                    //    Features = features
+                    //});
+                    var evalResult = User.Tags.Select(x => x.Tag).Intersect(project.Tags.Select(x => x.Tag)).Count();
+                    
                     nnResult.Add((project, evalResult));
                 }
 

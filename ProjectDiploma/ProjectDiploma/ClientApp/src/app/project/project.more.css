@@ -1,5 +1,6 @@
 .project_row {
   height: 330px;
+  min-width: 100%;
   display: inline-grid;
 }
 

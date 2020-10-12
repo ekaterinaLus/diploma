@@ -1,6 +1,11 @@
 .project_row {
-  height: 330px;
+  height: 340px;
+  min-width: 100%;
   display: inline-grid;
+}
+
+.img {
+  background-size: cover;
 }
 
 .add_project {
@@ -46,3 +51,4 @@
 .btn-space {
   margin-left: 20px;
 }
+

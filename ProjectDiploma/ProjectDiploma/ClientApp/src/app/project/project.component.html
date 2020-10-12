@@ -12,20 +12,21 @@
           <mat-chip *ngFor="let tag of pr.tags">{{tag.name}}</mat-chip>
         </mat-chip-list>
       </mat-card-header>
-      <img *ngIf="pr.fileName" mat-card-image src="{{url}}{{pr.fileName}}">
+      <img *ngIf="pr.fileName" mat-card-image style="max-height: 100px; max-width: 200px;" src="{{url}}{{pr.fileName}}">
+      <!--mat-card-image style="max-height: 100px; max-width: 200px;" src="{{url}}{{pr.fileName}}">-->
       <mat-card-content>
         <p *ngIf="pr.description" class="retreat" align="justify">
-          {{pr.description.length > 330 ? pr.description.substring(0, 300) + '...' : pr.description}}
+          {{pr.description.length > 130 ? pr.description.substring(0, 100) + '...' : pr.description}}<!--300-->
         </p>
         <!--<p *ngIf="pr.startDate" class="retreat" align="justify">
-          Дата начала исследования:
-          {{pr.startDate|date:'dd-MM-yyyy'}}
-        </p>
-        <p *ngIf="pr.finishDate" class="retreat" align="justify">
-          Предполагаемая дата завершения:
-          {{pr.finishDate|date:'dd-MM-yyyy'}}
-        </p>-->
-        
+      Дата начала исследования:
+      {{pr.startDate|date:'dd-MM-yyyy'}}
+    </p>
+    <p *ngIf="pr.finishDate" class="retreat" align="justify">
+      Предполагаемая дата завершения:
+      {{pr.finishDate|date:'dd-MM-yyyy'}}
+    </p>-->
+
       </mat-card-content>
       <mat-card-actions>
         <button mat-button (click)="OpenProject(pr.id);">Подробнее</button>
@@ -35,7 +36,7 @@
         <button *ngIf="canRate" mat-icon-button (click)="onDislike(pr.id);" [color]="pr.rate == 0 ? 'primary' : ''">
           <mat-icon>thumb_down</mat-icon>
         </button>
-        <button *ngIf="canRate" mat-icon-button (click)="subscribe(pr.id);" >
+        <button *ngIf="canRate" mat-icon-button (click)="subscribe(pr.id);">
           <mat-icon>done</mat-icon>
         </button>
       </mat-card-actions>

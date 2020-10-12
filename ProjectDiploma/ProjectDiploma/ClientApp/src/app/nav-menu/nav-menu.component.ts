@@ -59,6 +59,7 @@ export class NavMenuComponent {
 
   public logout() {
     this.authenticationService.logout();
+    this.router.navigate(['/']);
   }
   
   close(reason: string) {

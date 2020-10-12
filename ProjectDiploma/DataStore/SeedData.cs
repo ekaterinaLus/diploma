@@ -32,7 +32,7 @@ namespace DataStore
                 await EnsureRoleCreated(serviceProvider, universityId, nameof(BusinessUniversityContext.RoleValues.UNIVERSITY));
 
                 //создаем элементы таблиц
-                //await SeedDB(context);
+                await SeedDB(context);
             }
         }
 

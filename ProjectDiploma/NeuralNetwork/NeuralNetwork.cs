@@ -200,7 +200,7 @@ namespace NeuralNetwork
             var loss = CNTKLib.SquaredError(model, label);
             var evalError = CNTKLib.SquaredError(model, label);
             //0.002525
-            var learningRatePerSample = new TrainingParameterScheduleDouble(0.0585, 1);
+            var learningRatePerSample = new TrainingParameterScheduleDouble(0.0008525, 1);
             var parameterLearners = new List<Learner>() { Learner.SGDLearner(model.Parameters(), learningRatePerSample) };
 
             trainer = Trainer.CreateTrainer(model, loss, evalError, parameterLearners);
@@ -250,7 +250,7 @@ namespace NeuralNetwork
 
                         trainer.TrainMinibatch(arguments, false, device);
 
-                        PrintTrainingProgress(i / batchSize - 1, 5);
+                        PrintTrainingProgress(i / batchSize - 1, 2000);
 
                         epoch--;
                     }
